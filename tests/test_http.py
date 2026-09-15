@@ -17,6 +17,8 @@ async def test_loopback_http_roundtrip_and_private_store_disabled():
         **os.environ,
         "JT_LOCAL_DB": "/deliberately/unavailable/private.sqlite",
         "JT_PRINCIPAL": "fake-user",
+        "JT_EVIDENCE_DB": "/deliberately/unavailable/evidence.sqlite",
+        "JT_ADMIN_DB": "/deliberately/unavailable/admin.sqlite",
         "PISTE_CLIENT_ID": "",
         "PISTE_CLIENT_SECRET": "",
         "JUDILIBRE_KEY_ID": "",

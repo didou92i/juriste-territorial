@@ -10,9 +10,10 @@ from .models import ClaimInput, Document, Evidence, SourceError
 
 
 class EvidenceStore:
-    def __init__(self, max_entries=32, ttl=1800):
+    def __init__(self, max_entries=32, ttl=1800, archive=None):
         self.entries = OrderedDict()
         self.max_entries, self.ttl = max_entries, ttl
+        self.archive = archive
 
     def put(self, source_ref: str, doc: Document, as_of: date | None):
         identifier = "ev_" + uuid.uuid4().hex
@@ -23,6 +24,8 @@ class EvidenceStore:
             content_hash=hashlib.sha256(doc.text.encode()).hexdigest(),
             as_of_date=as_of,
         )
+        if self.archive:
+            self.archive.put("evidence", evidence.model_dump(mode="json"), identifier)
         self.entries[identifier] = (time.monotonic(), evidence)
         while len(self.entries) > self.max_entries:
             self.entries.popitem(last=False)
@@ -32,6 +35,11 @@ class EvidenceStore:
         item = self.entries.get(identifier)
         if item is None or time.monotonic() - item[0] > self.ttl:
             self.entries.pop(identifier, None)
+            if self.archive:
+                ev = Evidence.model_validate(self.archive.get("evidence", identifier))
+                if hashlib.sha256(ev.document.text.encode()).hexdigest() != ev.content_hash:
+                    raise SourceError("archive_corrupted", "Evidence content hash mismatch")
+                return ev
             raise SourceError(
                 "evidence_unavailable", "Evidence absent or expired; fetch the source again"
             )

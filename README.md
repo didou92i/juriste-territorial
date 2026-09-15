@@ -3,7 +3,7 @@
 **Passer de la recherche de textes à une position juridique motivée et utilisable.**
 
 Un skill pour les collectivités et établissements publics locaux français,
-accompagné du serveur MCP **droit-territorial**. Version **0.1.0 — pilote expérimental**.
+accompagné du serveur MCP **droit-territorial**. Version **0.2.0 — pilote expérimental**.
 
 ## Ce qui fait la méthode
 
@@ -25,15 +25,26 @@ générateur, la transition et le régime applicable avant de conseiller une pro
 
 ## Contenu livré
 
-- **Un noyau canonique**, cinq références de raisonnement et de preuve,
+- **Un noyau canonique**, des références de raisonnement et de preuve,
   un contrat d'outils, des gabarits de notes, audits, actes, courriers et contentieux.
 - **11 modules** : institutions, actes, FPT, dialogue social, commande publique,
   police, finances, urbanisme/patrimoine, services publics, données/numérique et contentieux.
-- **11 outils MCP** : recherche fédérée, consultation, versions, jurisprudence,
-  renvois, pièces privées, état des sources, méthode, preuves et règles bornées.
+- **14 outils MCP** : recherche fédérée, consultation, versions, jurisprudence,
+  renvois, pièces privées, état des sources, méthode, preuves, règles bornées,
+  contrôle des dossiers, comparaison de preuves et index administratif local.
 - **Connecteurs Légifrance/PISTE et JudiLibre**, lecteur de pages officielles,
   import local de textes, deux tests de seuils datés et tests automatisés.
-- **40 scénarios de recette** et un premier essai de la méthode sur trois dossiers fictifs.
+- **40 scénarios de recette**, **6 dossiers fictifs de développement**, un contrôleur
+  de campagne comparative et des essais indépendants par agent.
+- **Archive privée facultative** : preuves persistantes, notes historiques,
+  retraits appliqués et besoin de réexamen signalé.
+
+## Nouveautés 0.2.0
+
+La mise à jour rend les dossiers et leur contrôle exécutables, précise la portée
+des décisions et ajoute un index XML CE/CAA/TA. Trois lots officiels ont été testés
+sur **522 décisions** ; cela ne constitue pas une validation nationale de la recherche.
+Voir [les changements et leurs preuves](docs/release-0.2.0.md).
 
 ## Démarrage
 
@@ -78,6 +89,7 @@ accès PISTE. Tous les modules restent expérimentaux.
 
 - [Architecture](docs/architecture.md) et [revue des dépôts sources](docs/source-review.md).
 - [Plan finalisé et étapes suivantes](docs/development-plan.md).
+- [Index administratif](docs/admin-index.md), [dossiers et archive](docs/case-records.md).
 - [Pièces locales et accès](docs/local-documents.md), [maintenance](docs/maintenance.md).
 - [Évaluation](evals/README.md), [provenance](THIRD_PARTY.yml), [licences](LICENSE.md).
 

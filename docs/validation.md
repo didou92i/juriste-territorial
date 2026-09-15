@@ -1,60 +1,42 @@
-# Validation de la version 0.1.0
+# Validation de la version 0.2.0
 
 Date : **15 septembre 2026**. Statut : **pilote expérimental**.
 
-## Vérifications réellement exécutées
-
-| Vérification | Résultat observé | Portée |
+| Vérification exécutée | Résultat | Portée |
 |---|---|---|
-| Suite Python, macOS, Python 3.12.5 | **91 tests réussis, 1 ignoré** | Unités, contrats simulés, erreurs, accès, dates, règles et MCP |
-| Lint et format Ruff | Réussite | Qualité statique du code livré |
-| Validateur `skill-creator` | Réussite | Frontmatter et structure du skill |
-| Liens internes et outils annoncés | Réussite | Tous les renvois du skill et ses 11 outils existent |
-| MCP stdio | Réussite | Initialisation, liste, appels, ressources et prompt via client SDK réel |
-| MCP HTTP sur 127.0.0.1 | Réussite | Initialisation/appels réels ; accès aux pièces privées désactivé |
-| Source distante : portail open data administratif | Lecture réussie | Extraction HTML, sans certification de complétude/version |
-| Source distante : page Légifrance | Refus HTTP 403 correctement remonté | Aucune prétendue récupération du texte |
-| Essai de méthode par un agent distinct | Trois réponses examinées, aucun défaut matériel signalé | Cas fictifs IHTS, transition de seuil et compétence/signature |
+| Python 3.12.5, macOS | **122 réussis, 1 ignoré** | Contrats, sources simulées, accès, preuves, dossiers, règles et MCP |
+| Ruff, validateur de skill, liens et contrat des outils | Réussite | Qualité statique et présence des 14 outils |
+| Wheel installé en environnement isolé et ZIP du skill | Réussite | Version, schéma de dossier et méthode embarquée contrôlés |
+| MCP stdio et HTTP 127.0.0.1 | Réussite | Client SDK réel, 14 outils, ressources, prompt ; magasins locaux désactivés en HTTP |
+| Import officiel CE/CAA/TA | **522 décisions** | 40 CE, 211 CAA, 271 TA dans trois lots historiques |
+| Recherche puis consultation réelle | **3 décisions** | Pagination complète, empreintes texte/XML/ZIP et citation retrouvée |
+| Essai indépendant par agent | **2 réponses examinées** | Gouvernance privée et portée d’un référé, sans validation humaine |
+| Campagne comparative | **Non exécutée** | Six dossiers disponibles, aucune paire de réponses avec revue humaine |
+| Recette PISTE | **Non exécutée** | Identifiants absents ; sondes historique, courant et requête improbable signalées `not_run` |
 
-Les tests ignorés ne comptent pas comme réussites. Le test API Légifrance est
-ignoré faute d'activation explicite et d'accès PISTE configurés. JudiLibre est
-testé sur son contrat simulé, pas sur un accès authentifié réel.
+Les tests ignorés ne sont pas des réussites. Le test HTTP local nécessite une
+permission d’ouverture de port ; il a été exécuté après le refus technique du
+bac à sable. Aucune panne d’un fournisseur n’a été provoquée pour la recette.
 
-Les [sondes publiques](live-probes.json) consignent URL, résultat et empreinte
-lorsque le contenu a été récupéré. Le [rapport d'essai](../evals/forward-test-2026-09-15.md)
-précise le périmètre de la passe indépendante par agent.
+## Éléments contrôlables
 
-## Cas techniques couverts
+- [Sondes CE/CAA/TA](admin-probes-0.2.0.json) : URL, compte, dates et empreintes.
+- [Sondes PISTE](piste-probes-0.2.0.json) : prérequis réellement absents.
+- [État du benchmark](../evals/benchmark-0.2.0.json) : incomplet, sans gain annoncé.
+- [Essai par agent](../evals/forward-test-0.2.0.md) : réponses et ressources consultées.
+- [Validation historique 0.1.0](validation-0.1.0.md), conservée séparément.
 
-Version historique/future, début absent, fin absente/invalide/ouverte et borne
-exclusive ; identifiant absent ou différent dans la réponse ; citation inventée ;
-source officielle à applicabilité inconnue ; réponse incomplète ; panne/quota ;
-renouvellement OAuth borné ; destinations réseau refusées ; pagination stable ;
-requêtes de texte et CETAT séparées ; taxonomie judiciaire ; code erroné ;
-dates de jugement/publication séparées ; accès privés, retrait et intégrité ;
-seuils exacts, HT/TTC, type d'acheteur et fait générateur.
+Les nouvelles régressions couvrent faux identifiants, citation inventée, fait
+contesté, date de connaissance dépassée, annexe absente, attribution non certifiée,
+archive après redémarrage, mauvais principal, pièce d’un autre dossier, retrait,
+corruption, ZIP dangereux, DTD, pagination et campagnes non comparables.
 
-Le test d'injection logiciel vérifie que le texte reste une donnée non fiable ;
-l'essai par agent observe un comportement sur un exemple. Cela ne garantit pas
-une résistance générale de tous les modèles à toutes les injections.
+## Non démontré
 
-## Distribution
+Pertinence sémantique de toutes les réponses, exhaustivité des conditions,
+robustesse nationale CE/CAA/TA, benchmark comparatif humain, performances sur
+cas nouveaux, accès PISTE/JudiLibre authentifiés, veille automatisée ou service
+multiutilisateur. Les six dossiers publics restent des cas de développement.
 
-Le skill est empaqueté depuis sa source canonique. Le wheel embarque la méthode,
-les registres et les notices ; leur présence et leur concordance sont contrôlées
-lors du test d'installation isolé. Les archives n'incluent aucun document privé
-ni environnement virtuel.
-
-La CI exécute la suite sous Linux avec Python 3.12 et 3.13. Son résultat distant
-reste consultable dans l'onglet Actions du dépôt et doit être vérifié pour le
-commit distribué ; ce tableau rapporte les résultats locaux ci-dessus.
-
-## Non démontré par cette version
-
-- Validité juridique générale, revue humaine indépendante ou gain chiffré face au modèle seul.
-- Campagne comparative des 40 situations, qualification métier de tous les modules.
-- Succès des endpoints avec une application PISTE réelle, disponibilité future des fournisseurs.
-- Exhaustivité nationale des décisions, indexation XML, extraction OCR ou PDF.
-- Installation et comportement dans chaque client final, service distant multiutilisateur.
-
-Voir le [plan de qualification](development-plan.md) pour les étapes restantes.
+La CI Linux Python 3.12/3.13 et la distribution doivent être contrôlées sur le
+commit publié. Voir les résultats Actions et les artefacts de la release.

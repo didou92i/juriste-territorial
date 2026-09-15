@@ -26,7 +26,11 @@ flowchart LR
 | `evidence.py` | Preuves émises par le serveur, empreintes et contrôles de citations |
 | `local.py` | Import opérateur et lecture cloisonnée de textes privés |
 | `rules.py` + `registry/` | Tests monétaires bornés et registre des capacités |
-| `server.py` | 11 outils MCP, ressources de méthode/sources et prompt d'analyse |
+| `dossier.py` | Contrôle des références, conditions, moyens et lectures de décisions |
+| `archive.py` | Captures privées persistantes et notes immuables au niveau de l’API |
+| `admin.py` | Import XML officiel borné et index lexical CE/CAA/TA |
+| `evaluation.py` | Comparabilité des exécutions et contrôle des relectures déclarées |
+| `server.py` | 14 outils MCP, ressources de méthode/sources et prompt d'analyse |
 
 Le wheel embarque le même skill et le registre ; l'archive de skill est générée
 à partir du même répertoire. Aucun noyau spécifique à un client n'est maintenu.

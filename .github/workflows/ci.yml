@@ -22,5 +22,7 @@ jobs:
       - run: uv run --frozen ruff format --check .
       - run: uv run --frozen pytest
       - run: uv run --frozen python scripts/check_distribution.py
+      - run: uv run --frozen python scripts/evaluate_benchmark.py
+      - run: uv run --frozen droit-territorial case-schema > /tmp/dossier-schema.json
       - run: uv build
       - run: uv run --frozen python scripts/package_skill.py

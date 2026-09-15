@@ -28,3 +28,12 @@ mauvaise foi de l'autorité. Analyser les éléments d'inégalité allégués.
 **Sortie** : fondement, conditions, décision/justification à obtenir, projet de
 courrier proportionné et prochaine démarche. Aucune promesse de victoire ni
 affirmation d'un droit automatique à partir du seul mandat déclaré.
+
+## Dispositif décidé par un syndicat
+
+Identifier la personne morale, ses statuts, l’organe habilité, la délégation éventuelle
+et le financement. Une aide syndicale privée appelle cette analyse propre ;
+ne pas lui appliquer mécaniquement la chaîne de décision de la collectivité.
+Comparer la décision annoncée, les signatures constatées, les conditions d’adhésion
+et les pièces réellement disponibles. Pour une règle liée à un scrutin futur,
+vérifier aussi sa portée « en vue » du scrutin et les dispositions transitoires.

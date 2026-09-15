@@ -3,7 +3,7 @@ name: juriste-territorial
 description: Analyser une question juridique territoriale, articuler textes et actes locaux, examiner les arguments contraires et préparer notes, actes ou recours pour communes, EPCI et établissements publics locaux. Utiliser pour compétences, FPT, dialogue social, commande publique, police, services publics et contentieux administratif.
 license: CC-BY-SA-4.0
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
   method_reviewed_at: "2026-09-15"
   maturity: "experimental"
 ---
@@ -95,6 +95,12 @@ Sans MCP ou sans identifiants API, utiliser les outils web réellement disponibl
 et les sites officiels. Si la source ne peut pas être consultée, marquer précisément
 la référence non vérifiée et poursuivre ce qui peut être établi. Ne jamais simuler
 une recherche ni attribuer à une panne le sens « il n'existe aucun texte ».
+
+Pour les dossiers complexes, lire [dossier et preuves](references/dossier.md),
+puis utiliser `review_case` pour contrôler la justification structurée.
+`compare_evidence` signale les changements entre deux captures conservées.
+Pour le juge administratif, suivre [la fiche de lecture](references/jurisprudence.md) ;
+`search_admin_archive` recherche les lots officiels CE/CAA/TA importés par l’opérateur.
 
 ## Restitution
 

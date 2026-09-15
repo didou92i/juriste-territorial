@@ -1,4 +1,4 @@
-# Contrat MCP 0.1.0
+# Contrat MCP 0.2.0
 
 Les noms ci-dessous existent dans ce serveur ; vérifier leur présence dans le
 client connecté. Les préfixes du client peuvent modifier le nom affiché.
@@ -15,6 +15,9 @@ client connecté. Les préfixes du client peuvent modifier le nom affiché.
 | `resolve_references` | `source_ref`, `as_of_date`, `depth_limit` | Références explicites, profondeur 2 et 12 documents au maximum |
 | `search_local_acts` | `query`, `case_id`, `as_of_date`, `offset` | Identité configurée par l'opérateur, textes importés seulement |
 | `check_evidence` | `claims` | Une citation retrouvée ne prouve pas la déduction |
+| `review_case` | `dossier` (schéma structuré) | Contrôle technique de la justification, pas validation du raisonnement |
+| `compare_evidence` | `before_id`, `after_id` | Même document ; effet juridique à examiner |
+| `search_admin_archive` | `query`, `courts`, `date_start`, `date_end`, `offset` | Sous-ensemble XML importé ; filtres CE/CAA/TA et couverture explicite |
 | `evaluate_rule` | `rule_id`, `facts`, `as_of_date` | Deux tests monétaires ; aucun délai contentieux général |
 
 Types de recherche : `codes`, `legislation`, `jorf`, `case_law`,
@@ -24,7 +27,7 @@ Le fonds constitutionnel est disponible en découverte ; sa consultation API
 spécialisée n'est pas livrée. Consulter la page officielle pour son texte.
 
 Références de consultation : `legifrance:IDENTIFIANT`, `judilibre:IDENTIFIANT`,
-`web:URL_HTTPS_OFFICIELLE`, `local:IDENTIFIANT`, `evidence:IDENTIFIANT`.
+`web:URL_HTTPS_OFFICIELLE`, `local:IDENTIFIANT`, `admin:NOM_FICHIER_XML`, `evidence:IDENTIFIANT`.
 Les deux premières doivent être confirmées dans la réponse du fournisseur.
 La voie web ne permet que les domaines officiels déclarés et ne garantit pas
 la complétude de l'extraction HTML. Elle n'est pas un moteur de recherche web.
@@ -32,7 +35,8 @@ la complétude de l'extraction HTML. Elle n'est pas un moteur de recherche web.
 Après `fetch`, une preuve reçoit un identifiant émis par le serveur, l'empreinte
 du texte complet récupéré, sa provenance et ses dates. La mémoire de preuves
 est limitée à 32 documents et 30 minutes ; une preuve expirée doit être récupérée
-de nouveau. Conserver les sorties d'outils dans le dossier de travail si nécessaire.
+de nouveau. Avec `JT_EVIDENCE_DB` et `JT_PRINCIPAL`, une archive privée facultative conserve
+les preuves au-delà de cette limite en stdio. Les retraits restent contrôlés.
 
 `check_evidence` reçoit une liste d'objets : `claim_id`, `statement`, `evidence_id`,
 `quote`, `as_of_date` facultative, `fact_ids` facultatifs. Il contrôle la présence
@@ -48,8 +52,9 @@ Faits nécessaires : `buyer_type=other_contracting_authority`,
 `as_of_date` doit correspondre à ce fait générateur. Le résultat ne choisit pas
 la procédure et ne dispense pas des autres conditions ni d'une revalidation.
 
-Pas d'index XML administratif, de moteur vectoriel, d'OCR ni de service HTTP
-partagé dans cette version. Pour ArianeWeb/open data, utiliser la recherche web
-du client et consulter les pages officielles. Le HTTP fourni se limite à la
+L’index administratif local exige un import opérateur de lots officiels. Il
+n’est pas national ni automatiquement actualisé. Pas de moteur vectoriel, d’OCR
+ou de service HTTP partagé. Pour compléter le corpus, utiliser les pages
+officielles et la recherche web du client. Le HTTP fourni se limite à la
 boucle locale, sans accès aux pièces privées. Une intégration distante exige
 un déploiement et une authentification propres, non inclus ici.

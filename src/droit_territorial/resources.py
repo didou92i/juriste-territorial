@@ -23,7 +23,7 @@ def methodology(topic: str = "core", output_mode: str = "note") -> dict:
         raise SourceError("invalid_input", "Unknown output mode")
     return {
         "status": "ok",
-        "method_version": "0.1.0",
+        "method_version": "0.2.0",
         "maturity": "experimental",
         "topic": topic,
         "available_topics": list(topics),

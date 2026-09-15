@@ -36,6 +36,22 @@ async def test_all_declared_tools_are_callable_and_read_only(service):
         },
         "search_local_acts": {"query": "test", "case_id": "c"},
         "get_source_status": {},
+        "search_admin_archive": {"query": "test", "courts": ["TA"]},
+        "compare_evidence": {"before_id": "absent", "after_id": "absent"},
+        "review_case": {
+            "dossier": {
+                "context": {
+                    "case_id": "c",
+                    "objective": "test",
+                    "entity_type": "commune",
+                    "actor_capacity": "maire",
+                    "as_of_date": "2026-09-15",
+                },
+                "knowledge_cutoff": "2026-09-15T10:00:00Z",
+                "qualifications": ["test"],
+                "conclusion": "Non établi",
+            }
+        },
         "get_methodology": {"topic": "fpt"},
         "check_evidence": {
             "claims": [
@@ -64,6 +80,8 @@ async def test_mcp_protocol_stdio_roundtrip():
             "PISTE_CLIENT_SECRET": "",
             "JUDILIBRE_KEY_ID": "",
             "JT_LOCAL_DB": "",
+            "JT_EVIDENCE_DB": "",
+            "JT_ADMIN_DB": "",
             "JT_PRINCIPAL": "",
         },
     )
@@ -77,7 +95,7 @@ async def test_mcp_protocol_stdio_roundtrip():
         method = await session.call_tool(
             "get_methodology", {"topic": "core", "output_mode": "short"}
         )
-        assert not method.is_error and method.structured_content["method_version"] == "0.1.0"
+        assert not method.is_error and method.structured_content["method_version"] == "0.2.0"
         assert method.structured_content["text"]
         resource = await session.read_resource("juriste://methodology/core")
         assert resource.contents[0].text == method.structured_content["text"]
