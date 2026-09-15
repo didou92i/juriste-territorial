@@ -3,7 +3,7 @@ name: juriste-territorial
 description: Analyser une question juridique territoriale, articuler textes et actes locaux, examiner les arguments contraires et préparer notes, actes ou recours pour communes, EPCI et établissements publics locaux. Utiliser pour compétences, FPT, dialogue social, commande publique, police, services publics et contentieux administratif.
 license: CC-BY-SA-4.0
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
   method_reviewed_at: "2026-09-15"
   maturity: "experimental"
 ---
@@ -79,6 +79,13 @@ Leurs points d'entrée documentaires doivent être relus dans leur version appli
 Avec le MCP `droit-territorial`, commencer par `get_source_status` et, si nécessaire,
 `get_methodology`. Le nom exposé peut porter le préfixe du client. Voir le
 [contrat MCP](references/outils.md) pour les paramètres et limites.
+
+Au premier échange, lire le bloc `setup` et proposer brièvement
+[l'activation des sources](references/installation.md) si les accès utiles manquent.
+Ne jamais demander de secret dans la conversation ni les arguments d'un outil.
+Continuer avec les capacités disponibles ; ne pas répéter ce rappel à chaque appel.
+Des clés présentes ne prouvent pas une connexion : `probe=true` permet un diagnostic
+réel explicitement demandé, avec consommation du quota de la source.
 
 - `search` recherche séparément codes, textes, JORF et jurisprudence ;
   `search_case_law` exige l'ordre juridique. JudiLibre ne couvre pas le juge administratif.

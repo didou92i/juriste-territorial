@@ -95,7 +95,7 @@ async def test_mcp_protocol_stdio_roundtrip():
         method = await session.call_tool(
             "get_methodology", {"topic": "core", "output_mode": "short"}
         )
-        assert not method.is_error and method.structured_content["method_version"] == "0.2.0"
+        assert not method.is_error and method.structured_content["method_version"] == "0.3.0"
         assert method.structured_content["text"]
         resource = await session.read_resource("juriste://methodology/core")
         assert resource.contents[0].text == method.structured_content["text"]

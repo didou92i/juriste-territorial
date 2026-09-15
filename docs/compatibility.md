@@ -18,9 +18,9 @@ Prérequis : Python 3.12 ou plus et `uv`.
 ```bash
 git clone https://github.com/didou92i/juriste-territorial.git
 cd juriste-territorial
-uv sync --frozen
-uv run --frozen droit-territorial status
-uv run --frozen droit-territorial serve
+uv sync --frozen --extra credentials
+uv run --frozen --extra credentials droit-territorial status
+uv run --frozen --extra credentials droit-territorial serve
 ```
 
 Pour le client MCP, employer un chemin absolu vers `uv` si son environnement
@@ -31,7 +31,8 @@ ne connaît pas votre PATH. Exemple générique à adapter au client :
   "mcpServers": {
     "droit-territorial": {
       "command": "uv",
-      "args": ["--directory", "/CHEMIN/ABSOLU/juriste-territorial", "run", "--frozen", "droit-territorial", "serve"]
+      "args": ["--directory", "/CHEMIN/ABSOLU/juriste-territorial", "run", "--frozen", "--extra", "credentials", "droit-territorial", "serve"],
+      "env": {"JT_CREDENTIAL_STORE": "keyring", "PISTE_ENV": "production"}
     }
   }
 }
@@ -41,9 +42,38 @@ Les valeurs `/CHEMIN/ABSOLU/…` sont des emplacements à remplacer, pas des
 configurations installées. Le format exact d'enregistrement dépend du client.
 Le serveur publie les annotations de lecture seule et les capacités effectives.
 
+### Enregistrer dans Codex
+
+Après installation des dépendances, depuis la racine du dépôt, sur macOS/Linux :
+
+```bash
+codex mcp add droit-territorial --env JT_CREDENTIAL_STORE=keyring --env PISTE_ENV=production -- "$PWD/.venv/bin/python" -m droit_territorial.cli serve
+```
+
+Sous Windows, employer le chemin absolu vers `.venv\Scripts\python.exe`.
+Ne placer aucun secret dans `--env` ; les deux valeurs ci-dessus ne sont pas secrètes.
+Ouvrir une nouvelle session Codex si nécessaire, puis appeler `get_source_status`.
+Le client doit exposer les 14 outils. Le skill s'installe séparément comme indiqué plus haut.
+Pour Claude Desktop ou un autre client stdio, adapter le JSON générique ci-dessus.
+Ces exemples ne garantissent pas la compatibilité de toutes les versions des clients.
+
 ## Accès aux API
 
-L'opérateur fournit à l'environnement du processus :
+**Commencer par le [guide d'activation des sources](../skills/juriste-territorial/references/installation.md).**
+Au premier usage, le MCP fournit ce guide et les accès manquants dans `get_source_status`.
+Le skill et les instructions du serveur demandent à l'assistant de les présenter brièvement.
+
+```bash
+uv run --frozen --extra credentials droit-territorial configure piste
+JT_CREDENTIAL_STORE=keyring uv run --frozen --extra credentials droit-territorial doctor --probe
+```
+
+La saisie masquée écrit dans le trousseau système et confirme l'enregistrement.
+Le diagnostic suivant réalise une recherche publique puis une lecture. Le statut
+sans `--probe` ne contacte pas les API. Redémarrer le MCP après modification des clés.
+
+Sur un hébergement sans trousseau, l'opérateur fournit via son gestionnaire de secrets
+à l'environnement du processus (`JT_CREDENTIAL_STORE=environment`, option par défaut) :
 
 - `PISTE_CLIENT_ID`, `PISTE_CLIENT_SECRET` pour Légifrance ;
 - `JUDILIBRE_KEY_ID` ou les accès OAuth de l'application abonnée à JudiLibre ;
@@ -61,7 +91,7 @@ de pages officielles restent disponibles ; les recherches API annoncent
 ## HTTP local
 
 ```bash
-uv run --frozen droit-territorial serve --transport streamable-http --port 8765
+uv run --frozen --extra credentials droit-territorial serve --transport streamable-http --port 8765
 ```
 
 Adresse : `http://127.0.0.1:8765/mcp`. Le serveur reste lié à la boucle locale,

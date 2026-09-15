@@ -89,6 +89,13 @@ Les clés sont fournies à l’environnement du processus. Le programme ne charg
 
 ## Vérifier votre installation
 
+Le [parcours d'activation](../skills/juriste-territorial/references/installation.md)
+est distribué avec le skill et accessible via `get_methodology(topic="installation")`.
+`get_source_status` donne les accès manquants sans secret et sans appel API implicite.
+Avec `probe=true`, il réalise une recherche publique et consulte un résultat pour
+l'API choisie. Les clés peuvent provenir de l'environnement ou, sur activation
+explicite, du trousseau système. Un redémarrage du MCP recharge les clés modifiées.
+
 - Lancer `droit-territorial status` pour voir la configuration reconnue.
 - Dans le client, appeler `get_source_status` et vérifier la présence des 14 outils.
 - Rechercher une référence connue, la consulter et lire toutes les pages utiles.

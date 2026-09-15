@@ -5,7 +5,7 @@ client connecté. Les préfixes du client peuvent modifier le nom affiché.
 
 | Outil | Paramètres essentiels | Limite déterminante |
 |---|---|---|
-| `get_source_status` | `source_id` facultatif | Configuration et derniers appels ; pas test réseau implicite |
+| `get_source_status` | `source_id`, `probe=false` facultatifs | Configuration, accès manquants et guide ; `probe=true` teste explicitement recherche et lecture d'une API |
 | `get_methodology` | `topic=core`, `output_mode=note` | Liste les sujets ; méthode expérimentale |
 | `search` | `query`, `as_of_date`, `source_types`, `legal_order`, `cursor` | Date obligatoire pour codes/textes consolidés ; résultats de découverte |
 | `fetch` | `source_ref`, `as_of_date`, `offset`, `length` | `evidence:` et `next_offset` pour la suite du même document |

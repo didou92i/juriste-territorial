@@ -11,7 +11,7 @@
 Pensé pour les juristes, directions générales, services RH et agents des collectivités, **Juriste territorial** associe une méthode de raisonnement, **11 domaines métier** et un **serveur MCP de 14 outils** pour rechercher, consulter et contrôler les éléments d’un dossier.
 
 <p align="center">
-  <a href="https://github.com/didou92i/juriste-territorial/releases/download/v0.2.0/juriste-territorial-0.2.0.zip"><strong>Télécharger le skill</strong></a>
+  <a href="https://github.com/didou92i/juriste-territorial/releases/download/v0.3.0/juriste-territorial-0.3.0.zip"><strong>Télécharger le skill</strong></a>
   &nbsp; · &nbsp;
   <a href="#installer-le-mcp"><strong>Installer le MCP</strong></a>
   &nbsp; · &nbsp;
@@ -147,7 +147,7 @@ Les portails de référence et capacités détaillées figurent dans le [registr
 
 ### Utiliser le skill
 
-1. **[Télécharger le ZIP du skill](https://github.com/didou92i/juriste-territorial/releases/download/v0.2.0/juriste-territorial-0.2.0.zip).**
+1. **[Télécharger le ZIP du skill](https://github.com/didou92i/juriste-territorial/releases/download/v0.3.0/juriste-territorial-0.3.0.zip).**
 2. Décompresser le dossier `juriste-territorial` dans le répertoire de skills de votre client compatible.
 3. Ouvrir une nouvelle session, vérifier que le skill est disponible et lui soumettre un premier dossier.
 
@@ -172,22 +172,40 @@ Avec **Python 3.12+ et `uv`** :
 ```bash
 git clone https://github.com/didou92i/juriste-territorial.git
 cd juriste-territorial
-uv sync --frozen
-uv run --frozen droit-territorial status
-uv run --frozen droit-territorial serve
+uv sync --frozen --extra credentials
+uv run --frozen --extra credentials droit-territorial status
+uv run --frozen --extra credentials droit-territorial serve
 ```
 
 Enregistrer ensuite le serveur dans votre client avec la [configuration documentée](docs/compatibility.md). Lancer le serveur en terminal ne l’ajoute pas automatiquement à votre assistant.
 
+### Vos accès, guidés dès le premier échange
+
+Le MCP indique les sources disponibles et les identifiants manquants. L'assistant
+vous guide pour activer **Légifrance avec votre propre application PISTE** ; JudiLibre
+reste facultatif. La méthode et les index configurés restent utilisables sans ces clés.
+
+```bash
+uv run --frozen --extra credentials droit-territorial configure piste
+JT_CREDENTIAL_STORE=keyring uv run --frozen --extra credentials droit-territorial doctor --probe
+```
+
+**Saisie masquée, stockage dans le trousseau système, aucun secret dans le chat.**
+Le diagnostic distingue identifiants présents, recherche et lecture réussies, refus
+d'accès, quota atteint et résultat vide. Sur un hébergement, les variables sont
+fournies par votre gestionnaire de secrets.
+
+→ [Activer Légifrance et les autres sources](skills/juriste-territorial/references/installation.md)
+
 Le mode **stdio local** permet un usage individuel avec pièces privées configurées. Le transport HTTP fourni est limité à `127.0.0.1` et désactive les magasins locaux. Une connexion distante à une application nécessite un déploiement et une authentification adaptés.
 
-→ [Installation, accès API et compatibilité](docs/compatibility.md) · [Toutes les archives de la distribution](https://github.com/didou92i/juriste-territorial/releases/tag/v0.2.0)
+→ [Installation, accès API et compatibilité](docs/compatibility.md) · [Toutes les archives de la distribution](https://github.com/didou92i/juriste-territorial/releases/tag/v0.3.0)
 
 ## Une confiance fondée sur des éléments vérifiables
 
 | Ce qui est vérifié | Ce que cela démontre |
 |---|---|
-| **122 tests réussis, 1 ignoré** dans la validation publiée | Fonctionnement technique des contrats, règles bornées, accès, preuves et protocoles testés |
+| **145 tests réussis, 1 ignoré** dans la validation publiée | Fonctionnement technique des contrats, règles bornées, accès, preuves et protocoles testés |
 | **MCP stdio et HTTP local** avec un client SDK réel | Initialisation, découverte et appels des outils, ressources et prompt |
 | **522 décisions administratives importées** | Lecture de trois lots officiels et conservation des métadonnées ; trois consultations détaillées vérifiées |
 | **Six dossiers fictifs de développement** et essais distincts par agent | Matériel de recette et premiers comportements observés |
@@ -234,4 +252,4 @@ uv run --frozen python scripts/package_skill.py
 
 **Code sous MIT · Méthode et documentation sous CC BY-SA 4.0.** Méthode adaptée avec attribution à @brissonjo-sudo ; détail des reprises dans [NOTICE.md](NOTICE.md), [THIRD_PARTY.yml](THIRD_PARTY.yml) et la [revue des dépôts sources](docs/source-review.md).
 
-[Commencer avec le skill](https://github.com/didou92i/juriste-territorial/releases/download/v0.2.0/juriste-territorial-0.2.0.zip) · [Explorer les nouveautés](docs/release-0.2.0.md) · [Consulter les licences](LICENSE.md)
+[Commencer avec le skill](https://github.com/didou92i/juriste-territorial/releases/download/v0.3.0/juriste-territorial-0.3.0.zip) · [Explorer les nouveautés](docs/release-0.3.0.md) · [Consulter les licences](LICENSE.md)
