@@ -17,6 +17,7 @@ from .local import LocalReader
 from .models import ClaimInput, LegalOrder, SourceError
 from .resources import data_path
 from .runtime import Settings, Transport
+from .setup import setup_status
 from .sources import OfficialSources
 
 
@@ -74,10 +75,11 @@ class Service:
             row["last_collection"] = None
             if row.get("imported_coverage", {}).get("batches"):
                 row["last_collection"] = row["imported_coverage"]["batches"][-1]["imported_at"]
-            row["software_version"] = "0.2.0"
+            row["software_version"] = "0.3.0"
         return {
             "status": "ok",
             "evidence_storage": "private_persistent" if self.archive else "ephemeral",
+            "setup": setup_status(self.settings),
             "sources": [r for r in rows if not source_id or r["id"] == source_id],
             "scope": "Configuration and observed operations, not a current uptime or legal freshness guarantee",
         }

@@ -3,6 +3,7 @@ import asyncio
 import json
 from pathlib import Path
 
+from .credentials import configure
 from .dossier import Dossier
 from .local import import_document, withdraw_document
 from .models import SourceError
@@ -10,6 +11,7 @@ from .resources import methodology
 from .runtime import Settings
 from .server import build_server
 from .service import Service
+from .setup import probe_connection
 
 
 def main():
@@ -21,6 +23,16 @@ def main():
     commands.add_parser(
         "status", help="Show capabilities and configuration without exposing secrets"
     )
+    setup = commands.add_parser(
+        "configure", help="Store credentials in the OS keyring (hidden local input)"
+    )
+    setup.add_argument("provider", choices=["piste", "judilibre"])
+    setup.add_argument("--environment", choices=["production", "sandbox"], default="production")
+    doctor = commands.add_parser("doctor", help="Safe setup report; opt-in real API diagnosis")
+    doctor.add_argument(
+        "--probe", action="store_true", help="Run one public search and fetch (provider quota)"
+    )
+    doctor.add_argument("--source", choices=["legifrance", "judilibre"], default="legifrance")
     method = commands.add_parser("methodology")
     method.add_argument("topic", nargs="?", default="core")
     ingest = commands.add_parser(
@@ -45,7 +57,19 @@ def main():
     admin_withdraw.add_argument("id")
     admin_withdraw.add_argument("--db", required=True)
     args = parser.parse_args()
-    if args.command == "serve":
+    if args.command == "configure":
+        try:
+            print(
+                json.dumps(configure(args.provider, args.environment), ensure_ascii=False, indent=2)
+            )
+        except SourceError as exc:
+            print(
+                json.dumps(
+                    {"status": "error", "error": exc.problem.model_dump()}, ensure_ascii=False
+                )
+            )
+            raise SystemExit(1) from None
+    elif args.command == "serve":
         settings = Settings.from_env()
         if args.transport == "streamable-http":
             # Pilot HTTP is loopback only. Private documents require isolated stdio processes.
@@ -60,12 +84,19 @@ def main():
             server.run()
         else:
             server.run(transport="streamable-http", host="127.0.0.1", port=args.port)
-    elif args.command == "status":
+    elif args.command in {"status", "doctor"}:
 
         async def status():
             service = Service()
             try:
-                print(json.dumps(service.source_status(), ensure_ascii=False, indent=2))
+                value = service.source_status()
+                failed = False
+                if args.command == "doctor" and args.probe:
+                    value["connection_test"] = await probe_connection(service, args.source)
+                    failed = value["connection_test"]["state"] != "verified_search_and_fetch"
+                print(json.dumps(value, ensure_ascii=False, indent=2))
+                if failed:
+                    raise SystemExit(1)
             finally:
                 await service.close()
 
