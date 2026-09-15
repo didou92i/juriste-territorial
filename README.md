@@ -22,7 +22,7 @@ Pensé pour les juristes, directions générales, services RH et agents des coll
   <a href="https://github.com/didou92i/juriste-territorial/actions/workflows/ci.yml"><img src="https://github.com/didou92i/juriste-territorial/actions/workflows/ci.yml/badge.svg?branch=main" alt="État des tests et de la distribution"></a>
 </p>
 
-[La méthode](#une-méthode-pour-construire-votre-position) · [Les domaines](#le-droit-des-collectivités-au-centre) · [Les connexions](#quelles-sources-sont-consultées) · [Les garanties et limites](#une-confiance-fondée-sur-des-éléments-vérifiables)
+[La méthode](#une-méthode-pour-construire-votre-position) · [Les domaines](#le-droit-des-collectivités-au-centre) · [Les connexions](#les-sources-consultées) · [Les garanties et limites](#une-confiance-fondée-sur-des-éléments-vérifiables)
 
 ## Ce que vous pouvez lui confier
 
@@ -124,7 +124,7 @@ Le contrat de chaque outil précise ses entrées et ses limites. Les contrôles 
 
 → [Consulter le contrat MCP](skills/juriste-territorial/references/outils.md)
 
-## Quelles sources sont consultées ?
+## Les sources consultées
 
 **Le mécanisme de chaque connexion et son état sont explicités ci-dessous.** Un adaptateur livré doit être distingué d’un accès effectivement configuré et testé sur votre poste.
 
