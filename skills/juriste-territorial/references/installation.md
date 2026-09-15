@@ -23,6 +23,7 @@ de saisie à distance et ne garantit pas le comportement du modèle.
 | Jurisprudence judiciaire JudiLibre (facultatif) | `JUDILIBRE_KEY_ID` ou application OAuth abonnée à JudiLibre |
 | Index administratif CE/CAA/TA | Aucune clé ; importer les lots et définir `JT_ADMIN_DB` |
 | Méthode et lecture de pages officielles autorisées | Aucune clé API |
+| Données territoriales data.gouv.fr (facultatif) | Connecteur distinct dans le client ; aucune clé PISTE |
 
 Sur [PISTE](https://piste.gouv.fr/), créer une application, sélectionner l'API
 Légifrance et accepter ses CGU. Récupérer le couple d'identifiants OAuth dans
@@ -78,7 +79,29 @@ un service MCP distant sécurisé prêt à exposer. Le HTTP livré reste sur
 `127.0.0.1`, sans magasins locaux ; un service distant exige HTTPS, authentification
 et isolation adaptées.
 
-## Confirmer la connexion
+## Ajouter data.gouv.fr selon vos besoins
+
+Vérifier d'abord si le client expose déjà une application ou des outils data.gouv.fr.
+Si une recherche fonctionne, utiliser cette connexion. Sinon, le
+[serveur officiel](https://github.com/datagouv/datagouv-mcp) propose l'adresse
+`https://mcp.data.gouv.fr/mcp` en HTTP Streamable, sans clé API selon sa documentation.
+Dans Codex, si aucune connexion équivalente n'est déjà installée :
+
+```bash
+codex mcp add datagouv --url https://mcp.data.gouv.fr/mcp
+```
+
+Dans un autre client compatible, ajouter cette URL comme serveur distant selon
+son format de configuration. Recharger les outils ou ouvrir une nouvelle session
+si nécessaire. Vérifier ensuite une recherche, la fiche du jeu, la liste des
+ressources et la lecture de quelques lignes d'un fichier pris en charge.
+
+Ce connecteur est facultatif et distinct des 14 outils de `droit-territorial`.
+Le client coordonne les appels ; `get_source_status` ne mesure pas sa connexion.
+Le téléchargement du skill ne l'installe pas automatiquement. Suivre la méthode
+[données publiques](donnees-publiques.md) pour les producteurs, dates et limites.
+
+## Confirmer la connexion juridique
 
 Dans le client : `get_source_status(source_id="legifrance", probe=true)`.
 Le diagnostic lance une recherche publique prédéfinie et consulte un

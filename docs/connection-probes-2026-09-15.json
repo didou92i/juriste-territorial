@@ -1,0 +1,41 @@
+{
+  "scope": "Diagnostics ponctuels sur une installation, hors validation juridique ou historique complète.",
+  "checks": [
+    {
+      "provider": "legifrance",
+      "at": "2026-09-15T15:09:04.318778+00:00",
+      "environment": "production",
+      "checks": [
+        {
+          "operation": "search",
+          "status": "ok",
+          "count": 30
+        },
+        {
+          "operation": "fetch",
+          "status": "ok"
+        }
+      ],
+      "scope": "Recherche et lecture ponctuelles ; ni validation juridique ni recette historique complète",
+      "state": "verified_search_and_fetch"
+    },
+    {
+      "provider": "judilibre",
+      "at": "2026-09-15T15:25:05.251812+00:00",
+      "environment": "production",
+      "checks": [
+        {
+          "operation": "search",
+          "status": "ok",
+          "count": 10
+        },
+        {
+          "operation": "fetch",
+          "status": "ok"
+        }
+      ],
+      "scope": "Recherche et lecture ponctuelles ; ni validation juridique ni recette historique complète",
+      "state": "verified_search_and_fetch"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ name: juriste-territorial
 description: Analyser une question juridique territoriale, articuler textes et actes locaux, examiner les arguments contraires et préparer notes, actes ou recours pour communes, EPCI et établissements publics locaux. Utiliser pour compétences, FPT, dialogue social, commande publique, police, services publics et contentieux administratif.
 license: CC-BY-SA-4.0
 metadata:
-  version: "0.3.0"
+  version: "0.3.1"
   method_reviewed_at: "2026-09-15"
   maturity: "experimental"
 ---
@@ -97,6 +97,13 @@ réel explicitement demandé, avec consommation du quota de la source.
   ni la pertinence d'une règle ni la validité juridique de la conclusion.
 - `search_local_acts` concerne les seuls dossiers autorisés par l'opérateur.
 - `evaluate_rule` accepte seulement les règles bornées du registre.
+
+Pour un fait territorial à vérifier (finances, marché publié, périmètre d'un EPCI),
+utiliser le connecteur data.gouv.fr **s'il est disponible dans le client** et lire
+[données publiques](references/donnees-publiques.md). Il complète les sources
+juridiques : contrôler producteur, millésime, identifiants et couverture avant
+d'appliquer une règle. Ne pas l'appeler systématiquement pour une question de droit.
+Son état se vérifie par ses propres appels ; `get_source_status` ne le contrôle pas.
 
 Sans MCP ou sans identifiants API, utiliser les outils web réellement disponibles
 et les sites officiels. Si la source ne peut pas être consultée, marquer précisément

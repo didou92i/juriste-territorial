@@ -9,7 +9,7 @@ SOURCE = ROOT / "skills" / "juriste-territorial"
 
 
 def main():
-    output = ROOT / "dist" / "juriste-territorial-0.3.0.zip"
+    output = ROOT / "dist" / "juriste-territorial-0.3.1.zip"
     output.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as archive:
         for file in sorted(SOURCE.rglob("*")):

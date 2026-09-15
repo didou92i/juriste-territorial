@@ -88,6 +88,17 @@ Sans identifiants : méthode, règles bornées, pièces privées configurées et
 de pages officielles restent disponibles ; les recherches API annoncent
 `credentials_missing`. Le client peut employer sa recherche web officielle.
 
+## data.gouv.fr, connecteur facultatif du client
+
+Une application data.gouv.fr déjà fonctionnelle peut être utilisée directement.
+Pour un client sans connexion équivalente, suivre
+[l'activation du MCP officiel](../skills/juriste-territorial/references/installation.md#ajouter-datagouvfr-selon-vos-besoins).
+Dans Codex : `codex mcp add datagouv --url https://mcp.data.gouv.fr/mcp`.
+
+Le skill guide son usage pour des faits territoriaux. Ce serveur distant n'est pas
+un adaptateur de `droit-territorial` et ne reçoit pas ses identifiants PISTE.
+Vérifier ses appels dans le client, indépendamment de `get_source_status`.
+
 ## HTTP local
 
 ```bash

@@ -10,6 +10,7 @@
 | Le skill `juriste-territorial` | Donner la méthode et les références métier pertinentes | Dans le répertoire de skills du client, ou par les ressources de méthode du MCP |
 | Le MCP `droit-territorial` | Exposer 14 outils de recherche, consultation, preuve et contrôle | Comme serveur MCP dans le client |
 | Les API documentaires | Répondre aux requêtes autorisées | Avec les accès et abonnements requis pour les sources |
+| Le connecteur data.gouv.fr, facultatif | Rechercher des jeux de données et consulter leurs ressources | Comme application ou MCP distinct dans le client |
 | Les magasins locaux | Conserver les décisions importées, pièces et captures | Sur votre poste, selon les variables activées |
 
 Le code du serveur ne choisit et n’appelle directement aucun fournisseur de modèle IA. C’est le client qui transmet les demandes et exploite les résultats. L’installation doit être testée dans ce client : la présence d’un fichier de configuration ne prouve pas qu’un outil est effectivement utilisé.
@@ -22,7 +23,7 @@ L’adaptateur traite séparément les fonds : codes, législation, JORF, jurisp
 
 - Accès : `PISTE_CLIENT_ID` et `PISTE_CLIENT_SECRET`, application autorisée pour l’API.
 - Environnement : `PISTE_ENV=production` ou `sandbox`, avec les identifiants correspondants.
-- État de la livraison : contrats simulés testés ; [sondes authentifiées non exécutées faute d’accès](piste-probes-0.2.0.json).
+- État de la livraison : contrats simulés testés ; [recherche et lecture authentifiées réussies le 15 septembre 2026](connection-probes-2026-09-15.json). Le rapport v0.2.0 conserve son état historique ; la recette complète des versions historiques et incidents reste à poursuivre.
 - Limite : la découverte constitutionnelle n’inclut pas une consultation API spécialisée ; la page officielle reste nécessaire.
 
 [Documentation référencée par le projet](https://www.legifrance.gouv.fr/contenu/pied-de-page/foire-aux-questions-api).
@@ -48,10 +49,35 @@ Le skill peut guider une recherche sur [ArianeWeb](https://www.conseil-etat.fr/a
 L’adaptateur recherche et consulte la jurisprudence de l’ordre judiciaire, avec une gestion de la taxonomie des juridictions.
 
 - Accès : `JUDILIBRE_KEY_ID`, ou les accès OAuth de l’application abonnée à l’API.
-- État de la livraison : contrats simulés testés ; recette authentifiée encore à exécuter.
+- État de la livraison : contrats simulés testés ; [recherche et lecture authentifiées réussies le 15 septembre 2026](connection-probes-2026-09-15.json) sur une installation.
 - Usage : traiter les questions relevant du juge judiciaire, selon la qualification du dossier.
 
 [Contrat officiel référencé](https://github.com/Cour-de-cassation/judilibre-search/blob/dev/public/JUDILIBRE-public.json).
+
+### data.gouv.fr : compléter les faits du dossier
+
+Le client peut appeler le [MCP officiel data.gouv.fr](https://github.com/datagouv/datagouv-mcp)
+ou une application data.gouv.fr déjà disponible. Cette connexion est indépendante
+des 14 outils juridiques et n'est pas installée par le simple téléchargement du skill.
+L'adresse officielle est `https://mcp.data.gouv.fr/mcp`, sans clé selon la documentation
+du fournisseur. Les API tierces référencées dans le catalogue conservent leurs
+propres conditions d'accès ; leur découverte ne les connecte pas automatiquement.
+
+Usages ciblés : comptes locaux, marchés publiés, intercommunalités. Le skill vérifie
+le producteur, le millésime et le périmètre, puis rapproche les données des textes
+et pièces du dossier. Chaque publication doit être qualifiée, même sur ce portail.
+
+Le 15 septembre 2026, l'application disponible dans Codex a permis des recherches,
+lectures de fiches et listes de ressources, puis la lecture de deux lignes BANATIC.
+Le fichier de comptes communaux sélectionné était absent de l'API tabulaire.
+[La recette](validation-datagouv.md) détaille ces résultats et leurs limites.
+
+Les résultats externes ne reçoivent pas automatiquement les identifiants de preuve
+ni l'archivage de `droit-territorial`. Leur état ne figure pas dans `get_source_status`.
+La note doit conserver les références de la ressource et les paramètres consultés.
+
+[Activer le connecteur](compatibility.md#datagouvfr-connecteur-facultatif-du-client)
+· [Méthode d'exploitation](../skills/juriste-territorial/references/donnees-publiques.md).
 
 ### Pages institutionnelles
 
@@ -77,6 +103,7 @@ Une citation retrouvée dans les conclusions d’une partie ne devient pas un mo
 | Opération | Flux et conservation |
 |---|---|
 | Recherche API | La requête est envoyée au fournisseur officiel ; formuler les recherches sans noms ni données sensibles inutiles. |
+| Recherche data.gouv.fr | La requête et les filtres passent par le connecteur distant ; aucun envoi de pièce privée ou d'identifiant PISTE n'est nécessaire. Les résultats reviennent au client et à son modèle. |
 | Import d’un lot administratif | Le ZIP vient du portail officiel et alimente l’index local configuré. |
 | Import d’une pièce privée | Le texte et ses octets originaux sont enregistrés dans la base locale choisie ; cette commande ne les téléverse pas dans une API juridique. |
 | Consultation par l’assistant | Les extraits et métadonnées sont transmis au client MCP ; leur traitement dépend ensuite du modèle et du fournisseur utilisés. |
