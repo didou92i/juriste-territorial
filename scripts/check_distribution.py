@@ -31,7 +31,7 @@ async def main():
             raise SystemExit("Skill contract contains missing or fictional tools")
     finally:
         await service.close()
-    print("Skill links and all 11 MCP tool declarations verified")
+    print(f"Skill links and all {len(TOOL_NAMES)} MCP tool declarations verified")
 
 
 if __name__ == "__main__":

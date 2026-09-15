@@ -1,4 +1,11 @@
-# Plan finalisé et portée de la version 0.1.0
+# Plan initial et progression
+
+Le tableau ci-dessous décrit la livraison **0.1.0**. L’index administratif,
+l’archive persistante, les dossiers structurés et le contrôleur d’évaluation
+sont désormais livrés en [0.2.0](release-0.2.0.md). Les qualifications PISTE,
+juridiques humaines et sur corpus nouveau restent à obtenir.
+
+## État historique 0.1.0
 
 ## Décision
 

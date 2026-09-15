@@ -41,3 +41,37 @@ global qui évite de traiter les parties pourtant établissables.
 
 L'objectif est une amélioration mesurée de la méthode. Aucun gain chiffré par
 rapport au modèle seul n'est revendiqué pour cette version.
+
+## Exécuter le contrôle de campagne (0.2.0)
+
+`development-cases.jsonl` contient six demandes avec pièces synthétiques complètes.
+Donner au modèle uniquement `prompt` et `pieces` du cas ; garder le
+[guide de relecture](reviewer-guide.md) hors de son contexte.
+
+```bash
+uv run python scripts/evaluate_benchmark.py
+uv run python scripts/evaluate_benchmark.py --runs runs.jsonl --reviews reviews.jsonl
+uv run python scripts/qualify_sources.py
+```
+
+Sans exécutions, la première commande annonce `incomplete`, jamais une réussite.
+Ces scripts n’appellent aucun modèle payant. La dernière sonde peut effectuer
+les appels PISTE si des accès sont déjà fournis à l’environnement.
+
+Les schémas exacts sont `Run` et `Review` dans `src/droit_territorial/evaluation.py`.
+Un `Run` conserve modèle/version, paramètres, outils, budget, date de connaissance,
+répétition, réponse et événements d’outils. Calculer `case_hash` avec
+`fingerprint(cas_complet)` et `response_hash` avec `fingerprint(reponse)` ; cette
+fonction sérialise en JSON canonique avant SHA-256. `method_hash` identifie le
+skill réellement utilisé, par exemple l’empreinte de son ZIP de distribution.
+
+Une campagne compare un modèle/version à la fois, avec le même ensemble d’outils,
+paramètres et budget pour `baseline` et `skill`. `skill_mcp` reste séparé.
+Les pièces changées, avis liés à une autre réponse, paires manquantes ou divergences
+entre relecteurs sont signalés. Les identités et exécutions fournies sont des
+**déclarations de l’opérateur**, pas une preuve d’identité ou un journal signé.
+Une revue par agent ne compte jamais comme revue juridique humaine.
+
+Le [résultat actuel](benchmark-0.2.0.json) constate les six paires manquantes.
+Le [nouvel essai par agent](forward-test-0.2.0.md) explore deux de ces cas ;
+il ne les transforme pas en corpus inconnu ou en benchmark humain.

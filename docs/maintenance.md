@@ -37,3 +37,10 @@ skill et construction de paquet avant diffusion. Mettre à jour les résultats
 effectivement observés dans le rapport de validation, sans convertir un scénario
 non exécuté en succès. En cas de régression, conserver la dernière version
 qualifiée et suspendre explicitement la capacité concernée.
+
+## Opérations ajoutées en 0.2.0
+
+L’[index administratif](admin-index.md) accepte des réimports explicites et un
+retrait par identifiant. L’[archive privée](case-records.md) conserve des états
+anciens ; `compare_evidence` signale un réexamen. Ni cette comparaison ni les
+sondes de qualification ne lancent de veille programmée.

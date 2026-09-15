@@ -1,0 +1,102 @@
+{
+  "at": "2026-09-15T12:00:03.123780+00:00",
+  "status": "sample_technical_chain_passed",
+  "results": [
+    {
+      "level": "CE",
+      "import": {
+        "status": "imported",
+        "archive_hash": "063599dfe8a3fe65af770e2ac160834f352451bbe29bd07d9cf59f4b728cf31b",
+        "url": "https://opendata.justice-administrative.fr/DCE/2021/09/CE_202109.zip",
+        "count": 40,
+        "imported_at": "2026-09-15T12:00:02.131560+00:00"
+      },
+      "query": "436740",
+      "matched_ref": "admin:DCE_436740_20210927.xml",
+      "pages_read": 7,
+      "content_hash": "6fdac7c73f32755addc05e5cb76de0fa1223963845fce910e4e82bd63bd9d865",
+      "original_xml_hash": "21206b889bf59f5b01c34d3907f6ab4ca27fced1c552cf984a71a2388a67d324",
+      "quote_found": true,
+      "legal_validity": "not_assessed"
+    },
+    {
+      "level": "CAA",
+      "import": {
+        "status": "imported",
+        "archive_hash": "3d78eba6916f234227c45aef89ca7eb3292d8ee8976f1e5dc7a33ce6cea3c9d9",
+        "url": "https://opendata.justice-administrative.fr/DCA/2022/03/CAA_202203.zip",
+        "count": 211,
+        "imported_at": "2026-09-15T12:00:02.357103+00:00"
+      },
+      "query": "20NT02444",
+      "matched_ref": "admin:DCA_20NT02444_20220329.xml",
+      "pages_read": 14,
+      "content_hash": "ad9bc2af6e1e5ded9e862a3d3302b651a000525c8ccbd8d514d20ae58928758a",
+      "original_xml_hash": "4298ca8fe935a65936aaf7ac1f601110a5071d1b847deeaa156073aefcc7744b",
+      "quote_found": true,
+      "legal_validity": "not_assessed"
+    },
+    {
+      "level": "TA",
+      "import": {
+        "status": "imported",
+        "archive_hash": "76599eeac316648aa6cd02a4de70ad98e51ffb5032c471872618fae55a8b6774",
+        "url": "https://opendata.justice-administrative.fr/DTA/2022/06/TA_202206.zip",
+        "count": 271,
+        "imported_at": "2026-09-15T12:00:02.685584+00:00"
+      },
+      "query": "1900103",
+      "matched_ref": "admin:DTA_1900103_20220630.xml",
+      "pages_read": 20,
+      "content_hash": "6e6996ca4128ef63d40659cf0c4094837326fc7bdeb07a9550f1cd45d3596d89",
+      "original_xml_hash": "5d63278ba2b23337ec7a045070e47d7d7d3a8ae0fa2730c0cf6182e0061763c9",
+      "quote_found": true,
+      "legal_validity": "not_assessed"
+    }
+  ],
+  "coverage": {
+    "scope": "Imported files only; no inference of national exhaustiveness",
+    "courts": [
+      {
+        "level": "CAA",
+        "count": 211,
+        "earliest_decision": "2022-03-22",
+        "latest_decision": "2022-03-31"
+      },
+      {
+        "level": "CE",
+        "count": 40,
+        "earliest_decision": "2021-09-03",
+        "latest_decision": "2021-09-28"
+      },
+      {
+        "level": "TA",
+        "count": 271,
+        "earliest_decision": "2022-06-30",
+        "latest_decision": "2022-06-30"
+      }
+    ],
+    "batches": [
+      {
+        "hash": "063599dfe8a3fe65af770e2ac160834f352451bbe29bd07d9cf59f4b728cf31b",
+        "url": "https://opendata.justice-administrative.fr/DCE/2021/09/CE_202109.zip",
+        "imported_at": "2026-09-15T12:00:02.131560+00:00",
+        "count": 40
+      },
+      {
+        "hash": "3d78eba6916f234227c45aef89ca7eb3292d8ee8976f1e5dc7a33ce6cea3c9d9",
+        "url": "https://opendata.justice-administrative.fr/DCA/2022/03/CAA_202203.zip",
+        "imported_at": "2026-09-15T12:00:02.357103+00:00",
+        "count": 211
+      },
+      {
+        "hash": "76599eeac316648aa6cd02a4de70ad98e51ffb5032c471872618fae55a8b6774",
+        "url": "https://opendata.justice-administrative.fr/DTA/2022/06/TA_202206.zip",
+        "imported_at": "2026-09-15T12:00:02.685584+00:00",
+        "count": 271
+      }
+    ],
+    "withdrawal_sync": "manual; current provider withdrawals not automatically checked"
+  },
+  "limits": "Three historical lots and three known-decision lookups; no recall, ranking, current-law or legal reasoning benchmark"
+}

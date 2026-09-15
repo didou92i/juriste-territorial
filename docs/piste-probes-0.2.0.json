@@ -1,0 +1,23 @@
+{
+  "at": "2026-09-15T12:00:02.917590+00:00",
+  "piste_environment": "production",
+  "probes": [
+    {
+      "probe": "historical_article",
+      "status": "not_run",
+      "reason": "credentials_missing"
+    },
+    {
+      "probe": "current_article",
+      "status": "not_run",
+      "reason": "credentials_missing"
+    },
+    {
+      "probe": "unlikely_query",
+      "status": "not_run",
+      "reason": "credentials_missing"
+    }
+  ],
+  "outage_handling": "simulated_tests_only",
+  "legal_validation": "not_assessed"
+}

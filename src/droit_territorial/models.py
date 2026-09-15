@@ -68,7 +68,7 @@ class CaseContext(Model):
     entity_type: str
     actor_capacity: str
     as_of_date: date
-    method_version: str = "0.1.0"
+    method_version: str = "0.2.0"
     facts: list[Fact] = Field(default_factory=list, max_length=200)
     event_dates: dict[str, date] = Field(default_factory=dict)
 
@@ -87,6 +87,11 @@ class Document(Model):
     decision_date: date | None = None
     signed_at: date | None = None
     source_updated_at: str | None = None
+    original_content_hash: str | None = None
+    collection_hash: str | None = None
+    ecli: str | None = None
+    decision_type: str | None = None
+    publication_code: str | None = None
     retrieved_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     version: VersionInterval = Field(default_factory=VersionInterval)
     source_complete: bool = False

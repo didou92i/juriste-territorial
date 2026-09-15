@@ -38,6 +38,8 @@ class Settings:
     judilibre_key: str = field(default="", repr=False)
     sandbox: bool = False
     local_db: str = ""
+    evidence_db: str = ""
+    admin_db: str = ""
     principal: str = ""
     blocked_ids: frozenset[str] = frozenset()
     timeout: float = 20
@@ -53,6 +55,8 @@ class Settings:
             judilibre_key=os.getenv("JUDILIBRE_KEY_ID", ""),
             sandbox=environment == "sandbox",
             local_db=os.getenv("JT_LOCAL_DB", ""),
+            evidence_db=os.getenv("JT_EVIDENCE_DB", ""),
+            admin_db=os.getenv("JT_ADMIN_DB", ""),
             principal=os.getenv("JT_PRINCIPAL", ""),
             blocked_ids=frozenset(
                 x.strip() for x in os.getenv("JT_WITHDRAWN_IDS", "").split(",") if x.strip()
@@ -81,7 +85,7 @@ class Transport:
             follow_redirects=False,
             limits=httpx.Limits(max_connections=4, max_keepalive_connections=2),
             trust_env=False,
-            headers={"User-Agent": "droit-territorial/0.1.0"},
+            headers={"User-Agent": "droit-territorial/0.2.0"},
         )
         self.semaphore = asyncio.Semaphore(3)
         self.auth_lock = asyncio.Lock()

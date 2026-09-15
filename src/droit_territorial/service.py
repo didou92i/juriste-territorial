@@ -9,6 +9,9 @@ import uuid
 from collections import OrderedDict
 from datetime import UTC, datetime
 
+from .admin import AdminIndex
+from .archive import Archive
+from .dossier import Dossier, review
 from .evidence import EvidenceStore
 from .local import LocalReader
 from .models import ClaimInput, LegalOrder, SourceError
@@ -23,7 +26,13 @@ class Service:
         self.transport = transport or Transport(self.settings)
         self.sources = OfficialSources(self.transport)
         self.local = LocalReader(self.settings.local_db, self.settings.principal)
-        self.evidence = EvidenceStore()
+        self.admin = AdminIndex(self.settings.admin_db)
+        self.archive = (
+            Archive(self.settings.evidence_db, self.settings.principal)
+            if self.settings.evidence_db
+            else None
+        )
+        self.evidence = EvidenceStore(archive=self.archive)
         self.cursors = OrderedDict()
         self.last_attempts = {}
 
@@ -53,13 +62,22 @@ class Service:
                     if self.settings.local_db and self.settings.principal
                     else "not_configured"
                 )
+            elif row["id"] == "administrative_open_data":
+                try:
+                    row["imported_coverage"] = self.admin.coverage()
+                    row["access_state"] = "imported_subset_available"
+                except SourceError as exc:
+                    row["access_state"] = exc.problem.code
             else:
                 row["access_state"] = "browser_or_page_reader_only"
             row["last_attempt"] = self.last_attempts.get(row["id"])
             row["last_collection"] = None
-            row["software_version"] = "0.1.0"
+            if row.get("imported_coverage", {}).get("batches"):
+                row["last_collection"] = row["imported_coverage"]["batches"][-1]["imported_at"]
+            row["software_version"] = "0.2.0"
         return {
             "status": "ok",
+            "evidence_storage": "private_persistent" if self.archive else "ephemeral",
             "sources": [r for r in rows if not source_id or r["id"] == source_id],
             "scope": "Configuration and observed operations, not a current uptime or legal freshness guarantee",
         }
@@ -188,6 +206,9 @@ class Service:
     def _check_snapshot_access(self, ev):
         if ev.document.canonical_id in self.settings.blocked_ids:
             raise SourceError("reference_unavailable", "Reference unavailable")
+        if ev.document.provider == "admin":
+            # Preserve older snapshots, but honor withdrawals from the current index.
+            self.admin.fetch(ev.document.canonical_id)
         if ev.document.provider == "local":
             current = self.local.fetch(ev.document.canonical_id)
             if hashlib.sha256(current.text.encode()).hexdigest() != ev.content_hash:
@@ -224,10 +245,12 @@ class Service:
                 doc = await self.sources.official_page(identifier)
             elif provider == "local":
                 doc = self.local.fetch(identifier)
+            elif provider == "admin":
+                doc = self.admin.fetch(identifier)
             else:
                 raise SourceError(
                     "unsupported_source",
-                    "Supported references: legifrance:, judilibre:, web:, local:, evidence:",
+                    "Supported references: legifrance:, judilibre:, web:, local:, admin:, evidence:",
                 )
             ev = self.evidence.put(source_ref, doc, as_of_date)
         return self.evidence.page(ev.evidence_id, offset, length)
@@ -337,4 +360,64 @@ class Service:
             "status": "technical_check_only",
             "claims": results,
             "legal_validity": "not_assessed",
+        }
+
+    def review_case(self, dossier: Dossier):
+        return review(dossier, self)
+
+    def record_case(self, dossier: Dossier):
+        if self.archive is None:
+            raise SourceError("archive_not_configured", "Configure a private archive first")
+        report = self.review_case(dossier)
+        identifier = self.archive.put(
+            "case",
+            {
+                "recorded_at": datetime.now(UTC).isoformat(),
+                "dossier": dossier.model_dump(mode="json"),
+                "report": report,
+            },
+        )
+        return {"status": "recorded", "record_id": identifier, "report": report}
+
+    def read_case(self, identifier):
+        if self.archive is None:
+            raise SourceError("archive_not_configured", "Configure a private archive first")
+        record = self.archive.get("case", identifier)
+        dossier = Dossier.model_validate(record["dossier"])
+        # Do not re-expose withdrawn private excerpts preserved inside the historical note.
+        for piece in dossier.pieces:
+            self._check_snapshot_access(self.evidence.get(piece.evidence_id))
+        return {
+            "status": "historical_record",
+            "record": record,
+            "current_review": self.review_case(dossier),
+            "legal_validity": "not_assessed",
+        }
+
+    def compare_evidence(self, before_id, after_id):
+        old, new = self.evidence.get(before_id), self.evidence.get(after_id)
+        for ev in (old, new):
+            self._check_snapshot_access(ev)
+        if (old.document.provider, old.document.canonical_id) != (
+            new.document.provider,
+            new.document.canonical_id,
+        ):
+            raise SourceError(
+                "different_documents", "Compare snapshots of the same canonical document"
+            )
+        content_changed = old.content_hash != new.content_hash
+        metadata_changed = old.document.model_dump(
+            exclude={"text", "retrieved_at"}
+        ) != new.document.model_dump(exclude={"text", "retrieved_at"})
+        return {
+            "status": "technical_check_only",
+            "before_id": before_id,
+            "after_id": after_id,
+            "content_changed": content_changed,
+            "metadata_changed": metadata_changed,
+            "reexamination_required": content_changed
+            or metadata_changed
+            or old.as_of_date != new.as_of_date,
+            "legal_effect": "not_assessed",
+            "historical_record_modified": False,
         }

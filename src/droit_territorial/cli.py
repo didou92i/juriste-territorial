@@ -3,7 +3,9 @@ import asyncio
 import json
 from pathlib import Path
 
+from .dossier import Dossier
 from .local import import_document, withdraw_document
+from .models import SourceError
 from .resources import methodology
 from .runtime import Settings
 from .server import build_server
@@ -32,12 +34,24 @@ def main():
     )
     for arg in ("db", "principal", "id"):
         withdraw.add_argument("--" + arg, required=True)
+    for command in ("review-case", "record-case"):
+        commands.add_parser(command).add_argument("file", type=Path)
+    commands.add_parser("read-case").add_argument("id")
+    commands.add_parser("case-schema")
+    admin = commands.add_parser("import-admin", help="Download and index one official monthly ZIP")
+    admin.add_argument("url")
+    admin.add_argument("--db", required=True)
+    admin_withdraw = commands.add_parser("withdraw-admin")
+    admin_withdraw.add_argument("id")
+    admin_withdraw.add_argument("--db", required=True)
     args = parser.parse_args()
     if args.command == "serve":
         settings = Settings.from_env()
         if args.transport == "streamable-http":
             # Pilot HTTP is loopback only. Private documents require isolated stdio processes.
             settings.local_db = ""
+            settings.evidence_db = ""
+            settings.admin_db = ""
             settings.principal = ""
             if not 1024 <= args.port <= 65535:
                 parser.error("Choose an unprivileged port (1024–65535)")
@@ -70,6 +84,46 @@ def main():
                 {"status": "processed", "detail": "Unavailable identifiers disclose no existence"}
             )
         )
+    elif args.command == "case-schema":
+        print(json.dumps(Dossier.model_json_schema(), ensure_ascii=False, indent=2))
+    elif args.command in {
+        "review-case",
+        "record-case",
+        "read-case",
+        "import-admin",
+        "withdraw-admin",
+    }:
+
+        async def operate():
+            settings = Settings.from_env()
+            if args.command in {"import-admin", "withdraw-admin"}:
+                settings.admin_db = args.db
+            service = Service(settings)
+            try:
+                if args.command == "import-admin":
+                    value = await service.admin.sync(args.url, service.transport)
+                elif args.command == "withdraw-admin":
+                    service.admin.withdraw(args.id)
+                    value = {"status": "processed"}
+                elif args.command == "read-case":
+                    value = service.read_case(args.id)
+                else:
+                    if args.file.stat().st_size > 4_000_000:
+                        raise SourceError("document_too_large", "Dossier exceeds 4 MB")
+                    dossier = Dossier.model_validate_json(args.file.read_bytes())
+                    value = (
+                        service.record_case(dossier)
+                        if args.command == "record-case"
+                        else service.review_case(dossier)
+                    )
+                print(json.dumps(value, ensure_ascii=False, indent=2))
+            except SourceError as exc:
+                print(json.dumps({"status": "error", "error": exc.problem.model_dump()}))
+                raise SystemExit(1) from None
+            finally:
+                await service.close()
+
+        asyncio.run(operate())
 
 
 if __name__ == "__main__":

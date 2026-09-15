@@ -1,0 +1,17 @@
+{
+  "status": "incomplete",
+  "issues": [
+    "missing_pair:dev-01:1",
+    "missing_pair:dev-02:1",
+    "missing_pair:dev-03:1",
+    "missing_pair:dev-04:1",
+    "missing_pair:dev-05:1",
+    "missing_pair:dev-06:1"
+  ],
+  "complete_pairs": [],
+  "run_artifact_hashes": {},
+  "legal_validation": "not_certified",
+  "reviewer_identity": "operator_declared_not_authenticated",
+  "scope": "Paired baseline/skill within this corpus only; skill_mcp runs are retained separately, never pooled",
+  "generalization": "Development cases are public and cannot demonstrate unseen-case performance"
+}
