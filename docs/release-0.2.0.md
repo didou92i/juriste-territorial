@@ -1,4 +1,6 @@
-# 0.2.0 — rendre les preuves et les dossiers contrôlables
+# Du droit à la décision
+
+**Juriste territorial — présentation des nouveautés de la version 0.2.0.**
 
 Cette version répond à l’audit du pilote en renforçant les 11 modules existants.
 La note de 17,5/20 donnée dans l’audit reste une appréciation, pas une mesure du dépôt.
