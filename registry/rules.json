@@ -1,0 +1,65 @@
+{
+  "method_version": "0.1.0",
+  "reviewed_at": "2026-09-15",
+  "status": "experimental_no_independent_legal_review",
+  "rules": {
+    "procurement.dispense": {
+      "description": "Test du montant pour R. 2122-8, besoin entier et achat ordinaire ; pas autorisation d'achat",
+      "comparator": "lt",
+      "sources": [
+        "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000053222294",
+        "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000053221596/2026-01-01",
+        "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053202067",
+        "https://www.economie.gouv.fr/files/files/directions_services/daj/media-document/FT_Mesures%20de%20simplification%20du%20droit%20de%20la%20commande%20publique%20et%20rehaussement%20des%20seuils.pdf"
+      ],
+      "versions": [
+        {
+          "from": "2026-01-01",
+          "until": "2026-04-01",
+          "supplies": "40000",
+          "services": "40000",
+          "works": "100000"
+        },
+        {
+          "from": "2026-04-01",
+          "until": "2027-01-01",
+          "supplies": "60000",
+          "services": "60000",
+          "works": "100000"
+        }
+      ],
+      "remaining_checks": [
+        "estimation complète du besoin et absence de fractionnement",
+        "offre pertinente",
+        "bonne utilisation des deniers publics",
+        "absence de recours systématique au même opérateur si pluralité d'offres",
+        "règles locales",
+        "autres obligations de l'achat"
+      ]
+    },
+    "procurement.formal_threshold": {
+      "description": "Seuil de procédure formalisée des autres pouvoirs adjudicateurs, achat ordinaire",
+      "comparator": "gte",
+      "sources": [
+        "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053170349"
+      ],
+      "versions": [
+        {
+          "from": "2026-01-01",
+          "until": "2028-01-01",
+          "supplies": "216000",
+          "services": "216000",
+          "works": "5404000"
+        }
+      ],
+      "remaining_checks": [
+        "qualification de l'acheteur",
+        "régimes spéciaux et exceptions",
+        "publicité",
+        "délais",
+        "allotissement",
+        "autres obligations de l'achat"
+      ]
+    }
+  }
+}

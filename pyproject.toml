@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "droit-territorial"
+version = "0.1.0"
+description = "Méthode juridique territoriale et MCP de recherche avec provenance"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT AND CC-BY-SA-4.0"
+license-files = ["LICENSE.md", "LICENSES/*.txt", "NOTICE.md"]
+authors = [{name = "didou92i"}]
+dependencies = ["mcp==2.2.0", "httpx==0.28.1", "pydantic==2.13.5", "beautifulsoup4==4.15.0"]
+
+[project.scripts]
+droit-territorial = "droit_territorial.cli:main"
+
+[dependency-groups]
+dev = ["pytest==9.1.1", "pytest-asyncio==1.4.0", "ruff==0.16.7"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/droit_territorial"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"skills/juriste-territorial" = "droit_territorial/data/skill"
+"registry" = "droit_territorial/data/registry"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = ["live: contacts an official service only when explicitly enabled"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "UP"]

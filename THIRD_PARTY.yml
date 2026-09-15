@@ -1,0 +1,175 @@
+{
+  "reviewed_at": "2026-09-15",
+  "format_note": "JSON is a YAML 1.2 subset",
+  "files": [
+    {
+      "repo": "jmtanguy/droit-francais-mcp",
+      "commit": "f79a9ae949d8bcd3b20e6130b6c5022b26abd573",
+      "path": "LICENSE",
+      "size": 1096,
+      "sha256": "632400fc048a78adcaa10cdfc9a9ef404a18ddb0987887e9ad781f6815556f5b",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "MIT",
+      "url": "https://github.com/jmtanguy/droit-francais-mcp/blob/f79a9ae949d8bcd3b20e6130b6c5022b26abd573/LICENSE"
+    },
+    {
+      "repo": "jmtanguy/droit-francais-mcp",
+      "commit": "f79a9ae949d8bcd3b20e6130b6c5022b26abd573",
+      "path": "api_legifrance.py",
+      "size": 22692,
+      "sha256": "1303f3d6823955b5ca12c7cf88ea1c10441bdeac37d7b77b4b6a927b99196632",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "MIT",
+      "url": "https://github.com/jmtanguy/droit-francais-mcp/blob/f79a9ae949d8bcd3b20e6130b6c5022b26abd573/api_legifrance.py"
+    },
+    {
+      "repo": "jmtanguy/droit-francais-mcp",
+      "commit": "f79a9ae949d8bcd3b20e6130b6c5022b26abd573",
+      "path": "api_legifrance_query_builder.py",
+      "size": 48659,
+      "sha256": "0052d30f2a95de83f7d90b481b18192ff69f8136057e66c5b92f4799b4b20fc5",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "MIT",
+      "url": "https://github.com/jmtanguy/droit-francais-mcp/blob/f79a9ae949d8bcd3b20e6130b6c5022b26abd573/api_legifrance_query_builder.py"
+    },
+    {
+      "repo": "jmtanguy/droit-francais-mcp",
+      "commit": "f79a9ae949d8bcd3b20e6130b6c5022b26abd573",
+      "path": "api_judilibre.py",
+      "size": 30056,
+      "sha256": "c240f96a138bb14645aba3aa43b1942703cc97da9e98d3d08d3eac24c8969556",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "MIT",
+      "url": "https://github.com/jmtanguy/droit-francais-mcp/blob/f79a9ae949d8bcd3b20e6130b6c5022b26abd573/api_judilibre.py"
+    },
+    {
+      "repo": "brissonjo-sudo/droit-francais-skill",
+      "commit": "7284a8efc4f38f383f277a2deb24a113d32df4f9",
+      "path": "LICENSE",
+      "size": 18411,
+      "sha256": "ad5259ac9d63c064078a6490ddc5df3999d97fb0c33ae3bfad0ba3752ccf17e4",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "CC-BY-SA-4.0",
+      "url": "https://github.com/brissonjo-sudo/droit-francais-skill/blob/7284a8efc4f38f383f277a2deb24a113d32df4f9/LICENSE"
+    },
+    {
+      "repo": "brissonjo-sudo/droit-francais-skill",
+      "commit": "7284a8efc4f38f383f277a2deb24a113d32df4f9",
+      "path": "skill/SKILL.md",
+      "size": 48899,
+      "sha256": "33a48ee9e830dcde148a80ecb4fa74c795ec11eca3fad7c9b5370d7162662857",
+      "decision": "methodology_adapted_and_rewritten",
+      "author": "@brissonjo-sudo",
+      "license": "CC-BY-SA-4.0",
+      "destinations": [
+        "skills/juriste-territorial/SKILL.md",
+        "skills/juriste-territorial/references/"
+      ],
+      "url": "https://github.com/brissonjo-sudo/droit-francais-skill/blob/7284a8efc4f38f383f277a2deb24a113d32df4f9/skill/SKILL.md"
+    },
+    {
+      "repo": "brissonjo-sudo/droit-francais-skill",
+      "commit": "7284a8efc4f38f383f277a2deb24a113d32df4f9",
+      "path": "skill/scripts/droit_francais/legifrance.py",
+      "size": 5627,
+      "sha256": "baea37a064031a11cd60359cf98061c4483507ab4c10651f29d5c27aab293f83",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "CC-BY-SA-4.0",
+      "url": "https://github.com/brissonjo-sudo/droit-francais-skill/blob/7284a8efc4f38f383f277a2deb24a113d32df4f9/skill/scripts/droit_francais/legifrance.py"
+    },
+    {
+      "repo": "brissonjo-sudo/droit-francais-skill",
+      "commit": "7284a8efc4f38f383f277a2deb24a113d32df4f9",
+      "path": "skill/scripts/droit_francais/judilibre.py",
+      "size": 2684,
+      "sha256": "5aba0c795fb88315ce8b7b3bffac6ea4dcc7e7ed7106efac26407e8544bf13fc",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "CC-BY-SA-4.0",
+      "url": "https://github.com/brissonjo-sudo/droit-francais-skill/blob/7284a8efc4f38f383f277a2deb24a113d32df4f9/skill/scripts/droit_francais/judilibre.py"
+    },
+    {
+      "repo": "brissonjo-sudo/droit-francais-skill",
+      "commit": "7284a8efc4f38f383f277a2deb24a113d32df4f9",
+      "path": "skill/scripts/droit_francais/tools.py",
+      "size": 28269,
+      "sha256": "7f5dd7d2b4405ac7dc686e5492c230cb979866419b0b25721cfbb1493c6a69fb",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "CC-BY-SA-4.0",
+      "url": "https://github.com/brissonjo-sudo/droit-francais-skill/blob/7284a8efc4f38f383f277a2deb24a113d32df4f9/skill/scripts/droit_francais/tools.py"
+    },
+    {
+      "repo": "brissonjo-sudo/droit-francais-skill",
+      "commit": "7284a8efc4f38f383f277a2deb24a113d32df4f9",
+      "path": "skill/scripts/droit_francais/transport.py",
+      "size": 7166,
+      "sha256": "3c0a4514e302494be9cc78bc2efd3d5084e42a0d438f48e87f375958a57c7003",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "CC-BY-SA-4.0",
+      "url": "https://github.com/brissonjo-sudo/droit-francais-skill/blob/7284a8efc4f38f383f277a2deb24a113d32df4f9/skill/scripts/droit_francais/transport.py"
+    },
+    {
+      "repo": "brissonjo-sudo/droit-francais-skill",
+      "commit": "7284a8efc4f38f383f277a2deb24a113d32df4f9",
+      "path": "mcp_server/server.py",
+      "size": 20045,
+      "sha256": "eb88a3e108f1740b6d072b1eba14b20cdb6e8c90fcace133ff3f6ee56884a014",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "CC-BY-SA-4.0",
+      "url": "https://github.com/brissonjo-sudo/droit-francais-skill/blob/7284a8efc4f38f383f277a2deb24a113d32df4f9/mcp_server/server.py"
+    },
+    {
+      "repo": "Nikkoola22/gruuuprimes",
+      "commit": "50ec85d1d95c4d9a6bb59e053533e92ddb128167",
+      "path": "skills/raisonnement-juridique-amaury-fouret/SKILL.md",
+      "size": 17674,
+      "sha256": "9f3dbccd6455e5c9ea89b0e1568d71e83fa463521133edee7fea29e6b15aa49e",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "not_relied_on_for_reuse",
+      "url": "https://github.com/Nikkoola22/gruuuprimes/blob/50ec85d1d95c4d9a6bb59e053533e92ddb128167/skills/raisonnement-juridique-amaury-fouret/SKILL.md"
+    },
+    {
+      "repo": "Nikkoola22/gruuuprimes",
+      "commit": "50ec85d1d95c4d9a6bb59e053533e92ddb128167",
+      "path": "skills/contentieux-administratif/SKILL.md",
+      "size": 1642,
+      "sha256": "bc4bf536137c2f3ca409c97b0c9c9e302d59d157619463cd6cb8d125c16af9cb",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "not_relied_on_for_reuse",
+      "url": "https://github.com/Nikkoola22/gruuuprimes/blob/50ec85d1d95c4d9a6bb59e053533e92ddb128167/skills/contentieux-administratif/SKILL.md"
+    },
+    {
+      "repo": "Nikkoola22/gruuuprimes",
+      "commit": "50ec85d1d95c4d9a6bb59e053533e92ddb128167",
+      "path": "skills/marches-publics-et-contrats/SKILL.md",
+      "size": 1307,
+      "sha256": "3b26665d258f68926f01fa7913651587bcee86858655e07d67db120ad047ad6f",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "not_relied_on_for_reuse",
+      "url": "https://github.com/Nikkoola22/gruuuprimes/blob/50ec85d1d95c4d9a6bb59e053533e92ddb128167/skills/marches-publics-et-contrats/SKILL.md"
+    },
+    {
+      "repo": "Nikkoola22/gruuuprimes",
+      "commit": "50ec85d1d95c4d9a6bb59e053533e92ddb128167",
+      "path": "skills/arckit-fr-marche-public/SKILL.md",
+      "size": 16276,
+      "sha256": "c7cca0e5b3ba723a49ad8a6b934a4448fc1b83099dd01afba5d8b737e3a1097b",
+      "decision": "consulted_not_imported",
+      "destinations": [],
+      "license": "not_relied_on_for_reuse",
+      "url": "https://github.com/Nikkoola22/gruuuprimes/blob/50ec85d1d95c4d9a6bb59e053533e92ddb128167/skills/arckit-fr-marche-public/SKILL.md"
+    }
+  ]
+}

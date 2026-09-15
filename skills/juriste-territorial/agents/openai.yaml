@@ -1,0 +1,4 @@
+interface:
+  display_name: "Juriste territorial"
+  short_description: "Raisonner, vérifier et agir en droit territorial"
+  default_prompt: "Utilise $juriste-territorial pour analyser ce dossier et proposer une position motivée avec ses preuves et prochaines actions."

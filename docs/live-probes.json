@@ -1,0 +1,19 @@
+[
+  {
+    "url": "https://opendata.justice-administrative.fr/index.html",
+    "status": "ok",
+    "characters": 2021,
+    "source_complete": false,
+    "content_hash": "08be7ccb6b7a2a522bcafc8cf6902cc6b2cfc4baddcce88f67c52f1b110bac91",
+    "retrieved_at": "2026-09-15T10:49:50.311545Z"
+  },
+  {
+    "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000053222294",
+    "error": {
+      "code": "authorization_required",
+      "message": "Official source refused access (403)",
+      "provider": "official_web",
+      "retryable": false
+    }
+  }
+]

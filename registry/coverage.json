@@ -1,0 +1,64 @@
+{
+  "method_version": "0.1.0",
+  "modules": [
+    {
+      "id": "actes",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "commande-publique",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "contentieux",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "dialogue-social",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "donnees-numerique",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "finances",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "fpt",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "institutions",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "police",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "services-publics",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "urbanisme-patrimoine",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    }
+  ],
+  "release_scope": "local_pilot",
+  "national_xml_index": false,
+  "shared_http_service": false,
+  "authenticated_api_live_tests": false
+}
