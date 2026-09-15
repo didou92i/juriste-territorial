@@ -68,7 +68,7 @@ class CaseContext(Model):
     entity_type: str
     actor_capacity: str
     as_of_date: date
-    method_version: str = "0.3.0"
+    method_version: str = "0.3.1"
     facts: list[Fact] = Field(default_factory=list, max_length=200)
     event_dates: dict[str, date] = Field(default_factory=dict)
 

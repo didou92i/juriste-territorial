@@ -11,7 +11,7 @@
 Pensé pour les juristes, directions générales, services RH et agents des collectivités, **Juriste territorial** associe une méthode de raisonnement, **11 domaines métier** et un **serveur MCP de 14 outils** pour rechercher, consulter et contrôler les éléments d’un dossier.
 
 <p align="center">
-  <a href="https://github.com/didou92i/juriste-territorial/releases/download/v0.3.0/juriste-territorial-0.3.0.zip"><strong>Télécharger le skill</strong></a>
+  <a href="https://github.com/didou92i/juriste-territorial/releases/download/v0.3.1/juriste-territorial-0.3.1.zip"><strong>Télécharger le skill</strong></a>
   &nbsp; · &nbsp;
   <a href="#installer-le-mcp"><strong>Installer le MCP</strong></a>
   &nbsp; · &nbsp;
@@ -101,6 +101,8 @@ flowchart TD
     M --> ADM[Index local des lots officiels CE / CAA / TA]
     M --> WEB[Lecteur de pages officielles autorisées]
     M --> LOC[Pièces autorisées et archive privée]
+    A --> DG[Connecteur data.gouv.fr facultatif : faits territoriaux]
+    DG --> A
     A --> W[Recherche web du client, si disponible]
     M --> P[Textes, dates, empreintes et résultats de contrôles]
     P --> A
@@ -130,14 +132,17 @@ Le contrat de chaque outil précise ses entrées et ses limites. Les contrôles 
 
 | Source | Accès prévu dans le projet | État documenté |
 |---|---|---|
-| **Légifrance / PISTE** | API pour codes, textes, JORF, recherche jurisprudentielle, articles datés et comparaison de versions | Adaptateur livré et contrats simulés testés. Identifiants et souscription nécessaires ; recette authentifiée encore à réaliser. |
+| **Légifrance / PISTE** | API pour codes, textes, JORF, recherche jurisprudentielle, articles datés et comparaison de versions | Adaptateur livré et contrats simulés testés. Recherche et lecture authentifiées réussies le 15 septembre 2026 sur une installation ; recette historique complète à poursuivre. |
 | **Open data de la justice administrative** | Import opérateur des ZIP/XML officiels, index local et filtres CE/CAA/TA | Trois lots officiels réellement importés : **522 décisions** ; trois recherches et consultations intégrales contrôlées. Couverture limitée aux lots importés. |
 | **ArianeWeb** | Recherche web du client et lecture de pages officielles accessibles | Parcours web documenté ; aucun moteur de recherche ArianeWeb autonome intégré au MCP. |
-| **JudiLibre / PISTE** | API de jurisprudence judiciaire, consultation et taxonomie | Adaptateur livré et contrats simulés testés. Accès requis ; recette authentifiée encore à réaliser. Le juge administratif relève des autres sources. |
+| **JudiLibre / PISTE** | API de jurisprudence judiciaire, consultation et taxonomie | Adaptateur livré et contrats simulés testés. Recherche et lecture authentifiées réussies le 15 septembre 2026 sur une installation. Le juge administratif relève des autres sources. |
 | **DGCL, DAJ, CNIL, CADA, DINUM et sites européens autorisés** | Lecteur de pages HTTPS sur une liste explicite de domaines | Lecture selon l’accessibilité de la page ; recherche fournie par le client. Aucun accès universel aux bases des institutions. |
+| **data.gouv.fr, facultatif** | Application ou MCP officiel distinct dans le client ; recherche de jeux, métadonnées et ressources | Recherche, fiches et lecture de deux lignes BANATIC testées. Le fichier de comptes communaux essayé est absent de l’API tabulaire ; chaque ressource reste à vérifier. |
 | **Vos actes et pièces locales** | Import volontaire de fichiers `.txt`/`.md` dans une base locale, recherche par identité et dossier | Accès, retraits et intégrité testés sur documents fictifs. Conversion PDF/DOCX/OCR à effectuer en amont avec vos outils. |
 
 PISTE est la plateforme d’accès aux API concernées. Le dépôt livre ces adaptateurs dans son propre MCP ; il ne préconfigure pas de connexions à des serveurs MCP juridiques tiers.
+
+Pour documenter un fait territorial, le skill peut utiliser une connexion data.gouv.fr déjà disponible. Il vérifie producteur, millésime et périmètre, puis rapproche la donnée des textes et pièces locales. [Activer ce complément](skills/juriste-territorial/references/installation.md#ajouter-datagouvfr-selon-vos-besoins) · [Voir la recette réelle](docs/validation-datagouv.md).
 
 Les portails de référence et capacités détaillées figurent dans le [registre des sources](registry/sources.json). L’outil `get_source_status` expose la configuration locale et les opérations observées. Une panne, un accès manquant, une version inconnue et une recherche sans résultat sont traités distinctement.
 
@@ -147,7 +152,7 @@ Les portails de référence et capacités détaillées figurent dans le [registr
 
 ### Utiliser le skill
 
-1. **[Télécharger le ZIP du skill](https://github.com/didou92i/juriste-territorial/releases/download/v0.3.0/juriste-territorial-0.3.0.zip).**
+1. **[Télécharger le ZIP du skill](https://github.com/didou92i/juriste-territorial/releases/download/v0.3.1/juriste-territorial-0.3.1.zip).**
 2. Décompresser le dossier `juriste-territorial` dans le répertoire de skills de votre client compatible.
 3. Ouvrir une nouvelle session, vérifier que le skill est disponible et lui soumettre un premier dossier.
 
@@ -199,7 +204,7 @@ fournies par votre gestionnaire de secrets.
 
 Le mode **stdio local** permet un usage individuel avec pièces privées configurées. Le transport HTTP fourni est limité à `127.0.0.1` et désactive les magasins locaux. Une connexion distante à une application nécessite un déploiement et une authentification adaptés.
 
-→ [Installation, accès API et compatibilité](docs/compatibility.md) · [Toutes les archives de la distribution](https://github.com/didou92i/juriste-territorial/releases/tag/v0.3.0)
+→ [Installation, accès API et compatibilité](docs/compatibility.md) · [Toutes les archives de la distribution](https://github.com/didou92i/juriste-territorial/releases/tag/v0.3.1)
 
 ## Une confiance fondée sur des éléments vérifiables
 
@@ -207,11 +212,13 @@ Le mode **stdio local** permet un usage individuel avec pièces privées configu
 |---|---|
 | **145 tests réussis, 1 ignoré** dans la validation publiée | Fonctionnement technique des contrats, règles bornées, accès, preuves et protocoles testés |
 | **MCP stdio et HTTP local** avec un client SDK réel | Initialisation, découverte et appels des outils, ressources et prompt |
+| **Légifrance et JudiLibre en production** | [Recherches et lectures ponctuelles réussies](docs/connection-probes-2026-09-15.json) sur une installation ; aucun identifiant distribué |
+| **data.gouv.fr dans un client réel** | [Recherche, métadonnées et échantillon BANATIC](docs/validation-datagouv.md) ; limite tabulaire d’un autre fichier identifiée |
 | **522 décisions administratives importées** | Lecture de trois lots officiels et conservation des métadonnées ; trois consultations détaillées vérifiées |
 | **Six dossiers fictifs de développement** et essais distincts par agent | Matériel de recette et premiers comportements observés |
 | **Registres, empreintes et rapports accessibles** | Possibilité de retrouver la portée et les limites des vérifications annoncées |
 
-**Le projet est un pilote expérimental.** Les connexions PISTE authentifiées, le benchmark comparatif avec relecture juridique humaine et la robustesse nationale de la recherche restent à démontrer. Les résultats ci-dessus ne mesurent pas un taux général de fiabilité juridique.
+**Le projet est un pilote expérimental.** La recette complète des versions historiques et des incidents PISTE, le benchmark comparatif avec relecture juridique humaine et la robustesse nationale de la recherche restent à démontrer. Les résultats ci-dessus ne mesurent pas un taux général de fiabilité juridique.
 
 Les preuves et notes peuvent être conservées dans une archive privée facultative. Les bases sont locales ; **les extraits renvoyés à votre assistant sont traités selon la configuration de son modèle et de son fournisseur**. Le choix d’un MCP local ne rend pas, à lui seul, tout le traitement local.
 
@@ -252,4 +259,4 @@ uv run --frozen python scripts/package_skill.py
 
 **Code sous MIT · Méthode et documentation sous CC BY-SA 4.0.** Méthode adaptée avec attribution à @brissonjo-sudo ; détail des reprises dans [NOTICE.md](NOTICE.md), [THIRD_PARTY.yml](THIRD_PARTY.yml) et la [revue des dépôts sources](docs/source-review.md).
 
-[Commencer avec le skill](https://github.com/didou92i/juriste-territorial/releases/download/v0.3.0/juriste-territorial-0.3.0.zip) · [Explorer les nouveautés](docs/release-0.3.0.md) · [Consulter les licences](LICENSE.md)
+[Commencer avec le skill](https://github.com/didou92i/juriste-territorial/releases/download/v0.3.1/juriste-territorial-0.3.1.zip) · [Explorer les nouveautés](docs/release-0.3.1.md) · [Consulter les licences](LICENSE.md)
