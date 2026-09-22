@@ -16,7 +16,7 @@
     "documentation": "https://www.legifrance.gouv.fr/contenu/pied-de-page/foire-aux-questions-api",
     "coverage": "Selon fonds ; fonds jurisprudentiels sélectifs, textes anciens parfois sans HTML",
     "implementation": "api_adapter",
-    "live_validation": "not_run_without_credentials",
+    "live_validation": "production_search_and_fetch_probe_2026-09-15_only; historical_version_and_current_uptime_unverified",
     "reuse_policy": "CGU Légifrance/PISTE ; vérifier avant réutilisation"
   },
   {
@@ -32,7 +32,7 @@
     "documentation": "https://github.com/Cour-de-cassation/judilibre-search/blob/dev/public/JUDILIBRE-public.json",
     "coverage": "Ordre judiciaire uniquement ; couverture variable selon juridiction et date",
     "implementation": "api_adapter",
-    "live_validation": "not_run_without_credentials",
+    "live_validation": "production_search_and_fetch_probe_2026-09-15_only; current_uptime_unverified",
     "reuse_policy": "CGU JudiLibre ; pseudonymisation et demandes de retrait à respecter"
   },
   {
@@ -97,7 +97,7 @@
       "fetch"
     ],
     "documentation": "docs/local-documents.md",
-    "coverage": "Documents UTF-8 .txt/.md importés et autorisés ; pas OCR/PDF natif",
+    "coverage": "TXT/MD UTF-8, PDF et DOCX importés volontairement ; OCR PDF facultatif avec incertitudes signalées ; l'original et les repères sont conservés",
     "implementation": "local_private_store",
     "live_validation": "synthetic_integration_tests",
     "reuse_policy": "Privé ; aucune redistribution implicite"

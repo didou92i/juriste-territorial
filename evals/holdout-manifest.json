@@ -1,0 +1,29 @@
+{
+  "created_at": "2026-09-22",
+  "split": "private_holdout",
+  "case_count": 12,
+  "distribution": {
+    "fpt": 3,
+    "actes_locaux": 3,
+    "competences": 3,
+    "contentieux": 3
+  },
+  "corpus_file_sha256": "6e24faf25c142dc82739159712d8d7130aa30ba81a2e59b73802a736ca4cc82f",
+  "case_hashes": {
+    "H01": "b40cba20c27087ca33af91fa006942ae1e564cae417a192ae3993b361f076100",
+    "H02": "807b0a3943d9d2912fcc803e486e040b7b4329286a7ec656161061bb3e5bb1f8",
+    "H03": "7ff6fb440a1eacd47d0833b685730f1f24da071281712e7b474509b9514739da",
+    "H04": "1abafa3427b5dda719370b176af72b68eaa7b1da832ec8a52a677007215db232",
+    "H05": "7a2808b18b9cdab0e22ccb1b570e063ad8f6692e5ec914acb85a94e82f4cb2f7",
+    "H06": "c99e7fd1e50b41a4592b5bedf2bf36b28bad9103276fb0ecdeb5f514854b6b75",
+    "H07": "fc16972417332383d96f45e175056ede30ef28ea0d34fb24fcd4b53bd50de019",
+    "H08": "162276f3da080509409f52917bd91d4691b611c0a5b63c2d1bcd2cd8bec314c4",
+    "H09": "b6f2e190ca5025dd9c0a47e49b19534e5f2112e505eb70ffe62420cb054508b0",
+    "H10": "cddb67d5e5e767e1b0eab2916aac267f5c91d429e344128299fb3ef441bc8f9f",
+    "H11": "74c18967fa95d4db10a7a76d53249cecd16ff330abbd1231ac79dd6ecec973a3",
+    "H12": "0416b35052679e709dea54111523246f8d1bd452ee0230025045eef4d63132b3"
+  },
+  "run_status": "not_executed",
+  "human_review_status": "pending_two_independent_jurists",
+  "note": "Cases and reviewer keys remain outside Git; hashes establish the frozen local candidate corpus, not legal correctness."
+}

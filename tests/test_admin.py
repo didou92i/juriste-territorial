@@ -14,11 +14,15 @@ URL = "https://opendata.justice-administrative.fr/DCE/2021/09/CE_202109.zip"
 
 
 def xml(
-    identifier="DCE_123_20210927.xml", court="CE", body="Le requérant demande. Le juge décide."
+    identifier="DCE_123_20210927.xml",
+    court="CE",
+    body="Le requérant demande. Le juge décide.",
+    ecli="",
 ):
     return f"""<?xml version="1.0" encoding="UTF-8"?><Document><Identification>{identifier}</Identification>
     <Code_Juridiction>{court}</Code_Juridiction><Nom_Juridiction>Juridiction fictive</Nom_Juridiction>
-    <Numero_Dossier>123</Numero_Dossier><Date_Lecture>2021-09-27</Date_Lecture>
+    <Numero_Dossier>123</Numero_Dossier><Numero_ECLI>{ecli}</Numero_ECLI>
+    <Date_Lecture>2021-09-27</Date_Lecture>
     <Texte_Integral><p>{body}</p><p>Dispositif fictif.</p></Texte_Integral></Document>""".encode()
 
 
@@ -81,6 +85,31 @@ def test_ordonnance_and_ta_directory_supported(tmp_path):
     )
     assert index.fetch(name).source_authenticity == "unknown"
     assert len(index.search("juge", ["TA"])["results"]) == 1
+
+
+def test_exact_identifiers_variants_and_relevance(tmp_path):
+    index = AdminIndex(str(tmp_path / "admin.sqlite"))
+    entries = [
+        (
+            "DCE_123_20210927.xml",
+            xml(
+                ecli="ECLI:FR:CE:2021:123.20210927",
+                body="Compétence compétence délégation du conseil.",
+            ),
+        ),
+        ("DCE_456_20210927.xml", xml("DCE_456_20210927.xml", body="Compétence autre question.")),
+    ]
+    index._import_zip(zipped(entries), URL)
+    assert index.search("DCE_123_20210927.xml")["results"][0]["source_ref"].endswith(
+        "123_20210927.xml"
+    )
+    assert index.search("ECLI:FR:CE:2021:123.20210927")["results"][0]["source_ref"].endswith(
+        "123_20210927.xml"
+    )
+    assert index.search("CE n° 123")["results"][0]["source_ref"].endswith("123_20210927.xml")
+    result = index.search("délégation conseil", variants=["compétence délégation"])
+    assert result["results"][0]["source_ref"].endswith("123_20210927.xml")
+    assert result["coverage"]["batches"] and "ArianeWeb" in result["research_hint"]
 
 
 @pytest.mark.parametrize(

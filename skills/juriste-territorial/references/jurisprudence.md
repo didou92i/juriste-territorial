@@ -20,10 +20,13 @@ non-admission ne transforme pas les moyens reproduits en règles approuvées.
 Une solution isolée de première instance n'établit pas une jurisprudence constante.
 Une citation présente dans la décision ne prouve pas son attribution au juge.
 
-Avec `search_admin_archive`, filtrer `CE`, `CAA` ou `TA`, examiner les lots et
-dates de couverture, puis `fetch(admin:...)` et les pages restantes. La recherche
-est lexicale : varier termes, numéros et qualifications. Pour les périodes non
-importées, poursuivre sur les sources officielles réellement accessibles.
+Avec `search_admin_archive`, essayer d'abord l'ECLI, le numéro ou l'identifiant
+XML exact lorsqu'il est connu. Sinon filtrer `CE`, `CAA` ou `TA`, proposer au
+plus trois `variants` de termes, puis lire les résultats classés par pertinence
+lexicale. Examiner les lots et dates **réellement importés**, puis
+`fetch(admin:...)` et les pages restantes. Ce classement ne mesure ni l'autorité
+ni la portée de la solution. Compléter par ArianeWeb pour situer un apport
+jurisprudentiel ; l'index local n'est ni national ni automatiquement à jour.
 
 Réserver précisément le point qui dépend d'une décision introuvable ; poursuivre
 l'analyse fondée sur les autres pièces. Ne pas convertir une panne, une limite

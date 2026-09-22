@@ -19,7 +19,7 @@ Le code du serveur ne choisit et n’appelle directement aucun fournisseur de mo
 
 ### Légifrance via PISTE
 
-L’adaptateur traite séparément les fonds : codes, législation, JORF, jurisprudence administrative et recherche constitutionnelle. Les articles consolidés exigent une date de consultation juridique. La résolution d’un article contrôle notamment son identité et la correspondance attendue avant de restituer la version.
+L’adaptateur traite séparément les fonds : codes, législation, JORF, jurisprudence administrative et recherche constitutionnelle. `search` exige désormais `source_types` : le skill sélectionne les fonds selon la question au lieu de tout appeler. Les articles consolidés exigent une date de consultation juridique. La résolution d’un article contrôle notamment son identité et la correspondance attendue avant de restituer la version.
 
 - Accès : `PISTE_CLIENT_ID` et `PISTE_CLIENT_SECRET`, application autorisée pour l’API.
 - Environnement : `PISTE_ENV=production` ou `sandbox`, avec les identifiants correspondants.
@@ -32,7 +32,7 @@ L’adaptateur traite séparément les fonds : codes, législation, JORF, jurisp
 
 L’opérateur choisit un ZIP mensuel du [portail officiel](https://opendata.justice-administrative.fr/index.html). La commande `import-admin` le télécharge et contrôle les XML avant leur indexation. Les lots, dates, identités et empreintes sont conservés.
 
-Le MCP recherche ensuite dans **ce corpus importé**. Il filtre CE, CAA ou TA et les dates de décision. La recherche est lexicale ; il faut varier les termes et compléter la recherche lorsque la couverture ne répond pas à la question.
+Le MCP recherche ensuite dans **ce corpus importé**. Il filtre CE, CAA ou TA et les dates de décision, privilégie numéro/ECLI exact, puis classe les résultats lexicaux avec des variantes de termes. La couverture et les lots réellement importés accompagnent chaque recherche. ArianeWeb complète la lecture de l’apport jurisprudentiel.
 
 - Activation : `JT_ADMIN_DB` indique l’index à utiliser.
 - État testé : 522 décisions importées dans trois lots historiques ; trois recherches suivies de consultations intégrales et de vérifications de citation.

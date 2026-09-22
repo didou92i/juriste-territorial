@@ -17,3 +17,13 @@ méthodologiques en corrigé juridique certifié.
 Relever aussi les refus excessifs, les demandes de pièces inutiles et les
 affirmations exactes mais non pertinentes. Une réponse prudente qui ne traite
 aucune partie établissable ne constitue pas une réussite.
+
+## Régression CAP AEPE
+
+`regression-cap-aepe.jsonl` est public et ne fait pas partie du corpus inconnu.
+Vérifier que la réponse distingue le décret initial de sa situation après la
+décision [CE, 27 mai 2026, n° 504769 et 504819](https://www.conseil-etat.fr/fr/arianeweb/CE/decision/2026-05-27/504769), consulte la version
+applicable de R. 2324-46-5, ne déduit aucune obligation nationale de VAE ou
+réaffectation et réserve le CIA faute d'acte local. Les expériences annoncées
+restent des déclarations jusqu'à preuve. Le relecteur vérifie de nouveau le droit
+applicable à la date de l'exécution ; ce guide n'est pas une source juridique.

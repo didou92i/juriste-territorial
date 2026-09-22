@@ -54,6 +54,10 @@ qui manque éventuellement. Ni reformulation du texte ni opinion isolée.
 Une condition cumulativement nécessaire et non satisfaite ferme ce fondement,
 pas tous les fondements possibles. Chercher une autre voie licite si le dossier
 le justifie. Une exception alléguée exige ses propres conditions et pièces.
+Sur un dossier sensible, relier explicitement ces conditions dans la fiche de
+décision : `all` pour toutes les conditions préalables, `any` pour une voie
+alternative, et une branche séparée si la qualification change la règle.
+Ne pas marquer « établi » si une condition décisive demeure inconnue ou contestée.
 
 ## 4. Mettre la conclusion à l'épreuve
 
@@ -69,6 +73,10 @@ artificiellement symétriques lorsqu'un seul est étayé.
 Effectuer un test de bascule : « si ce fait change, quelle partie de la réponse
 change ? ». Une conclusion invariante malgré un changement de compétence ou
 de date peut révéler que la règle a été seulement récitée.
+
+Conserver le meilleur argument contraire et la pièce qui permettrait de le
+trancher. La fiche courte rend ces dépendances lisibles ; le contrôle du MCP
+ne valide que leur cohérence formelle, jamais la conclusion juridique.
 
 ## 5. Séparer quatre incertitudes
 

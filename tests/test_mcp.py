@@ -95,7 +95,7 @@ async def test_mcp_protocol_stdio_roundtrip():
         method = await session.call_tool(
             "get_methodology", {"topic": "core", "output_mode": "short"}
         )
-        assert not method.is_error and method.structured_content["method_version"] == "0.3.1"
+        assert not method.is_error and method.structured_content["method_version"] == "0.4.0"
         assert method.structured_content["text"]
         resource = await session.read_resource("juriste://methodology/core")
         assert resource.contents[0].text == method.structured_content["text"]
@@ -104,7 +104,8 @@ async def test_mcp_protocol_stdio_roundtrip():
         prompt = await session.get_prompt("analyse_territoriale", {"question": "Question fictive"})
         assert "Question fictive" in prompt.messages[0].content.text
         failed = await session.call_tool(
-            "search", {"query": "temps de travail", "as_of_date": "2026-09-15"}
+            "search",
+            {"query": "temps de travail", "as_of_date": "2026-09-15", "source_types": ["codes"]},
         )
         assert failed.is_error
         assert failed.structured_content["errors"][0]["code"] == "credentials_missing"

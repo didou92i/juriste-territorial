@@ -1,4 +1,9 @@
+from io import BytesIO
+
 import pytest
+from docx import Document as DocxDocument
+from pypdf import PdfWriter
+from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
 
 from droit_territorial.local import LocalReader, import_document, withdraw_document
 from droit_territorial.models import ClaimInput, SourceError
@@ -101,3 +106,88 @@ def test_unsupported_import_has_no_side_effect(tmp_path):
     with pytest.raises(ValueError):
         import_document(db, file, "a", "case", "title")
     assert not db.exists()
+
+
+def pdf_bytes(text=None):
+    writer = PdfWriter()
+    page = writer.add_blank_page(width=612, height=792)
+    if text:
+        font = DictionaryObject(
+            {
+                NameObject("/Type"): NameObject("/Font"),
+                NameObject("/Subtype"): NameObject("/Type1"),
+                NameObject("/BaseFont"): NameObject("/Helvetica"),
+            }
+        )
+        page[NameObject("/Resources")] = DictionaryObject(
+            {NameObject("/Font"): DictionaryObject({NameObject("/F1"): font})}
+        )
+        stream = DecodedStreamObject()
+        stream.set_data(f"BT /F1 12 Tf 72 720 Td ({text}) Tj ET".encode())
+        page[NameObject("/Contents")] = writer._add_object(stream)
+    output = BytesIO()
+    writer.write(output)
+    return output.getvalue()
+
+
+def test_pdf_and_docx_import_keep_original_and_locators(tmp_path):
+    db = tmp_path / "local.sqlite"
+    pdf = tmp_path / "acte.pdf"
+    pdf.write_bytes(
+        pdf_bytes("Deliberation fictive avec un texte suffisamment long pour extraction.")
+    )
+    pdf_id = import_document(db, pdf, "alice", "case", "Acte PDF")
+    pdf_doc = LocalReader(str(db), "alice").fetch(pdf_id)
+    assert pdf_doc.original_content_hash is not None
+    assert pdf_doc.locators[0].label == "page 1"
+    assert pdf_doc.extraction_status == "partial" and not pdf_doc.source_complete
+
+    docx_file = tmp_path / "annexe.docx"
+    docx = DocxDocument()
+    docx.add_paragraph("Article premier. Le conseil approuve l'annexe.")
+    table = docx.add_table(rows=1, cols=2)
+    table.cell(0, 0).text = "Groupe"
+    table.cell(0, 1).text = "CIA"
+    docx.save(docx_file)
+    docx_id = import_document(db, docx_file, "alice", "case", "Annexe DOCX")
+    docx_doc = LocalReader(str(db), "alice").fetch(docx_id)
+    assert "Groupe | CIA" in docx_doc.text
+    assert {item.label for item in docx_doc.locators} >= {"paragraphe 1", "tableau 1, ligne 1"}
+
+
+def test_ocr_uncertainty_is_localized_and_requires_review(tmp_path, monkeypatch):
+    import droit_territorial.extraction as extraction
+
+    monkeypatch.setattr(
+        extraction,
+        "_ocr_page",
+        lambda *_: [
+            ("page 1, ligne OCR 1", "Texte probable", "ocr", 91.0),
+            ("page 1, ligne OCR 2", "Montant incertain", "ocr", 52.0),
+        ],
+    )
+    pdf = tmp_path / "scan.pdf"
+    pdf.write_bytes(pdf_bytes())
+    db = tmp_path / "local.sqlite"
+    identifier = import_document(db, pdf, "alice", "case", "Scan", ocr=True)
+    doc = LocalReader(str(db), "alice").fetch(identifier)
+    assert doc.extraction_status == "ocr_unreviewed"
+    assert [item.uncertain for item in doc.locators] == [False, True]
+    assert not doc.source_complete
+
+
+def test_corrupted_extraction_metadata_is_an_integrity_error(tmp_path):
+    import sqlite3
+
+    file = tmp_path / "piece.md"
+    file.write_text("Délibération fictive")
+    db = tmp_path / "local.sqlite"
+    identifier = import_document(db, file, "alice", "case", "Acte")
+    with sqlite3.connect(db) as connection:
+        connection.execute(
+            "UPDATE document_extractions SET locators='bad JSON' WHERE document_id=?",
+            (identifier,),
+        )
+    with pytest.raises(SourceError) as exc:
+        LocalReader(str(db), "alice").fetch(identifier)
+    assert exc.value.problem.code == "integrity_error"

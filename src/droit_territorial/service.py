@@ -72,10 +72,16 @@ class Service:
             else:
                 row["access_state"] = "browser_or_page_reader_only"
             row["last_attempt"] = self.last_attempts.get(row["id"])
+            if row["last_attempt"] and row["id"] in {"legifrance", "judilibre", "local"}:
+                row["access_state"] = (
+                    "observed_ok_this_process"
+                    if row["last_attempt"]["status"] == "ok"
+                    else "observed_error_this_process"
+                )
             row["last_collection"] = None
             if row.get("imported_coverage", {}).get("batches"):
                 row["last_collection"] = row["imported_coverage"]["batches"][-1]["imported_at"]
-            row["software_version"] = "0.3.1"
+            row["software_version"] = "0.4.0"
         return {
             "status": "ok",
             "evidence_storage": "private_persistent" if self.archive else "ephemeral",
@@ -103,13 +109,12 @@ class Service:
             order = LegalOrder(legal_order)
         except ValueError:
             raise SourceError("invalid_input", "Unknown legal order") from None
-        kinds = list(
-            dict.fromkeys(
-                source_types
-                if source_types is not None
-                else ["codes", "legislation", "jorf", "case_law"]
+        if source_types is None:
+            raise SourceError(
+                "source_selection_required",
+                "Choose source_types for the legal question; no all-funds default",
             )
-        )
+        kinds = list(dict.fromkeys(source_types))
         if not kinds or set(kinds) - {
             "codes",
             "legislation",
@@ -147,34 +152,63 @@ class Service:
 
         async def run(kind, page):
             provider = "judilibre" if kind == "judicial_case_law" else "legifrance"
+            started = time.perf_counter()
+            counters = None
             try:
-                if page > 100:
-                    raise SourceError(
-                        "pagination_limit", "Refine the query after 100 pages", provider
-                    )
-                if kind == "judicial_case_law":
-                    result = await self.sources.judiciary_search(
-                        query, page, courts=courts, date_start=date_start, date_end=date_end
-                    )
-                else:
-                    kwargs = (
-                        {"date_start": date_start, "date_end": date_end}
-                        if kind.endswith("case_law")
-                        else {}
-                    )
-                    result = await self.sources.legi_search(query, kind, as_of_date, page, **kwargs)
+                with self.transport.measure() as counters:
+                    if page > 100:
+                        raise SourceError(
+                            "pagination_limit", "Refine the query after 100 pages", provider
+                        )
+                    if kind == "judicial_case_law":
+                        result = await self.sources.judiciary_search(
+                            query, page, courts=courts, date_start=date_start, date_end=date_end
+                        )
+                    else:
+                        kwargs = (
+                            {"date_start": date_start, "date_end": date_end}
+                            if kind.endswith("case_law")
+                            else {}
+                        )
+                        result = await self.sources.legi_search(
+                            query, kind, as_of_date, page, **kwargs
+                        )
                 self.last_attempts[provider] = {"at": datetime.now(UTC).isoformat(), "status": "ok"}
-                return kind, page, result, None
+                return (
+                    kind,
+                    page,
+                    result,
+                    None,
+                    {
+                        "source_type": kind,
+                        "elapsed_ms": round((time.perf_counter() - started) * 1000),
+                        **counters,
+                    },
+                )
             except SourceError as exc:
                 self.last_attempts[provider] = {
                     "at": datetime.now(UTC).isoformat(),
                     "status": exc.problem.code,
                 }
-                return kind, page, None, exc.problem.model_dump()
+                return (
+                    kind,
+                    page,
+                    None,
+                    exc.problem.model_dump(),
+                    {
+                        "source_type": kind,
+                        "elapsed_ms": round((time.perf_counter() - started) * 1000),
+                        **(
+                            counters
+                            or {"network_requests": 0, "response_bytes": 0, "network_ms": 0}
+                        ),
+                    },
+                )
 
         batches = await asyncio.gather(*(run(k, p) for k, p in offsets.items()))
-        results, errors, coverage, following = {}, [], [], {}
-        for kind, page, batch, error in batches:
+        results, errors, coverage, following, metrics = {}, [], [], {}, []
+        for kind, page, batch, error, performance in batches:
+            metrics.append(performance)
             if error:
                 errors.append({"source_type": kind, **error})
                 continue
@@ -195,6 +229,11 @@ class Service:
             "results": list(results.values()),
             "errors": errors,
             "coverage": coverage,
+            "performance": {
+                "sources": metrics,
+                "network_requests": sum(row["network_requests"] for row in metrics),
+                "provider_cost": "not_reported",
+            },
             "next_cursor": next_cursor,
             "as_of_date": str(as_of_date) if as_of_date else None,
             "warnings": [
@@ -219,6 +258,42 @@ class Service:
                 )
 
     async def fetch(self, source_ref, as_of_date=None, offset=0, length=6000):
+        started = time.perf_counter()
+        provider = {
+            "legifrance": "legifrance",
+            "judilibre": "judilibre",
+            "local": "local",
+            "admin": "administrative_open_data",
+            "web": "institutional_web",
+        }.get(source_ref.partition(":")[0])
+        with self.transport.measure() as counters:
+            try:
+                result = await self._fetch_inner(source_ref, as_of_date, offset, length)
+            except SourceError as exc:
+                if provider:
+                    self.last_attempts[provider] = {
+                        "at": datetime.now(UTC).isoformat(),
+                        "operation": "fetch",
+                        "status": exc.problem.code,
+                        "elapsed_ms": round((time.perf_counter() - started) * 1000),
+                        **counters,
+                    }
+                raise
+        result["performance"] = {
+            "elapsed_ms": round((time.perf_counter() - started) * 1000),
+            **counters,
+            "provider_cost": "not_reported",
+        }
+        if provider:
+            self.last_attempts[provider] = {
+                "at": datetime.now(UTC).isoformat(),
+                "operation": "fetch",
+                "status": "ok",
+                **result["performance"],
+            }
+        return result
+
+    async def _fetch_inner(self, source_ref, as_of_date=None, offset=0, length=6000):
         if not 1 <= length <= 12000 or offset < 0 or len(source_ref) > 2500:
             raise SourceError("invalid_input", "Invalid reference, length or offset")
         provider, sep, identifier = source_ref.partition(":")

@@ -3,8 +3,8 @@ name: juriste-territorial
 description: Analyser une question juridique territoriale, articuler textes et actes locaux, examiner les arguments contraires et préparer notes, actes ou recours pour communes, EPCI et établissements publics locaux. Utiliser pour compétences, FPT, dialogue social, commande publique, police, services publics et contentieux administratif.
 license: CC-BY-SA-4.0
 metadata:
-  version: "0.3.1"
-  method_reviewed_at: "2026-09-15"
+  version: "0.4.0"
+  method_reviewed_at: "2026-09-22"
   maturity: "experimental"
 ---
 
@@ -42,7 +42,8 @@ seulement les références et modules déclenchés par le dossier.
    Chercher aussi l'exception ou la solution adverse susceptible de renverser la
    conclusion. Voir [recherche et preuve](references/preuve-et-recherche.md).
 4. **Articuler.** Pour chaque point décisif : règle sourcée → condition → fait/pièce
-   → application → conséquence. Une condition inconnue demeure inconnue.
+   → application → conséquence. Préciser si les conditions sont cumulatives,
+   alternatives ou des exceptions. Une condition inconnue demeure inconnue.
    Traiter spécialement les conflits de normes et les décisions apparemment
    divergentes dans [articulation](references/articulation.md).
 5. **Éprouver la solution.** Examiner l'objection la plus solide, le fait qui ferait
@@ -51,6 +52,13 @@ seulement les références et modules déclenchés par le dossier.
 6. **Conclure utilement.** Donner la réponse, les conditions qui comptent et la
    prochaine action ; citer les passages décisifs. Réserver seulement la partie
    non établie. Le mode court réduit l'affichage, pas ces contrôles.
+
+Pour une décision sensible, produire une **fiche de décision courte** : branches
+de qualification, autorité compétente, fait générateur et date, conditions et
+leurs liens, pièce probante par condition, exception, meilleure objection,
+fait qui ferait basculer la conclusion, action suivante. Si une condition
+décisive ou une délibération locale manque, conclure sous réserve précise.
+`review_case` vérifie la structure et les références, jamais le sens du droit.
 
 Présenter une justification vérifiable ; ne pas demander ni reproduire un monologue
 interne. Les tableaux de conditions et les motifs expliquent suffisamment la décision.
@@ -87,7 +95,10 @@ Continuer avec les capacités disponibles ; ne pas répéter ce rappel à chaque
 Des clés présentes ne prouvent pas une connexion : `probe=true` permet un diagnostic
 réel explicitement demandé, avec consommation du quota de la source.
 
-- `search` recherche séparément codes, textes, JORF et jurisprudence ;
+- `search` exige de choisir `source_types` selon la question : codes/textes
+  consolidés pour une règle datée, JORF pour publication ou transition,
+  jurisprudence pour une interprétation ou un litige. Élargir seulement si la
+  condition reste ouverte ;
   `search_case_law` exige l'ordre juridique. JudiLibre ne couvre pas le juge administratif.
 - `fetch` fournit une preuve issue d'une consultation ; lire toutes les pages
   nécessaires. Un résultat de recherche est une piste, pas une preuve du texte.
@@ -96,6 +107,8 @@ réel explicitement demandé, avec consommation du quota de la source.
 - `check_evidence` vérifie les pièces techniques d'une affirmation ; il ne juge
   ni la pertinence d'une règle ni la validité juridique de la conclusion.
 - `search_local_acts` concerne les seuls dossiers autorisés par l'opérateur.
+  PDF/DOCX importés et OCR éventuel fournissent des repères de page/paragraphe,
+  mais leurs passages et signatures exigent une vérification sur l'original.
 - `evaluate_rule` accepte seulement les règles bornées du registre.
 
 Pour un fait territorial à vérifier (finances, marché publié, périmètre d'un EPCI),
@@ -114,7 +127,10 @@ Pour les dossiers complexes, lire [dossier et preuves](references/dossier.md),
 puis utiliser `review_case` pour contrôler la justification structurée.
 `compare_evidence` signale les changements entre deux captures conservées.
 Pour le juge administratif, suivre [la fiche de lecture](references/jurisprudence.md) ;
-`search_admin_archive` recherche les lots officiels CE/CAA/TA importés par l’opérateur.
+`search_admin_archive` cherche d'abord l'identifiant exact (numéro/ECLI), puis
+classe les termes et leurs variantes dans les lots CE/CAA/TA réellement importés.
+Compléter par ArianeWeb pour apprécier l'apport jurisprudentiel et toute période
+absente de l'index.
 
 ## Restitution
 

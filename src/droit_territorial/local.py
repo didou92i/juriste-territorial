@@ -1,6 +1,7 @@
 """Operator-managed local documents. Every lookup applies the principal before returning data."""
 
 import hashlib
+import json
 import re
 import sqlite3
 import unicodedata
@@ -8,6 +9,9 @@ import uuid
 from datetime import UTC, datetime
 from pathlib import Path
 
+from pydantic import ValidationError
+
+from .extraction import extract_document
 from .models import Document, SourceError
 
 SCHEMA = """
@@ -18,6 +22,10 @@ CREATE TABLE IF NOT EXISTS documents (
  withdrawn INTEGER NOT NULL DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS document_access ON documents(principal,case_id,withdrawn);
+CREATE TABLE IF NOT EXISTS document_extractions (
+ document_id TEXT PRIMARY KEY, format TEXT NOT NULL, text_hash TEXT NOT NULL,
+ locators TEXT NOT NULL, status TEXT NOT NULL, warnings TEXT NOT NULL
+);
 """
 
 
@@ -27,21 +35,27 @@ def lexical(value):
     )
 
 
-def import_document(db: Path, file: Path, principal: str, case_id: str, title: str):
-    if file.suffix.lower() not in {".txt", ".md"}:
-        raise ValueError(
-            "Pilot imports UTF-8 .txt/.md only; PDF/OCR extraction must be reviewed first"
-        )
+def import_document(
+    db: Path,
+    file: Path,
+    principal: str,
+    case_id: str,
+    title: str,
+    *,
+    ocr: bool = False,
+    ocr_language: str = "fra",
+):
+    suffix = file.suffix.lower()
+    if suffix not in {".txt", ".md", ".pdf", ".docx"}:
+        raise ValueError("Supported imports: UTF-8 .txt/.md, .pdf and .docx")
     if not principal.strip() or not case_id.strip() or not title.strip():
         raise ValueError("Principal, case id and title are required")
-    if file.stat().st_size > 2_000_000:
-        raise ValueError("Document exceeds the 2 MB import limit")
+    if file.stat().st_size > 20_000_000:
+        raise ValueError("Document exceeds the 20 MB import limit")
     raw = file.read_bytes()
-    if len(raw) > 2_000_000:
-        raise ValueError("Document exceeds the import limit")
-    body = raw.decode("utf-8")
-    if not body.strip():
-        raise ValueError("Document is empty")
+    body, locators, status, warnings = extract_document(
+        raw, suffix, ocr=ocr, ocr_language=ocr_language
+    )
     db.parent.mkdir(parents=True, exist_ok=True)
     identifier = uuid.uuid4().hex
     with sqlite3.connect(db) as connection:
@@ -58,6 +72,17 @@ def import_document(db: Path, file: Path, principal: str, case_id: str, title: s
                 raw,
                 hashlib.sha256(raw).hexdigest(),
                 datetime.now(UTC).isoformat(),
+            ),
+        )
+        connection.execute(
+            "INSERT INTO document_extractions VALUES (?,?,?,?,?,?)",
+            (
+                identifier,
+                suffix,
+                hashlib.sha256(body.encode()).hexdigest(),
+                json.dumps([item.model_dump() for item in locators], ensure_ascii=False),
+                status,
+                json.dumps(warnings, ensure_ascii=False),
             ),
         )
     db.chmod(0o600)
@@ -130,6 +155,12 @@ class LocalReader:
                     "SELECT * FROM documents WHERE id=? AND principal=? AND withdrawn=0",
                     (identifier, self.principal),
                 ).fetchone()
+                try:
+                    extraction = connection.execute(
+                        "SELECT * FROM document_extractions WHERE document_id=?", (identifier,)
+                    ).fetchone()
+                except sqlite3.OperationalError:
+                    extraction = None  # Text-only database from an older release.
         except sqlite3.Error as exc:
             raise SourceError("local_unavailable", "Local store unavailable", "local") from exc
         # Identical error for unknown, withdrawn and unauthorized identifiers.
@@ -139,23 +170,48 @@ class LocalReader:
             raise SourceError(
                 "integrity_error", "Stored original no longer matches its hash", "local"
             )
-        if row["original"].decode("utf-8") != row["text"]:
-            raise SourceError(
-                "integrity_error", "Stored extraction differs from the imported original", "local"
+        if not extraction or extraction["format"] in {".txt", ".md"}:
+            try:
+                original_text = row["original"].decode("utf-8")
+            except UnicodeDecodeError as exc:
+                raise SourceError(
+                    "integrity_error", "Stored original is not UTF-8", "local"
+                ) from exc
+            if original_text != row["text"]:
+                raise SourceError(
+                    "integrity_error",
+                    "Stored extraction differs from the imported original",
+                    "local",
+                )
+        if (
+            extraction
+            and hashlib.sha256(row["text"].encode()).hexdigest() != extraction["text_hash"]
+        ):
+            raise SourceError("integrity_error", "Stored extraction hash mismatch", "local")
+        try:
+            locators = json.loads(extraction["locators"]) if extraction else []
+            warnings = json.loads(extraction["warnings"]) if extraction else []
+            return Document(
+                provider="local",
+                canonical_id=row["id"],
+                title=row["title"],
+                text=row["text"],
+                document_kind="local_act",
+                source_authenticity="unknown",
+                source_complete=(extraction["status"] == "complete") if extraction else True,
+                access_scope="private",
+                case_id=row["case_id"],
+                source_updated_at=row["imported_at"],
+                original_content_hash=row["original_hash"],
+                withdrawal_status="not_reported",
+                warnings=warnings
+                + [
+                    "Imported document: authenticity, formalities, local scope and legal validity require analysis"
+                ],
+                locators=locators,
+                extraction_status=extraction["status"] if extraction else "complete",
             )
-        return Document(
-            provider="local",
-            canonical_id=row["id"],
-            title=row["title"],
-            text=row["text"],
-            document_kind="local_act",
-            source_authenticity="unknown",
-            source_complete=True,
-            access_scope="private",
-            case_id=row["case_id"],
-            source_updated_at=row["imported_at"],
-            withdrawal_status="not_reported",
-            warnings=[
-                "Imported document: authenticity, formalities, local scope and legal validity require analysis"
-            ],
-        )
+        except (ValueError, TypeError, ValidationError) as exc:
+            raise SourceError(
+                "integrity_error", "Stored extraction metadata is invalid", "local"
+            ) from exc

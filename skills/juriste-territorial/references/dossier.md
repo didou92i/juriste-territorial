@@ -17,6 +17,14 @@ de conclure. Une question générale ou une simple reformulation n'exige pas de 
   et son contenu doit effectivement être prouvé par la pièce.
 - `conditions` : question, citation de règle avec date pertinente, faits concernés,
   application motivée, appréciation, objection, conséquence et action suivante.
+  `decisive` marque la condition qui change l'issue ; `prerequisite_ids` relie les
+  conditions requises (`prerequisite_mode=all`) ou alternatives (`any`) ;
+  `exception_to` désigne la condition à laquelle s'oppose une exception.
+- `decision_sheet` pour un dossier `context.risk_level=sensitive` : autorité et
+  condition de compétence, fait générateur et date motivée, branches de
+  qualification reliées aux conditions, meilleure objection, faits de bascule
+  et prochaine action. `conclusion_status` vaut `established`, `conditional`
+  ou `not_established` selon la portée de la conclusion annoncée.
 - `grounds` : rattacher chaque moyen aux conditions concernées ; distinguer
   recevabilité, compétence, procédure, fond et preuve. Expliquer l'effet demandé
   et ses limites : un vice ne produit pas automatiquement annulation, injonction
@@ -25,8 +33,10 @@ de conclure. Une question générale ou une simple reformulation n'exige pas de 
 
 Le schéma complet se génère avec `droit-territorial case-schema` ; le MCP expose
 le même schéma dans `review_case`. Celui-ci détecte des défauts de références,
-citations, dates et structure. Même sans anomalie, la vérité des faits, le sens
-des citations, l'exhaustivité des conditions et la conclusion restent à examiner.
+citations, dates, liens entre conditions, branches et structure. Il signale
+notamment une condition décisive inconnue avec une conclusion dite établie.
+Même sans anomalie, la vérité des faits, le sens des citations, la complétude
+des conditions et la conclusion restent à examiner par un juriste.
 
 ## Pièces qui se répondent
 

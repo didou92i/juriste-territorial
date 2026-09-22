@@ -143,6 +143,65 @@ async def test_missing_annex_and_ground_are_distinct(service):
     }
 
 
+async def test_sensitive_decision_sheet_checks_decisive_links_without_legal_approval(service):
+    value = dossier(service)
+    value.context.risk_level = "sensitive"
+    assert "sensitive_decision_sheet_missing" in codes(service.review_case(value))
+    value.conditions[0].decisive = True
+    value.decision_sheet = {
+        "competent_authority": "Conseil à vérifier",
+        "authority_condition_id": "c1",
+        "trigger_date": "2026-09-15",
+        "trigger_date_reason": "Date du projet",
+        "branches": [
+            {
+                "qualification": "aide privée",
+                "condition_ids": ["c1"],
+                "possible_outcome": "Sous réserve du vote",
+            }
+        ],
+        "strongest_objection_condition_id": "c1",
+        "flip_fact_ids": ["f1"],
+        "next_action": "Obtenir le vote",
+    }
+    assert service.review_case(value)["issues"] == []
+    value.conditions[0].assessment = "unknown"
+    value.conclusion_status = "established"
+    value.reservations = ["Vote inconnu"]
+    assert "certainty_with_unresolved_decisive_condition" in codes(service.review_case(value))
+    value.decision_sheet.branches[0].condition_ids = ["absent"]
+    assert "branch_condition_missing" in codes(service.review_case(value))
+
+
+async def test_condition_dependencies_detect_cycle_but_not_diamond(service):
+    value = dossier(service)
+    condition = value.conditions[0].model_copy(deep=True)
+    for identifier in ("c2", "c3", "c4"):
+        item = condition.model_copy(deep=True)
+        item.condition_id = identifier
+        value.conditions.append(item)
+    value.conditions[0].prerequisite_ids = ["c2", "c3"]
+    value.conditions[1].prerequisite_ids = ["c4"]
+    value.conditions[2].prerequisite_ids = ["c4"]
+    assert "condition_dependency_cycle" not in codes(service.review_case(value))
+    value.conditions[3].prerequisite_ids = ["c1"]
+    assert "condition_dependency_cycle" in codes(service.review_case(value))
+
+
+async def test_declared_all_or_any_dependency_conflict_is_flagged(service):
+    value = dossier(service)
+    prerequisite = value.conditions[0].model_copy(deep=True)
+    prerequisite.condition_id = "c2"
+    prerequisite.assessment = "unknown"
+    value.conditions.append(prerequisite)
+    value.conditions[0].prerequisite_ids = ["c2"]
+    assert "declared_dependency_conflict" in codes(service.review_case(value))
+    value.conditions[0].prerequisite_mode = "any"
+    assert "declared_dependency_conflict" in codes(service.review_case(value))
+    prerequisite.assessment = "met"
+    assert "declared_dependency_conflict" not in codes(service.review_case(value))
+
+
 def test_archive_survives_restart_and_filters_principal(tmp_path):
     path = str(tmp_path / "evidence.sqlite")
     store = EvidenceStore(ttl=-1, archive=Archive(path, "alice"))

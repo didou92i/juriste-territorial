@@ -1,6 +1,6 @@
 """Review an explicit justification graph; never grade the truth of a legal conclusion."""
 
-from datetime import datetime
+from datetime import date, datetime
 from typing import Literal
 
 from pydantic import Field
@@ -33,6 +33,27 @@ class Condition(Model):
     objection: str = Field(min_length=1, max_length=6000)
     consequence: str = Field(min_length=1, max_length=6000)
     next_action: str = Field(min_length=1, max_length=6000)
+    decisive: bool = False
+    prerequisite_mode: Literal["all", "any"] = "all"
+    prerequisite_ids: list[str] = Field(default_factory=list, max_length=50)
+    exception_to: str | None = None
+
+
+class QualificationBranch(Model):
+    qualification: str = Field(min_length=1, max_length=6000)
+    condition_ids: list[str] = Field(min_length=1, max_length=50)
+    possible_outcome: str = Field(min_length=1, max_length=6000)
+
+
+class DecisionSheet(Model):
+    competent_authority: str = Field(min_length=1, max_length=6000)
+    authority_condition_id: str
+    trigger_date: date
+    trigger_date_reason: str = Field(min_length=1, max_length=6000)
+    branches: list[QualificationBranch] = Field(min_length=1, max_length=10)
+    strongest_objection_condition_id: str
+    flip_fact_ids: list[str] = Field(min_length=1, max_length=50)
+    next_action: str = Field(min_length=1, max_length=6000)
 
 
 class Ground(Model):
@@ -64,6 +85,8 @@ class Dossier(Model):
     conditions: list[Condition] = Field(default_factory=list, max_length=100)
     grounds: list[Ground] = Field(default_factory=list, max_length=100)
     decisions: list[DecisionAnalysis] = Field(default_factory=list, max_length=100)
+    decision_sheet: DecisionSheet | None = None
+    conclusion_status: Literal["established", "conditional", "not_established"] = "conditional"
     conclusion: str = Field(min_length=1, max_length=12000)
     reservations: list[str] = Field(default_factory=list, max_length=50)
 
@@ -93,6 +116,8 @@ def review(dossier: Dossier, service):
         flag("competing_qualification_missing", "dossier")
     if not conditions:
         flag("decisive_conditions_missing", "dossier")
+    if dossier.context.risk_level == "sensitive" and dossier.decision_sheet is None:
+        flag("sensitive_decision_sheet_missing", "dossier")
     for piece in pieces.values():
         try:
             ev = service.evidence.get(piece.evidence_id)
@@ -166,6 +191,72 @@ def review(dossier: Dossier, service):
                 flag("condition_relies_on_unestablished_fact", condition.condition_id)
         if condition.assessment in {"unknown", "disputed"} and not dossier.reservations:
             flag("unresolved_condition_without_reservation", condition.condition_id)
+        for ref in condition.prerequisite_ids:
+            if ref not in conditions:
+                flag("condition_prerequisite_missing", condition.condition_id)
+            elif ref == condition.condition_id:
+                flag("condition_dependency_cycle", condition.condition_id)
+        prerequisites = [conditions[ref] for ref in condition.prerequisite_ids if ref in conditions]
+        if condition.assessment == "met" and prerequisites:
+            if condition.prerequisite_mode == "all" and any(
+                item.assessment != "met" for item in prerequisites
+            ):
+                flag("declared_dependency_conflict", condition.condition_id)
+            if condition.prerequisite_mode == "any" and all(
+                item.assessment != "met" for item in prerequisites
+            ):
+                flag("declared_dependency_conflict", condition.condition_id)
+        if condition.exception_to and condition.exception_to not in conditions:
+            flag("exception_target_missing", condition.condition_id)
+        elif condition.exception_to == condition.condition_id:
+            flag("exception_self_reference", condition.condition_id)
+    visited, active = set(), set()
+
+    def check_cycle(identifier):
+        if identifier in active:
+            flag("condition_dependency_cycle", identifier)
+            return
+        if identifier in visited or identifier not in conditions:
+            return
+        active.add(identifier)
+        for ref in conditions[identifier].prerequisite_ids:
+            check_cycle(ref)
+        active.remove(identifier)
+        visited.add(identifier)
+
+    for identifier in conditions:
+        check_cycle(identifier)
+    if dossier.conclusion_status == "established" and any(
+        c.decisive and c.assessment in {"unknown", "disputed"} for c in conditions.values()
+    ):
+        flag("certainty_with_unresolved_decisive_condition", "dossier")
+    sheet = dossier.decision_sheet
+    if sheet:
+        if sheet.authority_condition_id not in conditions:
+            flag("authority_condition_missing", "decision_sheet")
+        if sheet.strongest_objection_condition_id not in conditions:
+            flag("objection_condition_missing", "decision_sheet")
+        if sheet.trigger_date not in {
+            dossier.context.as_of_date,
+            *dossier.context.event_dates.values(),
+        }:
+            flag("trigger_date_unexplained", "decision_sheet")
+        if dossier.qualification_disputed and len({b.qualification for b in sheet.branches}) < 2:
+            flag("competing_branch_missing", "decision_sheet")
+        covered = set()
+        for branch in sheet.branches:
+            if branch.qualification not in dossier.qualifications:
+                flag("branch_qualification_unknown", branch.qualification)
+            for ref in branch.condition_ids:
+                if ref not in conditions:
+                    flag("branch_condition_missing", branch.qualification)
+                covered.add(ref)
+        for condition in conditions.values():
+            if condition.decisive and condition.condition_id not in covered:
+                flag("decisive_condition_unmapped", condition.condition_id)
+        for ref in sheet.flip_fact_ids:
+            if ref not in facts:
+                flag("flip_fact_missing", ref)
     for ground in dossier.grounds:
         for ref in ground.condition_ids:
             if ref not in conditions:
