@@ -75,7 +75,7 @@ class Service:
             row["last_collection"] = None
             if row.get("imported_coverage", {}).get("batches"):
                 row["last_collection"] = row["imported_coverage"]["batches"][-1]["imported_at"]
-            row["software_version"] = "0.3.1"
+            row["software_version"] = "0.4.0"
         return {
             "status": "ok",
             "evidence_storage": "private_persistent" if self.archive else "ephemeral",
