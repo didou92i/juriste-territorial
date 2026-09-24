@@ -4,6 +4,7 @@ import hashlib
 import io
 import json
 import re
+import time
 import xml.etree.ElementTree as ET
 import zipfile
 from datetime import UTC, date, datetime
@@ -61,6 +62,7 @@ def parse_xml(raw, filename, url, official=False):
             source_updated_at=field("Date_Mise_Jour") or None,
             original_content_hash=hashlib.sha256(raw).hexdigest(),
             ecli=field("Numero_ECLI") or None,
+            case_number=number,
             decision_type=field("Type_Decision") or None,
             publication_code=field("Code_Publication") or None,
             source_authenticity="official" if official else "unknown",
@@ -94,6 +96,8 @@ class AdminIndex:
                     body TEXT, xml BLOB, xml_hash TEXT, body_hash TEXT, batch_hash TEXT, withdrawn INTEGER DEFAULT 0);
                 CREATE VIRTUAL TABLE IF NOT EXISTS decision_search USING fts5(id UNINDEXED, text,
                     tokenize='unicode61 remove_diacritics 2');
+                CREATE INDEX IF NOT EXISTS decision_ecli ON decisions(json_extract(body, '$.ecli'));
+                CREATE INDEX IF NOT EXISTS decision_number ON decisions(json_extract(body, '$.case_number'));
             """)
         return db
 
@@ -221,7 +225,17 @@ class AdminIndex:
             "withdrawal_sync": "manual; current provider withdrawals not automatically checked",
         }
 
-    def search(self, query, courts=None, date_start=None, date_end=None, offset=0, blocked_ids=()):
+    def search(
+        self,
+        query,
+        courts=None,
+        date_start=None,
+        date_end=None,
+        offset=0,
+        blocked_ids=(),
+        variants=None,
+    ):
+        started = time.perf_counter()
         terms = re.findall(r"[^\W_]+", query, re.UNICODE)
         if not terms or len(query) > 1000 or len(terms) > 30 or not 0 <= offset <= 10000:
             raise SourceError(
@@ -230,12 +244,24 @@ class AdminIndex:
         courts = courts or ["CE", "CAA", "TA"]
         if set(courts) - {"CE", "CAA", "TA"} or (date_start and date_end and date_start > date_end):
             raise SourceError("invalid_input", "Invalid administrative court or date bounds")
-        params = [" AND ".join('"' + x + '"' for x in terms), *courts]
-        where = (
-            "decision_search MATCH ? AND d.withdrawn=0 AND d.level IN ("
-            + ",".join("?" for _ in courts)
-            + ")"
+        variants = variants or []
+        if len(variants) > 3 or any(not x.strip() or len(x) > 200 for x in variants):
+            raise SourceError("invalid_input", "Use at most three short search variants")
+        queries = [terms]
+        for variant in variants:
+            words = re.findall(r"[^\W_]+", variant, re.UNICODE)
+            if not words or len(words) > 15:
+                raise SourceError("invalid_input", "A variant needs 1–15 words")
+            queries.append(words)
+        exact = query.strip()
+        is_identifier = bool(re.fullmatch(r"[A-Za-z0-9_-]+\.xml", exact))
+        is_ecli = bool(re.fullmatch(r"ECLI:[A-Za-z0-9:.\-]+", exact, re.IGNORECASE))
+        number_match = re.fullmatch(
+            r"(?:CE|CAA|TA)?\s*(?:n[°º]\s*)?(\d{3,9})", exact, re.IGNORECASE
         )
+        exact_mode = is_identifier or is_ecli or bool(number_match)
+        where = "d.withdrawn=0 AND d.level IN (" + ",".join("?" for _ in courts) + ")"
+        params = list(courts)
         for clause, value in (("d.day>=?", date_start), ("d.day<=?", date_end)):
             if value:
                 where += " AND " + clause
@@ -244,12 +270,44 @@ class AdminIndex:
             where += " AND d.id NOT IN (" + ",".join("?" for _ in blocked_ids) + ")"
             params.extend(blocked_ids)
         with self.connect() as db:
-            rows = db.execute(
-                "SELECT d.id,d.body FROM decision_search JOIN decisions d ON d.id=decision_search.id WHERE "
-                + where
-                + " ORDER BY d.day DESC,d.id LIMIT 21 OFFSET ?",
-                [*params, offset],
-            ).fetchall()
+            if exact_mode:
+                if is_identifier:
+                    predicate, key = "d.id=?", exact
+                elif is_ecli:
+                    predicate, key = "upper(json_extract(d.body,'$.ecli'))=?", exact.upper()
+                else:
+                    key = number_match[1]
+                    predicate = (
+                        "(json_extract(d.body,'$.case_number')=? OR "
+                        "json_extract(d.body,'$.title') LIKE ?)"
+                    )
+                keys = (
+                    [key, f"% — {key} — %"]
+                    if number_match and not (is_identifier or is_ecli)
+                    else [key]
+                )
+                rows = db.execute(
+                    "SELECT d.id,d.body FROM decisions d WHERE "
+                    + where
+                    + " AND "
+                    + predicate
+                    + " ORDER BY d.day DESC,d.id LIMIT 21 OFFSET ?",
+                    [*params, *keys, offset],
+                ).fetchall()
+                semantics = "Exact official XML id, ECLI or case number"
+            else:
+                match = " OR ".join(
+                    "(" + " AND ".join('"' + term.replace('"', '""') + '"' for term in words) + ")"
+                    for words in queries
+                )
+                rows = db.execute(
+                    "SELECT d.id,d.body FROM decision_search JOIN decisions d "
+                    "ON d.id=decision_search.id WHERE decision_search MATCH ? AND "
+                    + where
+                    + " ORDER BY bm25(decision_search),d.day DESC,d.id LIMIT 21 OFFSET ?",
+                    [match, *params, offset],
+                ).fetchall()
+                semantics = "BM25-ranked accent-insensitive lexical search; each variant matches all its words"
         return {
             "status": "ok",
             "results": [
@@ -258,7 +316,16 @@ class AdminIndex:
             ],
             "next_offset": offset + 20 if len(rows) > 20 else None,
             "coverage": self.coverage(),
-            "search_semantics": "All words, accent-insensitive lexical match; no semantic search",
+            "search_semantics": semantics,
+            "research_hint": (
+                "For jurisprudential contribution, complement this imported subset with ArianeWeb "
+                "and verify the full decision; no semantic or exhaustive search is implied"
+            ),
+            "performance": {
+                "elapsed_ms": round((time.perf_counter() - started) * 1000),
+                "network_requests": 0,
+                "provider_cost": "not_reported",
+            },
             "content_trust": "untrusted_data",
             "legal_validity": "not_assessed",
         }

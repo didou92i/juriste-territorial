@@ -104,7 +104,8 @@ async def test_mcp_protocol_stdio_roundtrip():
         prompt = await session.get_prompt("analyse_territoriale", {"question": "Question fictive"})
         assert "Question fictive" in prompt.messages[0].content.text
         failed = await session.call_tool(
-            "search", {"query": "temps de travail", "as_of_date": "2026-09-15"}
+            "search",
+            {"query": "temps de travail", "as_of_date": "2026-09-15", "source_types": ["codes"]},
         )
         assert failed.is_error
         assert failed.structured_content["errors"][0]["code"] == "credentials_missing"

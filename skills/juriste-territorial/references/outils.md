@@ -1,4 +1,4 @@
-# Contrat MCP 0.2.0
+# Contrat MCP 0.4.0
 
 Les noms ci-dessous existent dans ce serveur ; vérifier leur présence dans le
 client connecté. Les préfixes du client peuvent modifier le nom affiché.
@@ -7,7 +7,7 @@ client connecté. Les préfixes du client peuvent modifier le nom affiché.
 |---|---|---|
 | `get_source_status` | `source_id`, `probe=false` facultatifs | Configuration, accès manquants et guide ; `probe=true` teste explicitement recherche et lecture d'une API |
 | `get_methodology` | `topic=core`, `output_mode=note` | Liste les sujets ; méthode expérimentale |
-| `search` | `query`, `as_of_date`, `source_types`, `legal_order`, `cursor` | Date obligatoire pour codes/textes consolidés ; résultats de découverte |
+| `search` | `query`, `source_types`, `as_of_date`, `legal_order`, `cursor` | Choisir les fonds ; sans `source_types`, erreur explicite. Date obligatoire pour les textes consolidés |
 | `fetch` | `source_ref`, `as_of_date`, `offset`, `length` | `evidence:` et `next_offset` pour la suite du même document |
 | `get_legal_version` | `text_ref`, `article`, `as_of_date` | `text_ref` = titre exact du code ; correspondance unique requise |
 | `compare_versions` | `text_ref`, `article`, `from_date`, `to_date` | Diff textuel, pas interprétation du changement |
@@ -17,7 +17,7 @@ client connecté. Les préfixes du client peuvent modifier le nom affiché.
 | `check_evidence` | `claims` | Une citation retrouvée ne prouve pas la déduction |
 | `review_case` | `dossier` (schéma structuré) | Contrôle technique de la justification, pas validation du raisonnement |
 | `compare_evidence` | `before_id`, `after_id` | Même document ; effet juridique à examiner |
-| `search_admin_archive` | `query`, `courts`, `date_start`, `date_end`, `offset` | Sous-ensemble XML importé ; filtres CE/CAA/TA et couverture explicite |
+| `search_admin_archive` | `query`, `variants`, `courts`, `date_start`, `date_end`, `offset` | Numéro/ECLI exact en premier ; sinon classement lexical ; couverture des lots importés |
 | `evaluate_rule` | `rule_id`, `facts`, `as_of_date` | Deux tests monétaires ; aucun délai contentieux général |
 
 Types de recherche : `codes`, `legislation`, `jorf`, `case_law`,
@@ -53,8 +53,14 @@ Faits nécessaires : `buyer_type=other_contracting_authority`,
 la procédure et ne dispense pas des autres conditions ni d'une revalidation.
 
 L’index administratif local exige un import opérateur de lots officiels. Il
-n’est pas national ni automatiquement actualisé. Pas de moteur vectoriel, d’OCR
-ou de service HTTP partagé. Pour compléter le corpus, utiliser les pages
+n’est pas national ni automatiquement actualisé ; il n'intègre ni moteur
+vectoriel ni OCR. L'import local accepte PDF/DOCX
+et un OCR PDF facultatif ; les repères et alertes d'incertitude ne certifient
+pas le contenu. Pas de service HTTP partagé. Pour compléter le corpus, utiliser les pages
 officielles et la recherche web du client. Le HTTP fourni se limite à la
 boucle locale, sans accès aux pièces privées. Une intégration distante exige
 un déploiement et une authentification propres, non inclus ici.
+
+`search` et `fetch` renvoient `performance` (durée et appels HTTP observés) ;
+`provider_cost=not_reported` ne signifie pas zéro coût. Les pièces PDF/DOCX
+consultées exposent `source_locators` et `extraction_status` dans la preuve.

@@ -21,7 +21,7 @@ async def test_article_from_another_code_not_accepted(service):
     assert response["status"] == "version_unknown"
 
 
-async def test_general_territorial_query_searches_texts_and_cetat():
+async def test_explicit_source_routing_and_request_measurement():
     funds = []
 
     def handler(request):
@@ -34,18 +34,35 @@ async def test_general_territorial_query_searches_texts_and_cetat():
     settings = Settings(client_id="fake", client_secret="fake")
     async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
         service = Service(settings, Transport(settings, client))
-        answer = await service.search("temps de travail territorial", as_of_date=date(2026, 9, 15))
-    assert set(funds) == {"CODE_DATE", "LODA_DATE", "JORF", "CETAT"}
+        answer = await service.search(
+            "temps de travail territorial", ["codes"], as_of_date=date(2026, 9, 15)
+        )
+    assert funds == ["CODE_DATE"]
     assert answer["status"] == "ok" and not answer["results"] and not answer["errors"]
+    assert answer["performance"]["network_requests"] == 2  # OAuth and selected fund.
 
 
 async def test_failure_not_zero_results():
     service = Service(Settings())
     try:
-        response = await service.search("temps de travail", as_of_date=date(2026, 9, 15))
+        response = await service.search(
+            "temps de travail",
+            ["codes", "legislation", "jorf", "case_law"],
+            as_of_date=date(2026, 9, 15),
+        )
         assert response["status"] == "error"
         assert len(response["errors"]) == 4
         assert all(e["code"] == "credentials_missing" for e in response["errors"])
+    finally:
+        await service.close()
+
+
+async def test_search_requires_source_selection():
+    service = Service(Settings())
+    try:
+        with pytest.raises(SourceError) as exc:
+            await service.search("temps de travail", as_of_date=date(2026, 9, 15))
+        assert exc.value.problem.code == "source_selection_required"
     finally:
         await service.close()
 
@@ -96,6 +113,10 @@ async def test_cursors_are_query_bound_and_do_not_skip_pages():
 
 async def test_pagination_snapshot_preserves_the_whole_document(service):
     first = await service.fetch("legifrance:" + ARTICLE, date(2026, 9, 15), length=15)
+    assert first["performance"]["network_requests"] >= 1
+    source = service.source_status("legifrance")["sources"][0]
+    assert source["access_state"] == "observed_ok_this_process"
+    assert source["last_attempt"]["operation"] == "fetch"
     parts = [first["text"]]
     assert not first["response_complete"]
     while first["next_offset"]:

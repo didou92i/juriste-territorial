@@ -36,9 +36,11 @@ def main():
     method = commands.add_parser("methodology")
     method.add_argument("topic", nargs="?", default="core")
     ingest = commands.add_parser(
-        "import-local", help="Operator-only import of a private text document"
+        "import-local", help="Operator-only import of a private text, PDF or DOCX document"
     )
     ingest.add_argument("file", type=Path)
+    ingest.add_argument("--ocr", action="store_true", help="OCR PDF pages without selectable text")
+    ingest.add_argument("--ocr-language", default="fra")
     for arg in ("db", "principal", "case", "title"):
         ingest.add_argument("--" + arg, required=True)
     withdraw = commands.add_parser(
@@ -105,7 +107,13 @@ def main():
         print(methodology(args.topic)["text"])
     elif args.command == "import-local":
         identifier = import_document(
-            Path(args.db), args.file, args.principal, args.case, args.title
+            Path(args.db),
+            args.file,
+            args.principal,
+            args.case,
+            args.title,
+            ocr=args.ocr,
+            ocr_language=args.ocr_language,
         )
         print(json.dumps({"source_ref": "local:" + identifier, "case_id": args.case}))
     elif args.command == "withdraw-local":

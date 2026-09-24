@@ -22,7 +22,12 @@ uv run droit-territorial serve
 Appeler `search_admin_archive(query, courts=["CE", "CAA", "TA"])`, puis
 `fetch(source_ref="admin:...")`. Suivre `next_offset` avec la référence
 `evidence:` reçue. Dates de décision et lots importés apparaissent dans la couverture.
-La recherche réunit tous les mots, sans accents ; ce n’est pas une recherche sémantique.
+Un numéro, ECLI ou identifiant XML exact est recherché avant le texte. Pour une
+recherche textuelle, l’index classe les résultats par BM25 ; les mots d'une
+requête doivent tous être présents, mais chaque `variants` (trois au plus)
+ouvre une autre formulation. Le classement est lexical et ne juge pas la
+portée d’une décision. Pour une recherche fondée sur l’apport au droit,
+[le portail officiel conseille ArianeWeb](https://opendata.justice-administrative.fr/aide.html).
 L’offset concerne un index stable : recommencer la recherche après un nouvel import.
 
 ## Provenance, intégrité et retrait
@@ -53,4 +58,4 @@ reste manuel. L’index et l’archive privée sont désactivés en transport HT
 lots historiques, recherche trois décisions connues, lit toutes leurs pages et
 contrôle une citation et les empreintes. Le [résultat conservé](admin-probes-0.2.0.json)
 porte sur **522 décisions importées et trois consultations détaillées**.
-Il ne mesure ni rappel, ni classement, ni interprétation juridique, ni couverture nationale.
+Il ne mesure ni rappel, ni classement sur un corpus national, ni interprétation juridique.

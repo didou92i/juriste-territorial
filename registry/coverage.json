@@ -1,5 +1,5 @@
 {
-  "method_version": "0.2.0",
+  "method_version": "0.4.0",
   "modules": [
     {
       "id": "actes",
@@ -70,5 +70,8 @@
   "release_scope": "local_pilot",
   "national_xml_index": false,
   "shared_http_service": false,
-  "authenticated_api_live_tests": false
+  "authenticated_api_live_tests": true,
+  "authenticated_api_live_tests_scope": "Production search and fetch probes for Légifrance and JudiLibre on one installation, 2026-09-15; no current availability or full historical-version validation",
+  "authenticated_api_live_tests_evidence": "docs/connection-probes-2026-09-15.json",
+  "private_holdout_human_review": "pending"
 }

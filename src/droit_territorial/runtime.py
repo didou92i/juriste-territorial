@@ -4,6 +4,8 @@ import asyncio
 import json
 import os
 import time
+from contextlib import contextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass, field
 
 import httpx
@@ -95,6 +97,16 @@ class Transport:
         self.auth_lock = asyncio.Lock()
         self._token = ""
         self._expires = 0.0
+        self._measurement = ContextVar("jt_request_measurement", default=None)
+
+    @contextmanager
+    def measure(self):
+        counters = {"network_requests": 0, "response_bytes": 0, "network_ms": 0}
+        token = self._measurement.set(counters)
+        try:
+            yield counters
+        finally:
+            self._measurement.reset(token)
 
     async def close(self):
         await self.client.aclose()
@@ -109,6 +121,10 @@ class Transport:
         ):
             raise SourceError("disallowed_destination", "Destination not in the official allowlist")
         for attempt in range(2):
+            counters = self._measurement.get()
+            started = time.perf_counter()
+            if counters is not None:
+                counters["network_requests"] += 1
             try:
                 async with self.semaphore, self.client.stream(method, url, **kwargs) as response:
                     status = response.status_code
@@ -156,6 +172,8 @@ class Transport:
                                 "Response exceeds the bounded reader",
                                 provider,
                             )
+                    if counters is not None:
+                        counters["response_bytes"] += len(content)
                     return bytes(content)
             except (httpx.TimeoutException, httpx.NetworkError) as exc:
                 if attempt == 0:
@@ -164,6 +182,9 @@ class Transport:
                 raise SourceError(
                     "source_unavailable", "Network timeout or connection failure", provider, True
                 ) from exc
+            finally:
+                if counters is not None:
+                    counters["network_ms"] += round((time.perf_counter() - started) * 1000)
         raise SourceError("source_unavailable", "Source unavailable", provider, True)
 
     async def json(self, method, url, **kwargs):

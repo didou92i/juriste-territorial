@@ -51,7 +51,12 @@ class EvidenceStore:
         if offset < 0 or offset >= len(text):
             raise SourceError("invalid_offset", "Offset is outside the retrieved document")
         end = min(offset + length, len(text))
-        metadata = ev.document.model_dump(mode="json", exclude={"text"})
+        metadata = ev.document.model_dump(mode="json", exclude={"text", "locators"})
+        locators = [
+            item.model_dump(mode="json")
+            for item in ev.document.locators
+            if item.start < end and item.end > offset
+        ]
         return {
             "status": "ok",
             "evidence_id": identifier,
@@ -64,6 +69,7 @@ class EvidenceStore:
             "content_hash": ev.content_hash,
             "text": text[offset:end],
             "excerpt_locator": f"chars:{offset}:{end}",
+            "source_locators": locators,
             "next_offset": end if end < len(text) else None,
             "total_characters": len(text),
             "response_complete": offset == 0 and end == len(text),
@@ -75,6 +81,14 @@ class EvidenceStore:
         ev = self.get(claim.evidence_id)
         issues = []
         position = ev.document.text.find(claim.quote)
+        locator = next(
+            (
+                item.label
+                for item in ev.document.locators
+                if position >= item.start and position < item.end
+            ),
+            None,
+        )
         if position < 0:
             issues.append("quote_not_in_retrieved_text")
         if not ev.document.source_complete:
@@ -92,6 +106,7 @@ class EvidenceStore:
             "technical_issues": issues,
             "quote_found": position >= 0,
             "quote_offset": position if position >= 0 else None,
+            "source_locator": locator,
             "content_hash": ev.content_hash,
             "source_ref": ev.source_ref,
             "temporal_applicability": temporal,

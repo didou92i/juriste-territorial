@@ -11,7 +11,14 @@ requires-python = ">=3.12"
 license = "MIT AND CC-BY-SA-4.0"
 license-files = ["LICENSE.md", "LICENSES/*.txt", "NOTICE.md"]
 authors = [{name = "didou92i"}]
-dependencies = ["mcp==2.2.0", "httpx==0.28.1", "pydantic==2.13.5", "beautifulsoup4==4.15.0"]
+dependencies = [
+    "mcp==2.2.0",
+    "httpx==0.28.1",
+    "pydantic==2.13.5",
+    "beautifulsoup4==4.15.0",
+    "pypdf>=6,<7",
+    "python-docx>=1.2,<2",
+]
 
 [project.optional-dependencies]
 credentials = ["keyring==25.7.0"]

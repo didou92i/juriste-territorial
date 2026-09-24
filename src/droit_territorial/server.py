@@ -100,7 +100,7 @@ def build_server(service: Service | None = None):
         legal_order: Literal["administrative", "judicial", "any"] = "administrative",
         cursor: str | None = None,
     ) -> types.CallToolResult:
-        """Federated official search. Consolidated texts require as_of_date. Failed sources remain explicit."""
+        """Select source_types for this legal question. Consolidated texts require as_of_date; failures remain explicit."""
         return await safely(
             lambda: service.search(query, source_types, legal_order, as_of_date, cursor)
         )
@@ -247,14 +247,22 @@ def build_server(service: Service | None = None):
         date_start: date | None = None,
         date_end: date | None = None,
         offset: int = 0,
+        variants: list[str] | None = None,
     ) -> types.CallToolResult:
         """Search the operator-imported official XML subset. Report batches and coverage; zero hits is local only.
 
-        CE/CAA/TA filters are supported here. Follow admin: refs with fetch, then all evidence pages.
+        CE/CAA/TA filters and up to three wording variants are supported. Exact XML id, ECLI or
+        case number takes priority. Follow admin: refs with fetch, then all evidence pages.
         """
         return await safely(
             lambda: service.admin.search(
-                query, courts, date_start, date_end, offset, service.settings.blocked_ids
+                query,
+                courts,
+                date_start,
+                date_end,
+                offset,
+                service.settings.blocked_ids,
+                variants,
             )
         )
 

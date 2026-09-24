@@ -71,6 +71,16 @@ class CaseContext(Model):
     method_version: str = "0.4.0"
     facts: list[Fact] = Field(default_factory=list, max_length=200)
     event_dates: dict[str, date] = Field(default_factory=dict)
+    risk_level: Literal["routine", "sensitive"] = "routine"
+
+
+class TextLocator(Model):
+    label: str = Field(min_length=1, max_length=100)
+    start: int = Field(ge=0)
+    end: int = Field(ge=0)
+    method: Literal["original_text", "pdf_text", "docx_text", "ocr"]
+    confidence: float | None = Field(default=None, ge=0, le=100)
+    uncertain: bool = False
 
 
 class Document(Model):
@@ -90,6 +100,7 @@ class Document(Model):
     original_content_hash: str | None = None
     collection_hash: str | None = None
     ecli: str | None = None
+    case_number: str | None = None
     decision_type: str | None = None
     publication_code: str | None = None
     retrieved_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
@@ -104,6 +115,8 @@ class Document(Model):
     withdrawal_status: Literal["not_checked", "not_reported", "withdrawn"] = "not_checked"
     related_refs: list[str] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
+    locators: list[TextLocator] = Field(default_factory=list, max_length=5000)
+    extraction_status: Literal["complete", "partial", "ocr_unreviewed"] | None = None
 
 
 class Evidence(Model):

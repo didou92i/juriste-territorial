@@ -1,14 +1,33 @@
 # Pièces privées locales
 
-Le pilote importe du texte UTF-8 `.txt`/`.md`. Il conserve les octets originaux,
-leur empreinte et le texte dans une base SQLite privée. Il ne prétend pas
-extraire ou vérifier un scan ou un PDF.
+L’import volontaire accepte `.txt`/`.md` UTF-8, `.pdf` et `.docx`. Il conserve
+**l’original**, son empreinte SHA-256, le texte extrait, son empreinte et des
+repères de page, paragraphe ou ligne de tableau dans une base SQLite privée.
+L’extraction PDF/DOCX est partielle : vérifier signatures, annexes, images,
+notes et mise en page dans l’original avant d’en tirer une conséquence.
 
 ```bash
 uv run droit-territorial import-local piece.md \
   --db private/dossiers.sqlite --principal juriste-a \
   --case dossier-001 --title "Délibération à vérifier"
+
+# Pour un PDF scanné, après installation locale de pdftoppm et Tesseract :
+uv run droit-territorial import-local scan.pdf --ocr --ocr-language fra \
+  --db private/dossiers.sqlite --principal juriste-a \
+  --case dossier-001 --title "Scan à relire"
 ```
+
+L’OCR ne s’applique qu’aux pages PDF sans texte suffisamment extractible.
+`extraction_status=ocr_unreviewed` signale une transcription à comparer au
+scan. Les lignes OCR de confiance inférieure à 85/100 portent `uncertain=true` ;
+une confiance élevée ne certifie pas le texte. Les résultats `fetch` exposent
+les `source_locators` des passages affichés. Une délibération non importée ou
+une annexe illisible demeure une pièce manquante, pas une règle présumée.
+
+Bornes : fichier 20 Mo, texte UTF-8 2 Mo, 200 pages PDF, 2 millions de
+caractères extraits, 5 000 repères. L’OCR est local ; aucun document n’est
+transmis à un prestataire par l’import. La sortie du MCP, elle, est traitée
+selon la configuration du modèle de votre client.
 
 Configurer le processus MCP stdio avec `JT_LOCAL_DB` (chemin absolu) et
 `JT_PRINCIPAL`. L'identité est définie par l'opérateur ; elle n'est jamais un
