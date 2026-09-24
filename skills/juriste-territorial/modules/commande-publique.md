@@ -43,3 +43,28 @@ et vérifier la cohérence entre règlement, acte d'engagement et cahiers des ch
 
 Sources : [Code de la commande publique](https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000037701019/),
 [DAJ](https://www.economie.gouv.fr/daj/commande-publique), jurisprudence administrative.
+
+## Ancrages à vérifier
+
+- CCP L. 2111-1 (définition préalable du besoin), R. 2121-1 et s. (valeur estimée),
+  L. 2113-10 et s. (allotissement), R. 2122-1 et s. (marchés sans publicité ni mise
+  en concurrence, dont R. 2122-8), L. 2194-1 et R. 2194-1 à R. 2194-9 (modifications).
+- CJA L. 551-1 (référé précontractuel) et L. 551-13 (référé contractuel).
+- CE Sect. 3 octobre 2008, *SMIRGEOMES* : le requérant au référé précontractuel
+  invoque des manquements susceptibles de l'avoir lésé.
+- CE Ass. 28 décembre 2009, *Commune de Béziers* : exigence de loyauté des relations
+  contractuelles ; toute irrégularité n'écarte pas le contrat.
+- CE Ass. 4 avril 2014, *Département de Tarn-et-Garonne* : recours des tiers
+  contre la validité du contrat, intérêt lésé et moyens invocables.
+- C. pén. 432-14 : atteinte à la liberté d'accès et à l'égalité des candidats.
+
+## Pièges fréquents
+
+- Comparer au seuil le montant d'un seul bon de commande, d'une année ou d'un lot
+  au lieu de la valeur totale du besoin homogène sur la durée.
+- Fractionner un besoin, y compris en successions de « petits achats ».
+- Dispense de procédure lue comme dispense de bon usage des deniers publics :
+  choix pertinent, pas de contractualisation systématique avec un même opérateur.
+- Avenant dont le cumul modifie l'équilibre ou l'objet, justifié par un seul fondement.
+- Critère d'attribution non annoncé ou sous-critère pondéré non communiqué.
+- Appliquer à une concession les règles d'un marché, ou l'inverse.
