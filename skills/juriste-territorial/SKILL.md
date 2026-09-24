@@ -4,7 +4,7 @@ description: Analyser une question juridique territoriale, articuler textes et a
 license: CC-BY-SA-4.0
 metadata:
   version: "0.4.0"
-  method_reviewed_at: "2026-09-22"
+  method_reviewed_at: "2026-09-24"
   maturity: "experimental"
 ---
 

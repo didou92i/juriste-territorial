@@ -1,7 +1,6 @@
 """Build the standalone skill from the single canonical directory."""
 
 import hashlib
-import tomllib
 import zipfile
 from pathlib import Path
 
@@ -10,15 +9,14 @@ SOURCE = ROOT / "skills" / "juriste-territorial"
 
 
 def main():
-    version = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]["version"]
-    output = ROOT / "dist" / f"juriste-territorial-{version}.zip"
+    output = ROOT / "dist" / "juriste-territorial-0.4.0.zip"
     output.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as archive:
         for file in sorted(SOURCE.rglob("*")):
             if file.is_file():
                 info = zipfile.ZipInfo(
                     str(Path("juriste-territorial") / file.relative_to(SOURCE)),
-                    (2026, 9, 22, 0, 0, 0),
+                    (2026, 9, 24, 0, 0, 0),
                 )
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.external_attr = 0o644 << 16

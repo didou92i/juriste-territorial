@@ -68,10 +68,10 @@ class CaseContext(Model):
     entity_type: str
     actor_capacity: str
     as_of_date: date
-    risk_level: Literal["routine", "sensitive"] = "routine"
     method_version: str = "0.4.0"
     facts: list[Fact] = Field(default_factory=list, max_length=200)
     event_dates: dict[str, date] = Field(default_factory=dict)
+    risk_level: Literal["routine", "sensitive"] = "routine"
 
 
 class TextLocator(Model):
