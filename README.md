@@ -11,7 +11,7 @@
 Pensé pour les juristes, directions générales, services RH et agents des collectivités, **Juriste territorial** associe une méthode de raisonnement, **13 domaines métier** et un **serveur MCP de 14 outils** pour rechercher, consulter et contrôler les éléments d’un dossier.
 
 <p align="center">
-  <a href="https://github.com/didou92i/juriste-territorial/releases/download/v0.3.1/juriste-territorial-0.3.1.zip"><strong>Télécharger le skill</strong></a>
+  <a href="https://github.com/didou92i/juriste-territorial/releases/download/v0.4.0/juriste-territorial-0.4.0.zip"><strong>Télécharger le skill</strong></a>
   &nbsp; · &nbsp;
   <a href="#installer-le-mcp"><strong>Installer le MCP</strong></a>
   &nbsp; · &nbsp;
@@ -163,7 +163,7 @@ si l'API ne le communique pas.
 
 ### Utiliser le skill
 
-1. **[Télécharger le ZIP du skill](https://github.com/didou92i/juriste-territorial/releases/download/v0.3.1/juriste-territorial-0.3.1.zip).**
+1. **[Télécharger le ZIP du skill](https://github.com/didou92i/juriste-territorial/releases/download/v0.4.0/juriste-territorial-0.4.0.zip).**
 2. Décompresser le dossier `juriste-territorial` dans le répertoire de skills de votre client compatible.
 3. Ouvrir une nouvelle session, vérifier que le skill est disponible et lui soumettre un premier dossier.
 
@@ -180,10 +180,6 @@ et la prochaine action utile.
 ```
 
 Le skill peut utiliser les outils web de votre assistant sans clé PISTE. Il conserve sa méthode lorsque certaines sources sont indisponibles et doit signaler les références non vérifiées.
-
-Le ZIP lié ci-dessus reste la **version publiée 0.3.1**. Pour tester les
-changements 0.4.0 de cette branche avant leur publication, installer le skill
-directement depuis `skills/juriste-territorial/` du dépôt cloné.
 
 ### Installer le MCP
 
@@ -219,13 +215,13 @@ fournies par votre gestionnaire de secrets.
 
 Le mode **stdio local** permet un usage individuel avec pièces privées configurées. Le transport HTTP fourni est limité à `127.0.0.1` et désactive les magasins locaux. Une connexion distante à une application nécessite un déploiement et une authentification adaptés.
 
-→ [Installation, accès API et compatibilité](docs/compatibility.md) · [Toutes les archives de la distribution](https://github.com/didou92i/juriste-territorial/releases/tag/v0.3.1)
+→ [Installation, accès API et compatibilité](docs/compatibility.md) · [Toutes les archives de la distribution](https://github.com/didou92i/juriste-territorial/releases/tag/v0.4.0)
 
 ## Une confiance fondée sur des éléments vérifiables
 
 | Ce qui est vérifié | Ce que cela démontre |
 |---|---|
-| **156 tests réussis, 1 ignoré** sur la branche 0.4.0 | Fonctionnement technique des contrats, règles bornées, accès, preuves et protocoles testés |
+| **156 tests réussis, 1 ignoré** dans la version 0.4.0 | Fonctionnement technique des contrats, règles bornées, accès, preuves et protocoles testés |
 | **MCP stdio et HTTP local** avec un client SDK réel | Initialisation, découverte et appels des outils, ressources et prompt |
 | **Légifrance et JudiLibre en production** | [Recherches et lectures ponctuelles réussies](docs/connection-probes-2026-09-15.json) sur une installation ; aucun identifiant distribué |
 | **data.gouv.fr dans un client réel** | [Recherche, métadonnées et échantillon BANATIC](docs/validation-datagouv.md) ; limite tabulaire d’un autre fichier identifiée |
@@ -274,4 +270,4 @@ uv run --frozen python scripts/package_skill.py
 
 **Code sous MIT · Méthode et documentation sous CC BY-SA 4.0.** Méthode adaptée avec attribution à @brissonjo-sudo ; détail des reprises dans [NOTICE.md](NOTICE.md), [THIRD_PARTY.yml](THIRD_PARTY.yml) et la [revue des dépôts sources](docs/source-review.md).
 
-[Commencer avec le skill publié](https://github.com/didou92i/juriste-territorial/releases/download/v0.3.1/juriste-territorial-0.3.1.zip) · [Explorer les nouveautés 0.4.0](docs/release-0.4.0.md) · [Consulter les licences](LICENSE.md)
+[Commencer avec le skill publié](https://github.com/didou92i/juriste-territorial/releases/download/v0.4.0/juriste-territorial-0.4.0.zip) · [Explorer les nouveautés 0.4.0](docs/release-0.4.0.md) · [Consulter les licences](LICENSE.md)
