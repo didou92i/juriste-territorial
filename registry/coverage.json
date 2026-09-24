@@ -27,6 +27,11 @@
       "independent_human_legal_review": false
     },
     {
+      "id": "elus-deontologie",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
       "id": "finances",
       "status": "experimental",
       "independent_human_legal_review": false
@@ -43,6 +48,11 @@
     },
     {
       "id": "police",
+      "status": "experimental",
+      "independent_human_legal_review": false
+    },
+    {
+      "id": "responsabilite",
       "status": "experimental",
       "independent_human_legal_review": false
     },

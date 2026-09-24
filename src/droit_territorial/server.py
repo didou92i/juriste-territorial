@@ -76,7 +76,7 @@ def build_server(service: Service | None = None):
 
     mcp = MCPServer(
         "droit-territorial",
-        version="0.3.1",
+        version="0.4.0",
         lifespan=lifespan,
         instructions="At first use, call get_source_status. Explain missing API access briefly using "
         "its setup guidance and get_methodology(topic='installation'). Never request secrets in chat "

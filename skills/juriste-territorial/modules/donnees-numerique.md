@@ -31,3 +31,24 @@ Une validation humaine purement formelle ne résout pas, seule, les questions ju
 **Sortie** : obligations et conditions identifiées, données qui sortent du système,
 pièces manquantes, options de mise en conformité à examiner. Sources :
 [CNIL](https://www.cnil.fr/), EUR-Lex, Légifrance, CADA, DINUM/ANSSI selon leur portée.
+
+## Ancrages à vérifier
+
+- RGPD art. 5, 6, 28, 30, 35 et 37 (principes, bases, sous-traitance, registre,
+  analyse d'impact, délégué obligatoire pour une autorité publique) ; loi n° 78-17.
+- CRPA L. 311-3-1 (mention explicite et explication d'une décision individuelle
+  prise sur le fondement d'un traitement algorithmique), L. 312-1-3 (publication
+  des règles des principaux traitements algorithmiques, seuil d'effectif à vérifier),
+  L. 312-1-1 (ouverture des données par défaut, collectivités concernées).
+- Règlement (UE) 2024/1689 sur l'IA, modifié par le règlement « omnibus »
+  (UE) 2026/1744 : calendrier à relire (voir [veille](../references/veille.md)).
+- CSI L. 251-1 et s. (vidéoprotection) : autorisation, finalités, durée.
+
+## Pièges fréquents
+
+- Tenir un prestataire pour seul responsable alors que la collectivité détermine
+  les finalités : elle reste responsable de traitement.
+- Mettre en production un outil d'IA traitant des usagers ou des agents sans
+  analyse de la base légale, d'une AIPD éventuelle ni information des personnes.
+- Annoncer des obligations « haut risque » du règlement IA déjà applicables.
+- Publier en open data des documents contenant des données personnelles non occultées.
