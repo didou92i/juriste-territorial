@@ -59,6 +59,41 @@ décision : `all` pour toutes les conditions préalables, `any` pour une voie
 alternative, et une branche séparée si la qualification change la règle.
 Ne pas marquer « établi » si une condition décisive demeure inconnue ou contestée.
 
+### Interpréter le texte avant de l'appliquer
+
+Lire d'abord la lettre, puis le contexte (article voisin, définition du code,
+renvoi), la finalité et, si le texte reste ambigu, les travaux préparatoires
+ou la jurisprudence qui l'interprète. Une exception s'interprète strictement ;
+un raisonnement *a contrario* ou par analogie exige de montrer pourquoi la
+situation non visée partage (ou non) la raison d'être de la règle.
+
+Distinguer la valeur des supports : loi, règlement, délibération, circulaire
+ou instruction, FAQ ministérielle, fiche CDG, réponse ministérielle. Une
+interprétation administrative publiée peut être invocable dans les conditions
+du CRPA (L. 312-3), sans devenir une règle de droit opposable au juge.
+
+### Répartir la preuve
+
+Pour chaque condition, identifier qui doit l'établir et par quelle pièce.
+Devant le juge administratif, l'instruction est dirigée par le juge : une
+allégation suffisamment précise et étayée peut conduire à demander ses éléments
+à l'administration qui les détient. Une absence de preuve de la collectivité
+n'a donc pas le même effet qu'une absence de preuve d'un requérant.
+Un fait négatif (« aucune délibération n'existe ») se prouve rarement par une
+absence de réponse : demander la pièce ou une attestation de l'autorité.
+
+### Anticiper le contrôle exercé
+
+Une décision n'est pas vulnérable au même degré selon l'intensité du contrôle :
+restreint (erreur manifeste d'appréciation), normal (qualification juridique des
+faits), entier (proportionnalité, par exemple sanction disciplinaire ou mesure
+de police restreignant une liberté). Rechercher l'intensité applicable à ce type
+de décision avant d'évaluer le risque d'annulation ; ne pas l'inventer.
+
+Examiner ensuite ce que le juge peut faire du vice : neutralisation (*Danthony*),
+substitution de base légale ou de motifs, régularisation, annulation partielle,
+modulation dans le temps. C'est ce résultat, non le vice seul, qui mesure le risque.
+
 ## 4. Mettre la conclusion à l'épreuve
 
 Retenir l'objection qui peut réellement modifier le résultat : qualification
@@ -88,6 +123,16 @@ ne valide que leur cohérence formelle, jamais la conclusion juridique.
 Qualifier chaque incertitude en mots, avec sa conséquence. Aucun score universel
 d'autorité, moyenne de jurisprudences ou pourcentage de succès sans base mesurée.
 
+Employer une échelle verbale liée aux preuves, et dire pourquoi :
+
+| Formulation | Emploi |
+|---|---|
+| « Établi » | Texte lu dans la bonne version et faits prouvés par pièce |
+| « Solide, sous réserve de… » | Règle claire ; une pièce ou un fait secondaire reste à confirmer |
+| « Discutable » | Qualification ou interprétation sérieusement contestable, ou jurisprudence partagée |
+| « Fragile » | Contraire à la lettre, à une jurisprudence identifiée ou dépourvu de preuve décisive |
+| « Non déterminable à ce stade » | Condition décisive inconnue ; nommer la pièce qui tranchera |
+
 ## 6. Aller jusqu'à l'action
 
 Conclure « possible sous conditions », « ce fondement ne suffit pas », « non
@@ -98,3 +143,20 @@ Ne pas bloquer une note entière parce qu'un seul point reste réservé.
 Pour les dossiers urgents : identifier immédiatement les échéances plausibles,
 sans calcul non justifié, et les mesures conservatoires à examiner. Ne pas
 attendre d'avoir un exposé exhaustif pour signaler une action qui ne peut attendre.
+
+## 7. Contrôle final avant remise
+
+Relire la réponse contre ces questions ; corriger plutôt que commenter :
+
+1. La première phrase répond-elle à la question posée, au bon niveau de généralité ?
+2. La personne morale, l'organe et le signataire sont-ils les bons, à la bonne date ?
+3. Chaque règle décisive a-t-elle été lue dans la version applicable au fait
+   générateur, et non seulement celle du jour ? Un changement de la
+   [veille](veille.md) est-il en cause ?
+4. Chaque condition est-elle reliée à un fait ou à une pièce, avec son état ?
+5. L'exception, le texte spécial ou la jurisprudence contraire ont-ils été cherchés ?
+6. L'objection la plus forte est-elle traitée, et le test de bascule effectué ?
+7. Une référence a-t-elle été citée sans être consultée ? La marquer ou la retirer.
+8. Un délai, un montant ou un seuil figure-t-il sans source et date ? Le réserver.
+9. L'action proposée est-elle réalisable par ce demandeur, dans ce calendrier ?
+10. Le ton reste-t-il le même quel que soit le camp du demandeur ?

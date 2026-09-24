@@ -8,7 +8,7 @@
 
 **Donnez à votre assistant IA une méthode pour analyser vos dossiers, construire une argumentation et préparer vos décisions territoriales.**
 
-Pensé pour les juristes, directions générales, services RH et agents des collectivités, **Juriste territorial** associe une méthode de raisonnement, **11 domaines métier** et un **serveur MCP de 14 outils** pour rechercher, consulter et contrôler les éléments d’un dossier.
+Pensé pour les juristes, directions générales, services RH et agents des collectivités, **Juriste territorial** associe une méthode de raisonnement, **13 domaines métier** et un **serveur MCP de 14 outils** pour rechercher, consulter et contrôler les éléments d’un dossier.
 
 <p align="center">
   <a href="https://github.com/didou92i/juriste-territorial/releases/download/v0.3.1/juriste-territorial-0.3.1.zip"><strong>Télécharger le skill</strong></a>
@@ -83,6 +83,8 @@ Les modules sont chargés selon la question. Chaque domaine apporte ses points d
 | [Services publics](skills/juriste-territorial/modules/services-publics.md) | Accès, égalité, tarifs et documents administratifs |
 | [Données et numérique](skills/juriste-territorial/modules/donnees-numerique.md) | Données personnelles, numérique, IA et sécurité |
 | [Contentieux](skills/juriste-territorial/modules/contentieux.md) | Recevabilité, urgence, moyens, mémoire et effets recherchés |
+| [Élus et déontologie](skills/juriste-territorial/modules/elus-deontologie.md) | Conflit d'intérêts, déport, probité, statut de l'élu, déontologie des agents |
+| [Responsabilités](skills/juriste-territorial/modules/responsabilite.md) | Responsabilité administrative, pénale et des gestionnaires publics |
 
 **Ce sont des guides métier expérimentaux.** Leur présence indique un périmètre d’analyse ; la couverture juridique de chaque domaine doit encore être qualifiée par des relecteurs humains.
 
@@ -240,7 +242,7 @@ Les preuves et notes peuvent être conservées dans une archive privée facultat
 ## Un projet ouvert et structuré pour évoluer
 
 ```text
-skills/juriste-territorial/   Méthode, 11 modules et gabarits
+skills/juriste-territorial/   Méthode, 13 modules, veille et gabarits
 src/droit_territorial/       Serveur MCP, sources et contrôles
 registry/                   Règles datées, sources et couverture
 evals/                      Dossiers fictifs et protocole d’évaluation

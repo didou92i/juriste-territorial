@@ -35,3 +35,33 @@ précise, démarche vers DRH/CDG ou autorité compétente. Anonymiser les recher
 Points d'entrée : [Légifrance](https://www.legifrance.gouv.fr/),
 [DGCL](https://www.collectivites-locales.gouv.fr/), CDG/CIG concernés.
 Une fiche CDG explique et oriente ; retrouver les dispositions qu'elle mobilise.
+
+## Ancrages à vérifier
+
+- CGFP (en vigueur depuis le 1er mars 2022) ; partie réglementaire en cours de
+  publication par livres (voir [veille](../references/veille.md)). Retrouver la
+  correspondance entre anciennes lois 83-634 / 84-53 et articles du code.
+- Temps de travail : CGFP L. 611-1 à L. 611-3 ; décret n° 2001-623 renvoyant
+  au décret n° 2000-815 (durée annuelle de référence) ; délibération locale.
+- Heures supplémentaires : décret n° 91-875 (parité avec l'État) et décret
+  n° 2002-60 ; éligibilité, décompte automatisé ou contrôle, compensation.
+- Régime indemnitaire : principe de parité (CGFP L. 714-4 et s.) ; RIFSEEP
+  (décret n° 2014-513 pour l'État, transposé par délibération) ; statut particulier.
+- Contractuels : CGFP L. 332-8 (emplois permanents), L. 332-13, L. 332-14,
+  L. 332-23 (besoins temporaires), L. 332-24 (contrat de projet).
+- Discipline : [L. 533-1](https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044425388)
+  (échelle des sanctions), L. 532-2 (prescription de trois ans à compter de la
+  connaissance effective), L. 531-1 (suspension conservatoire) ; CE Ass.
+  13 novembre 2013, *Dahan* : contrôle entier de la proportionnalité de la sanction.
+- Protection fonctionnelle des agents : CGFP L. 134-1 et s.
+
+## Pièges fréquents
+
+- Transposer une règle de la FPE ou du Code du travail sans texte de renvoi.
+- Traiter une prime comme due sans délibération instituant le régime et sans
+  décision individuelle ; ou, à l'inverse, nier un droit statutaire faute de délibération.
+- Assimiler toute présence au-delà du cycle à des heures supplémentaires sans
+  demande ou autorisation de l'autorité.
+- Sanctionner hors prescription ou prononcer une sanction absente de l'échelle.
+- Confondre suspension conservatoire (mesure d'intérêt du service) et sanction.
+- Enchaîner des CDD sur le fondement « accroissement temporaire » pour un besoin permanent.

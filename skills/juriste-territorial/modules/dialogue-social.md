@@ -37,3 +37,31 @@ ne pas lui appliquer mécaniquement la chaîne de décision de la collectivité.
 Comparer la décision annoncée, les signatures constatées, les conditions d’adhésion
 et les pièces réellement disponibles. Pour une règle liée à un scrutin futur,
 vérifier aussi sa portée « en vue » du scrutin et les dispositions transitoires.
+
+## Ancrages à vérifier
+
+- CGFP livre II (L. 211-1 et s.) : liberté syndicale, moyens, instances ;
+  partie réglementaire en vigueur depuis le 1er février 2025 (décret n° 2024-1038).
+  Les fiches de CDG signalent l'abrogation des décrets n° 85-397 et n° 85-552 à
+  cette date : vérifier sur Légifrance la table de concordance.
+- Codifications signalées (à relire) : locaux R. 213-24 et s. ; réunions
+  R. 213-33 et s. ; crédit de temps syndical L. 214-4 et s., R. 214-18 et s. ;
+  autorisations d'absence R. 214-36 et s. ; congé pour formation syndicale
+  [L. 215-1](https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044427470)
+  et R. 215-1 et s.
+- Comité social territorial : CGFP L. 251-5 et s. ; texte d'application FPT
+  (décret n° 2021-571, codification éventuelle à vérifier) ; formation spécialisée.
+- Élections professionnelles du 10 décembre 2026 : textes électoraux,
+  protocole, listes, conditions d'éligibilité et vote électronique éventuel.
+
+## Pièges fréquents
+
+- Citer le décret n° 85-397 pour une demande postérieure au 1er février 2025.
+- Confondre ASA pour mandat dans un organisme directeur, crédit de temps syndical
+  (décharge + ASA contingentées) et congé pour formation syndicale.
+- Refuser pour « nécessités de service » sans éléments concrets ni délai de réponse
+  conforme ; ou prétendre qu'aucun refus n'est jamais possible.
+- Traiter un avis du CST comme une décision ou une consultation omise comme sans effet
+  (examiner la garantie au sens *Danthony*).
+- Utiliser des moyens de la collectivité pour une campagne électorale syndicale
+  hors règles d'égalité entre organisations.
