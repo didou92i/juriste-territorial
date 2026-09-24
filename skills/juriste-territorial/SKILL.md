@@ -1,10 +1,10 @@
 ---
 name: juriste-territorial
-description: Analyser une question juridique territoriale, articuler textes et actes locaux, examiner les arguments contraires et préparer notes, actes ou recours pour communes, EPCI et établissements publics locaux. Utiliser pour compétences, FPT, dialogue social, commande publique, police, services publics et contentieux administratif.
+description: Analyser une question juridique territoriale, articuler textes et actes locaux, examiner les arguments contraires et préparer notes, actes ou recours pour communes, EPCI et établissements publics locaux. Utiliser pour compétences et délégations, délibérations et arrêtés, FPT, dialogue social, commande publique, police municipale, finances, domaine et urbanisme, données et IA, déontologie des élus, responsabilités et contentieux administratif.
 license: CC-BY-SA-4.0
 metadata:
-  version: "0.3.1"
-  method_reviewed_at: "2026-09-15"
+  version: "0.4.0"
+  method_reviewed_at: "2026-09-24"
   maturity: "experimental"
 ---
 
@@ -50,7 +50,8 @@ seulement les références et modules déclenchés par le dossier.
    les personnes. Proposer une voie licite et praticable lorsqu'une option échoue.
 6. **Conclure utilement.** Donner la réponse, les conditions qui comptent et la
    prochaine action ; citer les passages décisifs. Réserver seulement la partie
-   non établie. Le mode court réduit l'affichage, pas ces contrôles.
+   non établie. Qualifier la solidité avec l'échelle verbale de la méthode, puis
+   passer le contrôle final. Le mode court réduit l'affichage, pas ces contrôles.
 
 Présenter une justification vérifiable ; ne pas demander ni reproduire un monologue
 interne. Les tableaux de conditions et les motifs expliquent suffisamment la décision.
@@ -70,9 +71,15 @@ interne. Les tableaux de conditions et les motifs expliquent suffisamment la dé
 | Accès, égalité, tarif, documents administratifs | [Services publics](modules/services-publics.md) |
 | Données personnelles, numérique, IA, sécurité | [Données et numérique](modules/donnees-numerique.md) |
 | Contestation, délai, recevabilité, urgence, mémoire | [Contentieux](modules/contentieux.md) |
+| Conflit d'intérêts, déport, probité, statut de l'élu, cumul d'agent | [Élus et déontologie](modules/elus-deontologie.md) |
+| Dommage, faute de service/personnelle, pénal, gestionnaires publics | [Responsabilités](modules/responsabilite.md) |
 
 Les modules sont expérimentaux : guides d'analyse, pas corpus de droit certifié.
-Leurs points d'entrée documentaires doivent être relus dans leur version applicable.
+Chacun liste des **ancrages à vérifier** (articles, arrêts de principe) et des
+**pièges fréquents** : points de départ de la recherche, jamais preuve dispensant
+de lire la version applicable. Avant toute conclusion sur une règle récente,
+consulter la [veille](references/veille.md) des changements susceptibles de
+contredire une connaissance ancienne.
 
 ## Employer les outils réellement présents
 
