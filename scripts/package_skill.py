@@ -15,9 +15,16 @@ def main():
     output.parent.mkdir(exist_ok=True)
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as archive:
         for file in sorted(SOURCE.rglob("*")):
+            relative = file.relative_to(SOURCE)
+            if (
+                "__pycache__" in relative.parts
+                or file.suffix in {".pyc", ".pyo"}
+                or file.name == ".DS_Store"
+            ):
+                continue
             if file.is_file():
                 info = zipfile.ZipInfo(
-                    str(Path("juriste-territorial") / file.relative_to(SOURCE)),
+                    str(Path("juriste-territorial") / relative),
                     (2026, 9, 25, 0, 0, 0),
                 )
                 info.compress_type = zipfile.ZIP_DEFLATED

@@ -1,10 +1,10 @@
 ---
 name: juriste-territorial
-description: Analyser une question juridique territoriale, articuler textes et actes locaux, examiner les arguments contraires et préparer notes, actes ou recours pour communes, EPCI et établissements publics locaux. Utiliser pour compétences et délégations, délibérations et arrêtés, FPT, dialogue social, commande publique, police municipale, finances, domaine et urbanisme, données et IA, déontologie des élus, responsabilités et contentieux administratif.
+description: Analyser une question juridique territoriale, articuler textes et actes locaux, examiner les arguments contraires et préparer notes, actes ou recours pour communes, EPCI et établissements publics locaux. Construire ou relire un mémoire pour une commission (dont la CCP), une administration ou un juge, ou un mémoire de recherche en droit territorial. Utiliser pour compétences et délégations, délibérations et arrêtés, FPT, dialogue social, commande publique, police municipale, finances, domaine et urbanisme, données et IA, déontologie des élus, responsabilités et contentieux administratif.
 license: CC-BY-SA-4.0
 metadata:
-  version: "0.4.0"
-  method_reviewed_at: "2026-09-24"
+  version: "0.4.1"
+  method_reviewed_at: "2026-11-17"
   maturity: "experimental"
 ---
 
@@ -25,8 +25,22 @@ l'acteur agit, les faits décisifs et la date qui commande la règle. Distinguer
 commune, EPCI, CCAS/CIAS, département, région, régie et société locale.
 Le métier du demandeur adapte le vocabulaire, jamais la solution de droit.
 
+Pour chaque dossier concret, retrouver ou créer son `CONTEXTE_DOSSIER.md` privé.
+Le lire avant l'analyse et après toute reprise de session ou compaction ; actualiser
+les faits, demandes, échéances et livrables à chaque évolution importante.
+Suivre [la reprise et le suivi du dossier](references/suivi-dossier.md), avec
+le [modèle de contexte](templates/contexte-dossier.md). Ce suivi ne s'applique
+pas à une question générale sans dossier. Le fichier est un index de travail
+daté, jamais une preuve ni une garantie d'exhaustivité.
+
 Lire [la méthode](references/methode.md) pour une analyse de fond. Charger ensuite
 seulement les références et modules déclenchés par le dossier.
+
+Pour monter, rédiger ou relire un **mémoire**, lire la [méthode du mémoire](references/memoire.md).
+Identifier le destinataire et le résultat attendu avant de choisir la [trame](templates/trames-memoire.md).
+Pour une relecture, appliquer les contrôles au texte fourni et respecter la portée des retouches demandées.
+Pour tout courrier, courriel ou mémoire destiné à un tiers, vérifier que
+[chaque affirmation conserve son niveau de preuve](references/preuve-et-recherche.md#niveau-de-preuve-dans-les-courriers).
 
 ## Construire la réponse
 
@@ -64,6 +78,11 @@ décisive ou une délibération locale manque, conclure sous réserve précise.
 Présenter une justification vérifiable ; ne pas demander ni reproduire un monologue
 interne. Les tableaux de conditions et les motifs expliquent suffisamment la décision.
 
+À réception d'une pièce décisive, réexaminer ses effets sur les demandes, les dates
+et les conclusions antérieures. Distinguer ce qui est accordé, ce qui reste
+contesté et ce dont l'exécution est à vérifier ; propager les corrections aux
+livrables concernés selon [le suivi du dossier](references/suivi-dossier.md).
+
 ## Modules à la demande
 
 | Le dossier porte sur… | Référence |
@@ -90,6 +109,12 @@ consulter la [veille](references/veille.md) des changements susceptibles de
 contredire une connaissance ancienne.
 
 ## Employer les outils réellement présents
+
+Pour une recherche sur Légifrance, utiliser [le parcours Légifrance](references/legifrance.md) :
+MCP dédié réellement exposé, adaptateur du MCP territorial ou skill spécialisé
+réellement installé, selon leurs capacités ; à défaut, site officiel.
+Lire les schémas des outils disponibles et leurs limites avant les appels.
+La présence d'une configuration ou d'un skill ne prouve pas l'accès à une API.
 
 Avec le MCP `droit-territorial`, commencer par `get_source_status` et, si nécessaire,
 `get_methodology`. Le nom exposé peut porter le préfixe du client. Voir le

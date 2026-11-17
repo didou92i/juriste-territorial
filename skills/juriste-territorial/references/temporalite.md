@@ -27,6 +27,14 @@ qualification ; vérifier les effets temporels éventuels de la décision.
 Conserver la version de méthode et les sources d'une note historique. Une mise
 à jour produit une nouvelle analyse, pas une modification silencieuse du dossier.
 
+Pour une échéance du dossier, conserver une ligne : événement déclencheur,
+date établie et pièce, règle et mode de calcul, échéance ou scénarios conditionnels,
+action suivante. La date d'un courrier, de sa signature ou de sa numérisation
+ne remplace pas la preuve de sa notification. Séparer les voies et délais
+concurrents ; ne pas attribuer d'effet suspensif ou interruptif à une démarche
+sans fondement vérifié. Si le départ reste inconnu, poser une question ciblée
+sur le justificatif et poursuivre les travaux qui n'en dépendent pas.
+
 Exemple de transition à relire : [R. 2122-8 du CCP](https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000053222294).
 Le fait générateur de la transition figure dans le texte modificatif ; la date
 d'émission de la note ne détermine pas le régime d'une consultation déjà engagée.

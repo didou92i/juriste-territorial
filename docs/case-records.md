@@ -51,3 +51,18 @@ Ce n’est ni du chiffrement au repos ni une authentification multiutilisateur.
 
 Définir localement conservation, sauvegarde et effacement. Ne jamais placer
 l’archive, les réponses privées ou les pièces de travail dans le dépôt public.
+
+## Contexte Markdown pour la reprise
+
+Chaque dossier concret traité par le skill conserve aussi un `CONTEXTE_DOSSIER.md`
+privé selon [le protocole de suivi](../skills/juriste-territorial/references/suivi-dossier.md).
+Le fichier relie état courant, pièces, demandes et réponses, échéances, conseils
+remplacés et versions remises. L’agent le relit avant une reprise et le met à jour
+après une évolution importante. Un résumé ancien doit être contrôlé contre les
+originaux utiles ; il n’a pas de valeur probante propre.
+
+`python skills/juriste-territorial/scripts/init_dossier.py --dossier /chemin/prive --titre "Objet"`
+crée le contexte et un `AGENTS.md` sans remplacer les fichiers existants. Le MCP
+reste en lecture seule : ce suivi dépend des capacités locales de l’agent et ne
+constitue ni une mémoire globale Codex ni un chargement automatique universel.
+Le contexte ne fait partie ni d’un paquet à transmettre ni de la distribution publique.
