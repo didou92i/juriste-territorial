@@ -38,12 +38,16 @@ de présenter l'acte comme prêt à signer.
 Objet précis → faits non polémiques et datés → fondement et application → demande
 réalisable → pièces utiles → suite ou délai seulement s'il est établi.
 Adapter au destinataire sans transformer une hypothèse en accusation.
+Reporter dans la phrase concernée toute réserve qui change la portée de la
+demande. Suivre le [contrôle des preuves dans les courriers](../references/preuve-et-recherche.md#niveau-de-preuve-dans-les-courriers).
 
 ## Préparation contentieuse
 
 Juridiction/voie envisagée ; parties et qualités à vérifier ; chronologie et
 recevabilité ; faits/pièces ; moyens développés ; réponse aux objections ;
 conclusions demandées ; bordereau de pièces ; contrôles de saisine restants.
+
+Pour rédiger le mémoire, choisir la [trame correspondant au destinataire et au stade de la procédure](trames-memoire.md).
 
 ## Veille
 

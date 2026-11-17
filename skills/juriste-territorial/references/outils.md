@@ -1,4 +1,4 @@
-# Contrat MCP 0.4.0
+# Contrat MCP 0.4.1
 
 Les noms ci-dessous existent dans ce serveur ; vérifier leur présence dans le
 client connecté. Les préfixes du client peuvent modifier le nom affiché.

@@ -52,8 +52,49 @@ Associer chaque affirmation décisive à une preuve réellement obtenue. Disting
 citation, paraphrase fidèle, déduction appliquée au dossier et hypothèse.
 Pour une déduction, conserver aussi les faits et le lien de raisonnement.
 
+Qualifier séparément l'existence du document, ce que son auteur affirme et ce
+qu'il établit sur le fond. Pour les points décisifs, conserver l'état exact :
+déclaré, documenté, décidé, notifié, appliqué ou payé, selon les étapes pertinentes.
+« Pas encore visé » ne signifie pas « pas reçu » ; un ajustement annoncé ne
+prouve ni son application ni son paiement.
+
+Rattacher transcription, OCR, extrait, synthèse NotebookLM et analyse d'agent à
+leur original commun. Plusieurs dérivés de la même pièce ne constituent pas
+des corroborations indépendantes. Revenir au passage original avec page,
+paragraphe ou horodatage effectivement vérifié ; ne pas inventer les secondes.
+Un audio ou sa transcription ne devient pas une note contemporaine : conserver
+sa provenance et son statut. Examiner séparément l'usage autorisé, les conditions
+juridiques de production et la force probante, sans présumer une recevabilité
+ou irrecevabilité générale. Les restrictions de diffusion propres au dossier
+suivent aussi les extraits et synthèses ; rechercher une confirmation écrite
+autonome lorsque la pièce sensible reste interne.
+
 Une référence introuvable demeure non vérifiée. Ne pas compléter un numéro
 plausible, inventer une URL officielle ni transformer un miroir en source primaire.
+
+## Niveau de preuve dans les courriers
+
+Avant de remettre un projet destiné à un tiers, relire ses affirmations décisives
+à partir des pièces effectivement consultées et du contexte actualisé. Pour
+chacune, vérifier ce que la pièce établit, qui déclare le reste et quelle limite
+change la portée de la demande. Vérifier aussi les titres, les conclusions et
+les pièces annoncées dans le bordereau.
+
+Si un fait utile reste déclaré, contesté ou déduit, inscrire la réserve dans
+la phrase qui le mobilise. Attribuer la déclaration à sa source. Si l'original
+manque, demander sa production ou subordonner la conclusion à sa confirmation.
+Par exemple, « La demande du 12 juin mentionne deux relevés de suivi. Je demande
+qu'ils soient versés au dossier pour examiner la fréquence du suivi. » Seule
+la demande a été lue dans cet exemple. Présenter une pièce comme jointe après
+avoir vérifié sa présence dans le lot destiné au tiers.
+
+Appliquer ce contrôle aux faits qui commandent le régime, la compétence ou le
+délai. Si un tel fait reste à confirmer, qualifier la conclusion qui en dépend
+et signaler dans le projet la vérification à effectuer avant dépôt.
+
+Une nouvelle pièce lève uniquement la réserve qu'elle résout. Reporter le
+nouvel état dans tous les écrits concernés et conserver les réserves restantes.
+Limiter le courrier aux réserves qui changent la demande ou sa justification.
 
 ## Fraîcheur, correction et limites
 

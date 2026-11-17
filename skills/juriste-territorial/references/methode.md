@@ -59,6 +59,14 @@ décision : `all` pour toutes les conditions préalables, `any` pour une voie
 alternative, et une branche séparée si la qualification change la règle.
 Ne pas marquer « établi » si une condition décisive demeure inconnue ou contestée.
 
+Pour imputer un résultat ou une insuffisance, vérifier l'obligation exacte,
+son destinataire, l'échéance, les moyens, les dépendances et les arbitrages.
+Distinguer tâche exécutée, livrable remis, validation et résultat collectif.
+Une note remise ne démontre pas seule un objectif entièrement atteint ; un
+résultat collectif incomplet ne démontre pas seul une insuffisance personnelle.
+Relier ensuite le fait prouvé à l'effet demandé : correction, nouveau classement,
+annulation ou conséquence indemnitaire exigent leurs conditions propres.
+
 ### Interpréter le texte avant de l'appliquer
 
 Lire d'abord la lettre, puis le contexte (article voisin, définition du code,
@@ -112,6 +120,13 @@ de date peut révéler que la règle a été seulement récitée.
 Conserver le meilleur argument contraire et la pièce qui permettrait de le
 trancher. La fiche courte rend ces dépendances lisibles ; le contrôle du MCP
 ne valide que leur cohérence formelle, jamais la conclusion juridique.
+
+Lorsqu'une simulation est utile ou demandée, distinguer auteur, contradicteur et
+arbitre. Fournir aux premiers relecteurs les pièces et la question sans les
+anciennes notes ; exiger pour chaque objection le passage, le saut de raisonnement
+et la preuve susceptible de la résoudre. Leurs réponses restent des analyses
+dépendantes du corpus, sans valeur d'avis humain indépendant ou de probabilité
+de succès. Hiérarchiser les demandes selon leur appui et l'office du destinataire.
 
 ## 5. Séparer quatre incertitudes
 

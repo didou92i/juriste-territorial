@@ -6,6 +6,7 @@ import pytest
 from mcp import ClientSession
 from mcp.client.stdio import StdioServerParameters, stdio_client
 
+from droit_territorial.resources import data_path
 from droit_territorial.server import TOOL_NAMES, build_server
 
 
@@ -95,7 +96,7 @@ async def test_mcp_protocol_stdio_roundtrip():
         method = await session.call_tool(
             "get_methodology", {"topic": "core", "output_mode": "short"}
         )
-        assert not method.is_error and method.structured_content["method_version"] == "0.4.0"
+        assert not method.is_error and method.structured_content["method_version"] == "0.4.1"
         assert method.structured_content["text"]
         resource = await session.read_resource("juriste://methodology/core")
         assert resource.contents[0].text == method.structured_content["text"]
@@ -109,6 +110,28 @@ async def test_mcp_protocol_stdio_roundtrip():
         )
         assert failed.is_error
         assert failed.structured_content["errors"][0]["code"] == "credentials_missing"
+
+
+@pytest.mark.parametrize(
+    "resource",
+    [
+        "references/memoire.md",
+        "templates/trames-memoire.md",
+        "references/legifrance.md",
+        "references/suivi-dossier.md",
+        "templates/contexte-dossier.md",
+        "templates/agents-dossier.md",
+    ],
+)
+async def test_memoire_resources_are_discoverable_and_readable(service, resource):
+    server = build_server(service)
+    path = data_path("skill") / resource
+    core = await server.call_tool("get_methodology", {"topic": "core"})
+    assert path.stem in core.structured_content["available_topics"]
+
+    result = await server.call_tool("get_methodology", {"topic": path.stem})
+    assert not result.is_error
+    assert result.structured_content["text"] == path.read_text(encoding="utf-8")
 
 
 async def test_methodology_path_traversal_is_refused(service):

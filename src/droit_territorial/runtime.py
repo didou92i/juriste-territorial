@@ -91,7 +91,7 @@ class Transport:
             follow_redirects=False,
             limits=httpx.Limits(max_connections=4, max_keepalive_connections=2),
             trust_env=False,
-            headers={"User-Agent": "droit-territorial/0.4.0"},
+            headers={"User-Agent": "droit-territorial/0.4.1"},
         )
         self.semaphore = asyncio.Semaphore(3)
         self.auth_lock = asyncio.Lock()

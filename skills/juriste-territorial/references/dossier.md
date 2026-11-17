@@ -3,6 +3,13 @@
 Pour un dossier concret complexe, construire une justification explicite avant
 de conclure. Une question générale ou une simple reformulation n'exige pas de JSON.
 
+Le dossier de travail conserve aussi un [contexte Markdown durable](suivi-dossier.md),
+lisible avant toute reprise. Il indexe les pièces, les décisions de travail,
+les questions ouvertes et la version courante ; il ne remplace ni les originaux
+ni le schéma de justification ci-dessous. Un identifiant de preuve MCP peut
+expirer : garder aussi le document, sa provenance et le passage permettant
+une nouvelle consultation.
+
 ## Contrat de raisonnement
 
 - `context` : personne morale, qualité de l'auteur, objectif, fait générateur,
