@@ -3,8 +3,8 @@ name: juriste-territorial
 description: Analyser une question juridique territoriale, articuler textes et actes locaux, examiner les arguments contraires et préparer notes, actes ou recours pour communes, EPCI et établissements publics locaux. Construire ou relire un mémoire pour une commission (dont la CCP), une administration ou un juge, ou un mémoire de recherche en droit territorial. Utiliser pour compétences et délégations, délibérations et arrêtés, FPT, dialogue social, commande publique, police municipale, finances, domaine et urbanisme, données et IA, déontologie des élus, responsabilités et contentieux administratif.
 license: CC-BY-SA-4.0
 metadata:
-  version: "0.4.1"
-  method_reviewed_at: "2026-11-17"
+  version: "0.4.2"
+  method_reviewed_at: "2026-11-18"
   maturity: "experimental"
 ---
 
@@ -41,6 +41,9 @@ Identifier le destinataire et le résultat attendu avant de choisir la [trame](t
 Pour une relecture, appliquer les contrôles au texte fourni et respecter la portée des retouches demandées.
 Pour tout courrier, courriel ou mémoire destiné à un tiers, vérifier que
 [chaque affirmation conserve son niveau de preuve](references/preuve-et-recherche.md#niveau-de-preuve-dans-les-courriers).
+Avant de qualifier un écrit de prêt à signer ou un lot de prêt au dépôt, appliquer la
+[relecture du point de vue du destinataire](references/memoire.md#relire-du-point-de-vue-du-destinataire)
+à la version complète, y compris aux passages et pièces repris d’une version précédente.
 
 ## Construire la réponse
 

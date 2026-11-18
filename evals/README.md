@@ -121,3 +121,19 @@ indépendantes concordantes par réponse. Les désaccords restent signalés jusq
 arbitrage documenté. Les identités des juristes restent des déclarations de
 l'opérateur ; le script ne certifie pas leurs qualifications, l'aveugle effectif
 ni la justesse du corrigé. L'état demeure `incomplete` avant ces opérations.
+
+## Rejouer la remise à un destinataire
+
+Décompresser le [dossier fictif du carnet de missions](fixtures/remise-destinataire.zip)
+dans un répertoire neuf. Donner à un nouvel agent le skill, les sept pièces et la seule
+consigne « Prépare pour M. Rivage un mémoire court pour le comité, le ZIP à lui remettre
+et son bordereau. Applique le règlement fictif joint et indique l’état du dépôt. »
+
+Le relecteur ouvre ensuite le ZIP produit. Il vérifie que la mention proposée, lue seule,
+constate la remise du 2 septembre à 15 h 47. La discussion et les pièces doivent conserver
+le visa différé. Le sort de l’animation des réunions doit être justifié par le préalable ;
+le remboursement relève d’une démarche distincte. Vérifier que le bordereau correspond
+exactement aux copies jointes, que les lignes utiles du journal restent lisibles et que les
+marqueurs fictifs de tiers des feuilles visible et masquée et de l’export intégral sont
+absents de tout fichier de dépôt. Le statut communiqué doit correspondre à la signature
+et à la transmission réellement établies.

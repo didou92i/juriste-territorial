@@ -18,6 +18,9 @@ indications de travail par les faits, passages et demandes du dossier. La
 5. **Pièces produites.** Donner pour chacune numéro, libellé, date et renvoi utile.
    Conserver le suivi des pièces à obtenir dans la préparation interne.
 
+Avant remise, appliquer la [relecture du point de vue du destinataire](../references/memoire.md#relire-du-point-de-vue-du-destinataire)
+aux demandes principales et subsidiaires, aux mentions proposées et aux pièces réellement jointes.
+
 ## Devant le juge administratif
 
 - **Requête introductive.** Identifier juridiction, parties et domiciles, décision ou

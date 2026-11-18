@@ -89,12 +89,53 @@ Les [trames de rédaction](../templates/trames-memoire.md) donnent les rubriques
   En recherche, vérifier les références utilisées, les annexes citées et la table paginée.
   Une relecture demandée peut se restituer par passage, difficulté, correction et source.
 
-Lors d'une remise, contrôler ensemble Word, PDF, bordereau, ZIP et courrier
-d'accompagnement : version, demandes, chiffres, dates et pièces cohérents.
-Vérifier le rendu du document final et le contenu réel de l'archive. Garder une
-version courante clairement identifiée et archiver les précédentes sans les
-effacer. Préparé, signé, joint et effectivement envoyé sont des états distincts ;
-une vérification technique ne certifie ni recevabilité ni succès sur le fond.
+## Relire du point de vue du destinataire
+
+Pour un écrit adressé à un tiers, appliquer les contrôles suivants selon la remise demandée.
+Lors d’un audit, montrer le passage ou la pièce en cause et la correction concrète. Lors
+d’une préparation au dépôt, réaliser cette correction dans les fichiers de remise.
+
+1. **Lire les formulations comme si elles étaient adoptées mot pour mot.** Isoler chaque
+   mention proposée, dans le dispositif comme dans les annexes, y compris les solutions de
+   repli. Lue seule dans l’acte définitif ou le dossier de la personne, que lui attribuerait-elle ?
+   Corriger tout grief repris par inadvertance, concession involontaire ou tâche annoncée
+   présentée comme accomplie. Proposer un fait daté, exact et proportionné à la pièce.
+   Exposer dans la discussion le fait contraire et sa portée. Garder dans la mention toute
+   réserve indispensable à son exactitude. Par exemple, un courriel de remise et une demande
+   de retouches permettent d’écrire « Le projet a été transmis le 8 avril pour relecture ».
+   Une validation ou une défaillance personnelle demanderait une preuve distincte.
+2. **Vérifier chaque demande auprès de la bonne autorité.** Confronter son libellé au
+   dispositif du préalable lorsqu’il est exigé et à la réponse reçue, avec page ou paragraphe.
+   Distinguer un point expressément soumis, un rattachement discutable et une demande nouvelle.
+   Pour le point discutable, expliquer son rattachement et formuler une demande subsidiaire si
+   la procédure le permet. Une réponse globale laisse ouverte la question de l’examen individuel.
+   Ajuster introduction, demandes finales et annexes. Identifier qui peut proposer, décider ou
+   exécuter la mesure. Adresser séparément la demande qui relève d’une autre autorité. Dans un
+   dossier de révision d’évaluation, demander à la commission la modification qu’elle peut
+   proposer. Adresser à l’employeur la demande de calcul et de versement de la prime.
+   Conserver les réserves sur les conditions décisives, notamment la grille effectivement
+   appliquée, sa correspondance avec les niveaux affichés et les bornes de la période évaluée.
+3. **Ouvrir le lot tel que le tiers le recevra.** Dès que les pièces utiles au destinataire
+   diffèrent du fonds personnel ou interne, conserver les originaux et constituer un lot
+   distinct, avec son propre bordereau. Sélectionner les passages nécessaires en préservant
+   dates, fonctions, contexte et éléments contraires. Identifier chaque copie ou extrait,
+   l’original et sa page, ligne ou date. Vérifier les formes de production exigées. Écarter
+   les données de tiers sans utilité et contrôler aussi les noms de fichiers, listes de
+   destinataires, onglets masqués, commentaires, métadonnées, annexes incorporées et exports
+   en double. Sur chaque copie occultée, examiner le rendu et le texte récupérable, y compris
+   la couche OCR. Un rectangle superposé laisse parfois le texte accessible. Refaire la copie
+   si les données subsistent. Si une pièce indispensable ne peut être contrôlée, l’identifier
+   comme restant à traiter et préciser comment la communiquer dans le délai applicable.
+4. **Qualifier l’état réel de la remise.** Ouvrir le PDF et l’archive finaux. Pointer dans les
+   deux sens chaque cote au bordereau et chaque fichier du lot. Retrouver les passages décisifs
+   dans les copies jointes après occultation, puis vérifier l’accord du Word, du PDF et du
+   courrier d’accompagnement sur les demandes et les réserves. Dans le suivi interne, noter
+   la version examinée, ce qui a été vérifié et le point précis qui reste ouvert. Annoncer
+   « projet à relire » si une vérification de fond reste à faire et « à signer » une fois le
+   fond contrôlé et les réserves intégrées. Pour « prêt au dépôt », contrôler aussi les
+   signatures et formalités requises. Dater l’envoi et la réception selon leurs justificatifs.
+   Conserver la version remise et archiver celles qu’elle remplace. Si une pièce complémentaire
+   est encore attendue, décider explicitement du dépôt en temps utile avec les éléments disponibles.
 
 ## Origine des choix de méthode
 
